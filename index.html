@@ -665,6 +665,7 @@
   .proj-nav-item[data-target="sp"]::before { background: linear-gradient(180deg, #ff8d6b, #6a4dff); }
   .proj-nav-item[data-target="sc"]::before { background: linear-gradient(180deg, #fff36b, #ff3d2e); }
   .proj-nav-item[data-target="pt"]::before { background: linear-gradient(180deg, #8effc1, #1f9d55); }
+  .proj-nav-item[data-target="cd"]::before { background: linear-gradient(180deg, #c4b5fd, #7c3aed); }
   .proj-nav-item[data-target="ai"]::before { background: linear-gradient(180deg, #4dffea, #4d6bff); }
   .proj-nav-item.active::before,
   .proj-nav-item:hover::before { opacity: 1; }
@@ -740,6 +741,7 @@
   .proj-panel.panel-sp::before { background: linear-gradient(90deg, #ff8d6b, #6a4dff); }
   .proj-panel.panel-sc::before { background: linear-gradient(90deg, #fff36b, #ff3d2e); }
   .proj-panel.panel-pt::before { background: linear-gradient(90deg, #8effc1, #1f9d55); }
+  .proj-panel.panel-cd::before { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
   .proj-panel.panel-ai::before { background: linear-gradient(90deg, #4dffea, #4d6bff); }
 
   .proj-panel-header {
@@ -1483,6 +1485,15 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
+        <div class="proj-nav-item" data-target="cd" data-hover>
+          <div class="proj-nav-num">/05</div>
+          <div class="proj-nav-name">Career Dashboard</div>
+          <div class="proj-nav-meta">
+            <span>Career Tech</span>
+            <span class="live">● Live</span>
+          </div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
       </nav>
 
       <!-- Right panels -->
@@ -1641,6 +1652,48 @@
                 <span class="proj-label">Stack</span>
                 <div class="proj-stack">
                   <span>n8n</span><span>OpenAI</span><span>Claude</span><span>Excel</span><span>REST APIs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Career Dashboard -->
+        <div class="proj-panel panel-cd" id="panel-cd">
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">Career Dashboard</h3>
+            <a href="https://career-dashboard-ten.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
+          </div>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>Job searching means a spreadsheet for applications, a doc for cover letters, and browser tabs for leads — nothing in one place, and nothing that actually knows your background.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>An AI command center that imports postings from a URL, scores fit against your resume, drafts cover letters, runs mock interviews, and surfaces new leads. Built first for myself, now open with a bring-your-own-key setup flow so anyone can run their own instance.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>One-click job import from a URL, recruiter email, or screenshot — Claude extracts the structured fields</li>
+                  <li>AI match scorecard, gap analysis, tailored resume bullets, and cover letter drafts per job</li>
+                  <li>Coach mode: streaming chat with persistent memory, plus mock interviews with per-answer feedback</li>
+                  <li>Discover tab runs an agentic job-hunt loop with live web search, deduped against your tracker</li>
+                  <li>No accounts — onboarding collects your background and your own Anthropic key, scoped per user</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="App Router &amp; API routes">Next.js</span>
+                  <span data-tip="Type-safe frontend &amp; backend">TypeScript</span>
+                  <span data-tip="Cloud SQLite database">Turso</span>
+                  <span data-tip="Powers scoring, chat &amp; extraction">Claude AI</span>
+                  <span data-tip="Hosting &amp; CI/CD">Vercel</span>
                 </div>
               </div>
             </div>
