@@ -604,6 +604,37 @@
     color: var(--accent);
   }
 
+  .exp-item.exp-noexpand { cursor: default; }
+  .exp-item.exp-noexpand:hover { background: transparent; }
+
+  .involvement-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .involvement-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 1.25rem;
+  }
+  .inv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+  }
+  .inv-item {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .inv-item:nth-child(odd) {
+    border-right: 1px solid var(--line);
+    padding-left: 0;
+  }
+
   @media (max-width: 900px) {
     .exp-row {
       grid-template-columns: 1fr auto;
@@ -617,6 +648,10 @@
     .exp-plus { grid-column: 2; grid-row: 1 / 4; align-self: center; }
     .exp-detail-inner { grid-template-columns: 1fr; padding: 0 0 1.5rem 0; }
     .exp-detail-text { grid-column: 1; }
+  }
+  @media (max-width: 600px) {
+    .inv-grid { grid-template-columns: 1fr; }
+    .inv-item:nth-child(odd) { border-right: none; }
   }
 
   /* ---------- PROJECTS ---------- */
@@ -1267,27 +1302,7 @@
         <div class="exp-row">
           <div class="exp-num">/02</div>
           <div>
-            <div class="exp-company">AI Business Association</div>
-            <div class="exp-role">Founding Vice President</div>
-          </div>
-          <div></div>
-          <div class="exp-date">May 2026 — Present</div>
-          <div class="exp-plus" aria-hidden="true"></div>
-        </div>
-        <div class="exp-detail">
-          <div class="exp-detail-inner">
-            <div class="exp-detail-text">
-              <p>Co-founding a new student organization at the University of Miami for business students who want real fluency with AI — built around three pillars: hands-on workshops with the tools, a curated speaker series with founders, investors, and operators at the frontier of AI in business, and structured discussions on where AI agents, the future of work, and the next five years of competitive advantage are headed.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="exp-item" data-hover>
-        <div class="exp-row">
-          <div class="exp-num">/03</div>
-          <div>
-            <div class="exp-company">N&S Digital LLC</div>
+            <div class="exp-company">N&amp;S Digital LLC</div>
             <div class="exp-role">Co-Founder</div>
           </div>
           <div></div>
@@ -1310,31 +1325,7 @@
 
       <article class="exp-item" data-hover>
         <div class="exp-row">
-          <div class="exp-num">/04</div>
-          <div>
-            <div class="exp-company">Alpha Kappa Psi</div>
-            <div class="exp-role">Treasurer</div>
-          </div>
-          <div></div>
-          <div class="exp-date">Nov 2025 — May 2026</div>
-          <div class="exp-plus" aria-hidden="true"></div>
-        </div>
-        <div class="exp-detail">
-          <div class="exp-detail-inner">
-            <div class="exp-detail-text">
-              <p>Led financial stewardship and technology initiatives for a 200-member business fraternity.</p>
-              <ul>
-                <li>Managed the chapter's full financial ecosystem: budgeting, accounting, and internal controls.</li>
-                <li>Established and led the Technology Committee overseeing digital initiatives.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="exp-item" data-hover>
-        <div class="exp-row">
-          <div class="exp-num">/05</div>
+          <div class="exp-num">/03</div>
           <div>
             <div class="exp-company">SK Commercial Realty</div>
             <div class="exp-role">Commercial Real Estate Intern</div>
@@ -1359,7 +1350,7 @@
 
       <article class="exp-item" data-hover>
         <div class="exp-row">
-          <div class="exp-num">/06</div>
+          <div class="exp-num">/04</div>
           <div>
             <div class="exp-company">Eduply</div>
             <div class="exp-role">Generative AI Prompt Engineer</div>
@@ -1384,31 +1375,7 @@
 
       <article class="exp-item" data-hover>
         <div class="exp-row">
-          <div class="exp-num">/07</div>
-          <div>
-            <div class="exp-company">Acadomia &amp; JC Academy Miami</div>
-            <div class="exp-role">Tutor</div>
-          </div>
-          <div></div>
-          <div class="exp-date">Aug 2024 — Dec 2025</div>
-          <div class="exp-plus" aria-hidden="true"></div>
-        </div>
-        <div class="exp-detail">
-          <div class="exp-detail-inner">
-            <div class="exp-detail-text">
-              <p>Provided one-on-one instruction across two tutoring practices, building effective academic support routines for students at every level.</p>
-              <ul>
-                <li>Tutored across math, sciences, and core academics for K-12 students.</li>
-                <li>Worked with students on SAT and ACT prep — test strategy, pacing, and content review.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <article class="exp-item" data-hover>
-        <div class="exp-row">
-          <div class="exp-num">/08</div>
+          <div class="exp-num">/05</div>
           <div>
             <div class="exp-company">YMCA Camp High Harbour</div>
             <div class="exp-role">Program Director — Watersports</div>
@@ -1422,15 +1389,58 @@
             <div class="exp-detail-text">
               <p>Led operations and safety for 200+ campers and 80+ staff across watersports programs.</p>
               <ul>
-                <li>Directed daily operations and enforced comprehensive safety procedures.</li>
-                <li>Managed logistics, staff coordination, and activity planning for large-scale summer programs.</li>
+                <li>Directed daily operations and enforced comprehensive safety procedures for 200+ campers and 80+ staff.</li>
+                <li>Responsible for over $1M in equipment including 7 speedboats and full watersports infrastructure.</li>
               </ul>
             </div>
           </div>
         </div>
       </article>
 
+      <article class="exp-item exp-noexpand">
+        <div class="exp-row">
+          <div class="exp-num">/06</div>
+          <div>
+            <div class="exp-company">Acadomia &amp; JC Academy Miami</div>
+            <div class="exp-role">Tutor</div>
+          </div>
+          <div></div>
+          <div class="exp-date">Aug 2024 — Dec 2025</div>
+        </div>
+      </article>
+
     </div>
+
+    <div class="involvement-section reveal">
+      <div class="involvement-label">Involvement</div>
+      <div class="inv-grid">
+        <div class="inv-item">
+          <div class="exp-company">AI Business Association</div>
+          <div class="exp-role">Co-Founder &amp; VP</div>
+        </div>
+        <div class="inv-item">
+          <div class="exp-company">Alpha Kappa Psi</div>
+          <div class="exp-role">Treasurer</div>
+        </div>
+        <div class="inv-item">
+          <div class="exp-company">UMiami Club Wrestling</div>
+          <div class="exp-role">VP &amp; Treasurer</div>
+        </div>
+        <div class="inv-item">
+          <div class="exp-company">REM Consulting</div>
+          <div class="exp-role">Strategist</div>
+        </div>
+        <div class="inv-item">
+          <div class="exp-company">Beta Theta Pi</div>
+          <div class="exp-role">Philanthropy Committee</div>
+        </div>
+        <div class="inv-item">
+          <div class="exp-company">UWake</div>
+          <div class="exp-role">Member</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1971,7 +1981,7 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   // ---------- EXPERIENCE ACCORDION ----------
-  document.querySelectorAll('.exp-item').forEach(item => {
+  document.querySelectorAll('.exp-item:not(.exp-noexpand)').forEach(item => {
     item.addEventListener('click', () => {
       const detail = item.querySelector('.exp-detail');
       const isOpen = item.classList.contains('open');
