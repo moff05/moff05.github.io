@@ -516,8 +516,8 @@
   .exp-item:hover { background: var(--bg-deep); }
   .exp-row {
     display: grid;
-    grid-template-columns: 80px 1fr 1fr auto auto;
-    gap: 2rem;
+    grid-template-columns: 60px 44px 1fr auto auto;
+    gap: 1.5rem;
     padding: 1.4rem 0.5rem;
     align-items: center;
   }
@@ -526,6 +526,13 @@
     font-size: 0.75rem;
     color: var(--muted);
     letter-spacing: 0.1em;
+  }
+  .exp-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+    flex-shrink: 0;
   }
   .exp-role {
     font-family: 'Instrument Serif', serif;
@@ -642,6 +649,7 @@
       padding: 1.5rem 0;
     }
     .exp-num { display: none; }
+    .exp-logo { display: none; }
     .exp-company { grid-column: 1; grid-row: 1; font-size: 0.8rem; color: var(--muted); }
     .exp-role { grid-column: 1; grid-row: 2; }
     .exp-date { grid-column: 1; grid-row: 3; }
@@ -1276,11 +1284,11 @@
       <article class="exp-item" data-hover>
         <div class="exp-row">
           <div class="exp-num">/01</div>
+          <img class="exp-logo" src="logos/goldenrod.png" alt="Goldenrod">
           <div>
             <div class="exp-company">Goldenrod Companies</div>
             <div class="exp-role">Investment Intern, Real Estate Tech</div>
           </div>
-          <div></div>
           <div class="exp-date">Jan 2026 — Present</div>
           <div class="exp-plus" aria-hidden="true"></div>
         </div>
@@ -1301,11 +1309,11 @@
       <article class="exp-item" data-hover>
         <div class="exp-row">
           <div class="exp-num">/02</div>
+          <img class="exp-logo" src="logos/ns-digital.svg" alt="N&S Digital">
           <div>
             <div class="exp-company">N&amp;S Digital LLC</div>
             <div class="exp-role">Co-Founder</div>
           </div>
-          <div></div>
           <div class="exp-date">Apr 2025 — Present</div>
           <div class="exp-plus" aria-hidden="true"></div>
         </div>
@@ -1326,11 +1334,11 @@
       <article class="exp-item" data-hover>
         <div class="exp-row">
           <div class="exp-num">/03</div>
+          <img class="exp-logo" src="logos/sk-commercial.png" alt="SK Commercial Realty">
           <div>
             <div class="exp-company">SK Commercial Realty</div>
             <div class="exp-role">Commercial Real Estate Intern</div>
           </div>
-          <div></div>
           <div class="exp-date">Jul — Aug 2025</div>
           <div class="exp-plus" aria-hidden="true"></div>
         </div>
@@ -1351,11 +1359,11 @@
       <article class="exp-item" data-hover>
         <div class="exp-row">
           <div class="exp-num">/04</div>
+          <img class="exp-logo" src="logos/eduply.png" alt="Eduply">
           <div>
             <div class="exp-company">Eduply</div>
             <div class="exp-role">Generative AI Prompt Engineer</div>
           </div>
-          <div></div>
           <div class="exp-date">May 2024 — May 2025</div>
           <div class="exp-plus" aria-hidden="true"></div>
         </div>
@@ -1376,11 +1384,11 @@
       <article class="exp-item" data-hover>
         <div class="exp-row">
           <div class="exp-num">/05</div>
+          <img class="exp-logo" src="logos/ymca.png" alt="YMCA">
           <div>
             <div class="exp-company">YMCA Camp High Harbour</div>
             <div class="exp-role">Program Director — Watersports</div>
           </div>
-          <div></div>
           <div class="exp-date">Seasonal · 2021 — 2025</div>
           <div class="exp-plus" aria-hidden="true"></div>
         </div>
@@ -1400,11 +1408,11 @@
       <article class="exp-item exp-noexpand">
         <div class="exp-row">
           <div class="exp-num">/06</div>
+          <div></div>
           <div>
             <div class="exp-company">Acadomia &amp; JC Academy Miami</div>
             <div class="exp-role">Tutor</div>
           </div>
-          <div></div>
           <div class="exp-date">Aug 2024 — Dec 2025</div>
         </div>
       </article>
