@@ -619,18 +619,35 @@
     font-weight: 400;
     margin-bottom: 1.25rem;
   }
-  .inv-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .inv-list {
     border-top: 1px solid var(--line);
   }
-  .inv-item {
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--line);
+  .inv-row {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 1.25rem;
+    padding: 1rem 0.5rem;
+    align-items: center;
   }
-  .inv-item:nth-child(odd) {
-    border-right: 1px solid var(--line);
-    padding-left: 0;
+  .inv-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: #e4dfd6;
+    padding: 3px;
+  }
+  .inv-detail-inner {
+    padding: 0 0.5rem 1.5rem 0.5rem;
+  }
+  .inv-placeholder {
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 900px) {
+    .inv-row { grid-template-columns: 40px 1fr auto; gap: 0.9rem; padding: 0.9rem 0; }
+    .inv-logo { width: 40px; height: 40px; }
   }
 
   @media (max-width: 900px) {
@@ -647,10 +664,6 @@
     .exp-plus { grid-column: 2; grid-row: 1 / 4; align-self: center; }
     .exp-detail-inner { grid-template-columns: 1fr; padding: 0 0 1.5rem 0; }
     .exp-detail-text { grid-column: 1; }
-  }
-  @media (max-width: 600px) {
-    .inv-grid { grid-template-columns: 1fr; }
-    .inv-item:nth-child(odd) { border-right: none; }
   }
 
   /* ---------- PROJECTS ---------- */
@@ -968,7 +981,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     color: var(--paper);
     cursor: pointer;
     transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
@@ -994,28 +1007,14 @@
   }
   .off-card:hover .off-card-photo { transform: scale(1.06); }
   .off-card-photo--left { object-position: 30% center; }
-  .off-card-top, .off-card-bottom { position: relative; z-index: 2; }
-  .off-card-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    opacity: 0.85;
-  }
+  .off-card-bottom { position: relative; z-index: 2; }
   .off-card-title {
     font-family: 'Instrument Serif', serif;
     font-size: 2.5rem;
     line-height: 1;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
   }
   .off-card-title em { font-style: italic; }
-  .off-card-desc {
-    font-size: 0.92rem;
-    line-height: 1.45;
-    max-width: 260px;
-    opacity: 0.95;
-  }
   /* unique gradient backgrounds for each off card (fallbacks if photo fails to load) */
   .off-card.c1 { background: linear-gradient(135deg, #2a5fa3, #4ec0d8); }
   .off-card.c2 { background: linear-gradient(135deg, #6b1f2a, #b03238); }
@@ -1408,31 +1407,84 @@
 
     <div class="involvement-section reveal">
       <div class="involvement-label">Involvement</div>
-      <div class="inv-grid">
-        <div class="inv-item">
-          <div class="exp-company">AI Business Association</div>
-          <div class="exp-role">Co-Founder &amp; VP</div>
-        </div>
-        <div class="inv-item">
-          <div class="exp-company">Alpha Kappa Psi</div>
-          <div class="exp-role">Treasurer</div>
-        </div>
-        <div class="inv-item">
-          <div class="exp-company">UMiami Club Wrestling</div>
-          <div class="exp-role">VP &amp; Treasurer</div>
-        </div>
-        <div class="inv-item">
-          <div class="exp-company">REM Consulting</div>
-          <div class="exp-role">Strategist</div>
-        </div>
-        <div class="inv-item">
-          <div class="exp-company">Beta Theta Pi</div>
-          <div class="exp-role">Philanthropy Committee</div>
-        </div>
-        <div class="inv-item">
-          <div class="exp-company">UWake</div>
-          <div class="exp-role">Member</div>
-        </div>
+      <div class="inv-list">
+
+        <article class="exp-item" data-hover>
+          <div class="inv-row">
+            <div class="inv-logo" aria-hidden="true"></div>
+            <div>
+              <div class="exp-company">AI Business Association</div>
+              <div class="exp-role">Co-Founder &amp; VP</div>
+            </div>
+            <div class="exp-plus" aria-hidden="true"></div>
+          </div>
+          <div class="exp-detail">
+            <div class="inv-detail-inner exp-detail-text">
+              <ul>
+                <li class="inv-placeholder">Add a bullet about this role</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp-item" data-hover>
+          <div class="inv-row">
+            <img class="inv-logo" src="logos/akpsi.png" alt="Alpha Kappa Psi">
+            <div>
+              <div class="exp-company">Alpha Kappa Psi</div>
+              <div class="exp-role">Treasurer</div>
+            </div>
+            <div class="exp-plus" aria-hidden="true"></div>
+          </div>
+          <div class="exp-detail">
+            <div class="inv-detail-inner exp-detail-text">
+              <ul>
+                <li class="inv-placeholder">Add a bullet about this role</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp-item exp-noexpand">
+          <div class="inv-row">
+            <img class="inv-logo" src="logos/umiami-wrestling.jpg" alt="UMiami Club Wrestling">
+            <div>
+              <div class="exp-company">UMiami Club Wrestling</div>
+              <div class="exp-role">VP &amp; Treasurer</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp-item exp-noexpand">
+          <div class="inv-row">
+            <img class="inv-logo" src="logos/rem-on-campus.webp" alt="REM on Campus">
+            <div>
+              <div class="exp-company">REM on Campus</div>
+              <div class="exp-role">Strategist</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp-item exp-noexpand">
+          <div class="inv-row">
+            <img class="inv-logo" src="logos/beta-theta-pi.png" alt="Beta Theta Pi">
+            <div>
+              <div class="exp-company">Beta Theta Pi</div>
+              <div class="exp-role">Philanthropy Committee</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exp-item exp-noexpand">
+          <div class="inv-row">
+            <img class="inv-logo" src="logos/uwake.jpg" alt="UWake">
+            <div>
+              <div class="exp-company">UWake</div>
+              <div class="exp-role">Member</div>
+            </div>
+          </div>
+        </article>
+
       </div>
     </div>
 
@@ -1731,117 +1783,81 @@
       <!-- Set 1 -->
       <div class="off-card c5" data-hover>
         <img class="off-card-photo" src="off-clock/family.jpg" alt="Nicholas with family" loading="lazy" />
-        <div class="off-card-top">
-          <span class="off-card-num">/01 · The point of all this</span>
-        </div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">Family <em>&amp; friends</em></h3>
-          <p class="off-card-desc">The people I'd build all of this for. Couldn't do any of it without them.</p>
         </div>
       </div>
 
       <div class="off-card c2" data-hover>
         <img class="off-card-photo" src="off-clock/wrestling.jpg" alt="Nicholas at a wrestling tournament" loading="lazy" />
-        <div class="off-card-top">
-          <span class="off-card-num">/02 · Mat time</span>
-        </div>
         <div class="off-card-bottom">
           <h3 class="off-card-title"><em>Wrestling</em></h3>
-          <p class="off-card-desc">Wrestled through high school and into Miami's club team — Treasurer, then VP. Still on the mat — these days at a combat sports gym in Miami.</p>
         </div>
       </div>
 
       <div class="off-card c1" data-hover>
         <img class="off-card-photo" src="off-clock/uwake.jpg" alt="Nicholas wakeboarding" loading="lazy" />
-        <div class="off-card-top">
-          <span class="off-card-num">/03 · On the water</span>
-        </div>
         <div class="off-card-bottom">
           <h3 class="off-card-title"><em>UWake</em></h3>
-          <p class="off-card-desc">Wakeboarding club at the University of Miami — the only homework that involves a boat.</p>
         </div>
       </div>
 
       <div class="off-card c3" data-hover>
         <img class="off-card-photo off-card-photo--left" src="off-clock/bjj.jpg" alt="Nicholas at Soares Jiu Jitsu" loading="lazy" />
-        <div class="off-card-top">
-          <span class="off-card-num">/04 · Still learning</span>
-        </div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">Brazilian <em>Jiu Jitsu</em></h3>
-          <p class="off-card-desc">Currently training. Currently getting humbled. Getting choked turns out to be a productive form of meditation.</p>
         </div>
       </div>
 
       <div class="off-card c4" data-hover>
         <img class="off-card-photo" src="off-clock/beach.jpg" alt="Nicholas with friends at the beach in Miami" loading="lazy" />
-        <div class="off-card-top">
-          <span class="off-card-num">/05 · 25.7°N · 80.1°W</span>
-        </div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">The <em>Beach</em></h3>
-          <p class="off-card-desc">Miami did its job. Hard to take yourself too seriously a few blocks from the water.</p>
         </div>
       </div>
 
       <div class="off-card c6" data-hover>
         <img class="off-card-photo" src="off-clock/sideprojects.jpg" alt="An AR side project visualizing a water molecule" loading="lazy" />
-        <div class="off-card-top">
-          <span class="off-card-num">/06 · Always shipping</span>
-        </div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">Side <em>projects</em></h3>
-          <p class="off-card-desc">There's always something half-built on my laptop. The good ones eventually become the next scholairly.</p>
         </div>
       </div>
 
       <!-- Set 2 (duplicate for seamless loop) -->
       <div class="off-card c5" aria-hidden="true">
         <img class="off-card-photo" src="off-clock/family.jpg" alt="" loading="lazy" />
-        <div class="off-card-top"><span class="off-card-num">/01 · The point of all this</span></div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">Family <em>&amp; friends</em></h3>
-          <p class="off-card-desc">The people I'd build all of this for. Couldn't do any of it without them.</p>
         </div>
       </div>
       <div class="off-card c2" aria-hidden="true">
         <img class="off-card-photo" src="off-clock/wrestling.jpg" alt="" loading="lazy" />
-        <div class="off-card-top"><span class="off-card-num">/02 · Mat time</span></div>
         <div class="off-card-bottom">
           <h3 class="off-card-title"><em>Wrestling</em></h3>
-          <p class="off-card-desc">Wrestled through high school and into Miami's club team — Treasurer, then VP. Still on the mat — these days at a combat sports gym in Miami.</p>
         </div>
       </div>
       <div class="off-card c1" aria-hidden="true">
         <img class="off-card-photo" src="off-clock/uwake.jpg" alt="" loading="lazy" />
-        <div class="off-card-top"><span class="off-card-num">/03 · On the water</span></div>
         <div class="off-card-bottom">
           <h3 class="off-card-title"><em>UWake</em></h3>
-          <p class="off-card-desc">Wakeboarding club at the University of Miami — the only homework that involves a boat.</p>
         </div>
       </div>
       <div class="off-card c3" aria-hidden="true">
         <img class="off-card-photo off-card-photo--left" src="off-clock/bjj.jpg" alt="" loading="lazy" />
-        <div class="off-card-top"><span class="off-card-num">/04 · Still learning</span></div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">Brazilian <em>Jiu Jitsu</em></h3>
-          <p class="off-card-desc">Currently training. Currently getting humbled. Getting choked turns out to be a productive form of meditation.</p>
         </div>
       </div>
       <div class="off-card c4" aria-hidden="true">
         <img class="off-card-photo" src="off-clock/beach.jpg" alt="" loading="lazy" />
-        <div class="off-card-top"><span class="off-card-num">/05 · 25.7°N · 80.1°W</span></div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">The <em>Beach</em></h3>
-          <p class="off-card-desc">Miami did its job. Hard to take yourself too seriously a few blocks from the water.</p>
         </div>
       </div>
       <div class="off-card c6" aria-hidden="true">
         <img class="off-card-photo" src="off-clock/sideprojects.jpg" alt="" loading="lazy" />
-        <div class="off-card-top"><span class="off-card-num">/06 · Always shipping</span></div>
         <div class="off-card-bottom">
           <h3 class="off-card-title">Side <em>projects</em></h3>
-          <p class="off-card-desc">There's always something half-built on my laptop. The good ones eventually become the next scholairly.</p>
         </div>
       </div>
     </div>
