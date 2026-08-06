@@ -177,6 +177,8 @@
   }
   .nav-links a:hover { color: var(--accent); }
   .nav-links a:hover::after { width: 100%; }
+  .nav-links a.active { color: var(--accent); }
+  .nav-links a.active::after { width: 100%; }
 
   .nav-status {
     display: flex;
@@ -414,7 +416,7 @@
 
   /* ---------- SECTION ---------- */
   section {
-    padding: 7rem 0;
+    padding: 5.5rem 0;
     position: relative;
     z-index: 1;
   }
@@ -422,7 +424,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     gap: 2rem;
     flex-wrap: wrap;
   }
@@ -441,8 +443,15 @@
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: 1;
     letter-spacing: -0.03em;
+    overflow: hidden; /* mask for the kinetic title-inner rise below */
   }
   .section-title em { font-style: italic; color: var(--accent); }
+  .section-title .title-inner {
+    display: inline-block;
+    transform: translateY(115%);
+    transition: transform 0.85s cubic-bezier(.2,.8,.2,1);
+  }
+  .section-head.in .section-title .title-inner { transform: translateY(0); }
   .section-sub {
     max-width: 360px;
     font-size: 0.95rem;
@@ -770,11 +779,11 @@
   }
   .proj-panel.active {
     display: flex;
-    animation: panelIn 0.3s ease forwards;
+    animation: panelIn 0.5s cubic-bezier(.2,.8,.2,1) forwards;
   }
   @keyframes panelIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(18px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   /* color accent top bar */
@@ -945,7 +954,7 @@
 
   /* ---------- OFF HOURS (SCROLLING CARDS) ---------- */
   .off {
-    padding: 7rem 0 5rem;
+    padding: 5.5rem 0 4rem;
     overflow: hidden;
   }
   .off-track-wrap {
@@ -984,9 +993,16 @@
     justify-content: flex-end;
     color: var(--paper);
     cursor: pointer;
-    transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+    /* No transform on this element, ever — it clips its own content via
+       border-radius + overflow:hidden while sitting inside a mask-image
+       ancestor (.off-track-wrap's edge fade), and that combo drops the
+       rounded-corner clip the instant ANY transform (2D or 3D) touches it.
+       Hover feedback lives in box-shadow instead; the photo still gets its
+       own transform separately since a plain <img> child isn't affected. */
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    transition: box-shadow 0.4s ease;
   }
-  .off-card:hover { transform: translateY(-8px) rotate(-1deg); }
+  .off-card:hover { box-shadow: 0 20px 36px -14px rgba(0,0,0,0.4); }
   .off-card::after {
     content: '';
     position: absolute;
@@ -997,13 +1013,13 @@
   }
   .off-card-photo {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    inset: -6%;
+    width: 112%;
+    height: 112%;
     object-fit: cover;
     z-index: 0;
     filter: contrast(1.03) saturate(1.04);
-    transition: transform 1s cubic-bezier(.2,.8,.2,1);
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
   }
   .off-card:hover .off-card-photo { transform: scale(1.06); }
   .off-card-photo--left { object-position: 30% center; }
@@ -1025,7 +1041,7 @@
 
   /* ---------- CONTACT ---------- */
   .contact {
-    padding: 7rem 0 4rem;
+    padding: 5.5rem 0 3.5rem;
     border-top: 1px solid var(--line);
   }
   .contact-headline {
@@ -1147,6 +1163,24 @@
     opacity: 1;
     transform: translateY(0);
   }
+  /* Staggered cascade for repeating list items (work rows, involvement, off-hours
+     cards, project nav) — when a whole short list enters the viewport at once,
+     IntersectionObserver alone fires them all together; this delay ladder is what
+     turns that into a cascade instead of one flat block-fade. */
+  .stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+  .stagger > .reveal:nth-child(2) { transition-delay: 60ms; }
+  .stagger > .reveal:nth-child(3) { transition-delay: 120ms; }
+  .stagger > .reveal:nth-child(4) { transition-delay: 180ms; }
+  .stagger > .reveal:nth-child(5) { transition-delay: 240ms; }
+  .stagger > .reveal:nth-child(6) { transition-delay: 300ms; }
+  .stagger > .reveal:nth-child(n+7) { transition-delay: 360ms; }
+
+  /* ---------- SCROLL PROGRESS ---------- */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 2.5px; width: 0%;
+    background: var(--accent); z-index: 300; transition: width 0.1s linear;
+    pointer-events: none;
+  }
 
   /* prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
@@ -1164,15 +1198,17 @@
 <div class="blob" id="blob"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 <div class="cursor" id="cursor"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- NAVIGATION -->
 <nav class="top" id="nav">
   <a href="#top" class="logo">Nicholas <em>Moffett</em></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" data-section="about">About</a></li>
+    <li><a href="#work" data-section="work">Work</a></li>
+    <li><a href="#projects" data-section="projects">Projects</a></li>
+    <li><a href="#off" data-section="off">Off Hours</a></li>
+    <li><a href="#contact" data-section="contact">Contact</a></li>
   </ul>
   <div class="nav-status">
     <span class="status-dot"></span>
@@ -1227,7 +1263,7 @@
     <div class="section-head reveal">
       <div>
         <span class="section-num">01 — About</span>
-        <h2 class="section-title">A little <em>about me</em>,<br/>since you're here.</h2>
+        <h2 class="section-title"><span class="title-inner">A little <em>about me</em>,<br/>since you're here.</span></h2>
       </div>
       <p class="section-sub">A senior at the University of Miami building at the intersection of AI, automation, and the businesses that need both.</p>
     </div>
@@ -1260,14 +1296,14 @@
     <div class="section-head reveal">
       <div>
         <span class="section-num">02 — Work</span>
-        <h2 class="section-title">Selected <em>experience</em>.</h2>
+        <h2 class="section-title"><span class="title-inner">Selected <em>experience</em>.</span></h2>
       </div>
       <p class="section-sub">Click any role to expand.</p>
     </div>
 
-    <div class="exp-list">
+    <div class="exp-list stagger">
 
-      <article class="exp-item" data-hover>
+      <article class="exp-item reveal" data-hover>
         <div class="exp-row">
           <div class="exp-num">/01</div>
           <img class="exp-logo" src="logos/goldenrod.png" alt="Goldenrod">
@@ -1292,7 +1328,7 @@
         </div>
       </article>
 
-      <article class="exp-item" data-hover>
+      <article class="exp-item reveal" data-hover>
         <div class="exp-row">
           <div class="exp-num">/02</div>
           <img class="exp-logo" src="logos/ns-digital.svg" alt="N&S Digital">
@@ -1317,7 +1353,7 @@
         </div>
       </article>
 
-      <article class="exp-item" data-hover>
+      <article class="exp-item reveal" data-hover>
         <div class="exp-row">
           <div class="exp-num">/03</div>
           <img class="exp-logo" src="logos/sk-commercial.png" alt="SK Commercial Realty">
@@ -1342,7 +1378,7 @@
         </div>
       </article>
 
-      <article class="exp-item" data-hover>
+      <article class="exp-item reveal" data-hover>
         <div class="exp-row">
           <div class="exp-num">/04</div>
           <img class="exp-logo" src="logos/eduply.png" alt="Eduply">
@@ -1367,7 +1403,7 @@
         </div>
       </article>
 
-      <article class="exp-item" data-hover>
+      <article class="exp-item reveal" data-hover>
         <div class="exp-row">
           <div class="exp-num">/05</div>
           <img class="exp-logo" src="logos/ymca.png" alt="YMCA">
@@ -1392,7 +1428,7 @@
         </div>
       </article>
 
-      <article class="exp-item exp-noexpand">
+      <article class="exp-item exp-noexpand reveal">
         <div class="exp-row">
           <div class="exp-num">/06</div>
           <img class="exp-logo" src="logos/jc-academy.png" alt="JC Academy">
@@ -1408,9 +1444,9 @@
 
     <div class="involvement-section reveal">
       <div class="involvement-label">Involvement</div>
-      <div class="inv-list">
+      <div class="inv-list stagger">
 
-        <article class="exp-item" data-hover>
+        <article class="exp-item reveal" data-hover>
           <div class="inv-row">
             <img class="inv-logo" src="logos/ai-business-association.jpg" alt="AI Business Association">
             <div>
@@ -1428,7 +1464,7 @@
           </div>
         </article>
 
-        <article class="exp-item" data-hover>
+        <article class="exp-item reveal" data-hover>
           <div class="inv-row">
             <img class="inv-logo" src="logos/akpsi.png" alt="Alpha Kappa Psi">
             <div>
@@ -1446,7 +1482,7 @@
           </div>
         </article>
 
-        <article class="exp-item exp-noexpand">
+        <article class="exp-item exp-noexpand reveal">
           <div class="inv-row">
             <img class="inv-logo" src="logos/umiami-wrestling.jpg" alt="UMiami Club Wrestling">
             <div>
@@ -1456,7 +1492,7 @@
           </div>
         </article>
 
-        <article class="exp-item exp-noexpand">
+        <article class="exp-item exp-noexpand reveal">
           <div class="inv-row">
             <img class="inv-logo" src="logos/rem-on-campus.webp" alt="REM on Campus">
             <div>
@@ -1466,7 +1502,7 @@
           </div>
         </article>
 
-        <article class="exp-item exp-noexpand">
+        <article class="exp-item exp-noexpand reveal">
           <div class="inv-row">
             <img class="inv-logo" src="logos/beta-theta-pi.png" alt="Beta Theta Pi">
             <div>
@@ -1476,7 +1512,7 @@
           </div>
         </article>
 
-        <article class="exp-item exp-noexpand">
+        <article class="exp-item exp-noexpand reveal">
           <div class="inv-row">
             <img class="inv-logo" src="logos/uwake.jpg" alt="UWake">
             <div>
@@ -1498,7 +1534,7 @@
     <div class="section-head reveal">
       <div>
         <span class="section-num">03 — Projects</span>
-        <h2 class="section-title">Things I've <em>built</em>.</h2>
+        <h2 class="section-title"><span class="title-inner">Things I've <em>built</em>.</span></h2>
       </div>
       <p class="section-sub">Click any project to expand.</p>
     </div>
@@ -1506,8 +1542,8 @@
     <div class="proj-showcase reveal">
 
       <!-- Left nav -->
-      <nav class="proj-nav" aria-label="Project list">
-        <div class="proj-nav-item active" data-target="sp" data-hover>
+      <nav class="proj-nav stagger" aria-label="Project list">
+        <div class="proj-nav-item active reveal" data-target="sp" data-hover>
           <div class="proj-nav-num">/01</div>
           <div class="proj-nav-name">StackingPlanner</div>
           <div class="proj-nav-meta">
@@ -1516,7 +1552,7 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item" data-target="ai" data-hover>
+        <div class="proj-nav-item reveal" data-target="ai" data-hover>
           <div class="proj-nav-num">/02</div>
           <div class="proj-nav-name">AI Suite</div>
           <div class="proj-nav-meta">
@@ -1525,7 +1561,7 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item" data-target="cd" data-hover>
+        <div class="proj-nav-item reveal" data-target="cd" data-hover>
           <div class="proj-nav-num">/03</div>
           <div class="proj-nav-name">Career Dashboard</div>
           <div class="proj-nav-meta">
@@ -1534,7 +1570,7 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item" data-target="sc" data-hover>
+        <div class="proj-nav-item reveal" data-target="sc" data-hover>
           <div class="proj-nav-num">/04</div>
           <div class="proj-nav-name">scholairly</div>
           <div class="proj-nav-meta">
@@ -1543,7 +1579,7 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item" data-target="pt" data-hover>
+        <div class="proj-nav-item reveal" data-target="pt" data-hover>
           <div class="proj-nav-num">/05</div>
           <div class="proj-nav-name">Portfolio Manager</div>
           <div class="proj-nav-meta">
@@ -1770,7 +1806,7 @@
     <div class="section-head reveal">
       <div>
         <span class="section-num">04 — Off the clock</span>
-        <h2 class="section-title">Life outside <em>the laptop</em>.</h2>
+        <h2 class="section-title"><span class="title-inner">Life outside <em>the laptop</em>.</span></h2>
       </div>
       <p class="section-sub">Hover to pause, drag to explore.</p>
     </div>
@@ -1978,6 +2014,35 @@
     nav.classList.toggle('scrolled', window.scrollY > 30);
   });
 
+  // ---------- SCROLL-SPY NAV ----------
+  (function scrollSpy() {
+    const navLinks = document.querySelectorAll('#navLinks a[data-section]');
+    const sections = Array.from(navLinks)
+      .map(a => document.getElementById(a.dataset.section))
+      .filter(Boolean);
+    if (!sections.length) return;
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === entry.target.id));
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' }); // fires when a section crosses the vertical middle of the viewport
+
+    sections.forEach(s => spy.observe(s));
+  })();
+
+  // ---------- SCROLL PROGRESS ----------
+  const scrollProgress = document.getElementById('scrollProgress');
+  function updateScrollProgress() {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    scrollProgress.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+
   // ---------- REVEAL ON SCROLL ----------
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -2037,6 +2102,21 @@
     btn.addEventListener('mouseleave', () => {
       btn.style.transform = 'translate(0,0)';
     });
+  });
+
+  // ---------- OFF-HOURS CARDS: PHOTO FOLLOWS CURSOR (2D — no 3D transform,
+  // which was fighting the track's mask-image edge-fade and the custom cursor
+  // blob's stacking order and causing visible rendering glitches) ----------
+  document.querySelectorAll('.off-card').forEach(card => {
+    const photo = card.querySelector('.off-card-photo');
+    if (!photo) return;
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      photo.style.transform = `translate(${(px * -14).toFixed(1)}px, ${(py * -14).toFixed(1)}px) scale(1.08)`;
+    });
+    card.addEventListener('mouseleave', () => { photo.style.transform = ''; });
   });
 
   // ---------- OFF-HOURS MARQUEE: AUTO-SCROLL + DRAG ----------
