@@ -233,6 +233,14 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
+  .hero-rotator {
+    display: inline-block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ink);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .hero-rotator.swap { opacity: 0; transform: translateY(5px); }
 
   .hero-main {
     display: grid;
@@ -263,8 +271,11 @@
     animation: rise 1.2s cubic-bezier(.2,.8,.2,1) forwards;
   }
   .hero-title .line:nth-child(2) span { animation-delay: 0.15s; }
-  .hero-title .line:nth-child(3) span { animation-delay: 0.3s; }
   @keyframes rise { to { transform: translateY(0); } }
+
+  /* explicit low z-index so the parallax transform (which creates its own
+     stacking context) can never paint above the fixed nav (z-index:100) */
+  .hero-image-wrap { width: 100%; position: relative; z-index: 0; }
 
   .hero-image {
     width: 100%;
@@ -317,6 +328,14 @@
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid var(--line);
+  }
+
+  .hero-tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.9rem;
   }
 
   .hero-desc {
@@ -586,6 +605,7 @@
     grid-template-columns: 80px 1fr;
     gap: 2rem;
   }
+  .count-num { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--ink); }
   .exp-detail-text {
     grid-column: 2;
     max-width: 700px;
@@ -1219,29 +1239,31 @@
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-meta">
-    <span>Portfolio / 2026 Edition</span>
+    <span id="heroRotator" class="hero-rotator">Portfolio / 2026 Edition</span>
     <span id="clock">--:--:-- EST</span>
     <span>Atlanta · Miami</span>
   </div>
 
   <div class="hero-main">
     <h1 class="hero-title">
-      <span class="line"><span>Builder of</span></span>
-      <span class="line"><span>AI that</span></span>
-      <span class="line"><span><em class="italic">ships</em>.</span></span>
+      <span class="line"><span>Nicholas</span></span>
+      <span class="line"><span><em class="italic">Moffett</em></span></span>
     </h1>
-    <div class="hero-image">
-      <img src="profile.jpg" alt="Nicholas Moffett" loading="eager" />
+    <div class="hero-image-wrap" id="heroImageWrap">
+      <div class="hero-image">
+        <img src="profile.jpg" alt="Nicholas Moffett" loading="eager" />
+      </div>
     </div>
   </div>
 
   <div class="hero-bottom">
-    <p class="hero-desc">
-      I'm <strong>Nicholas Moffett</strong>, a senior at the University of Miami
-      and a co-founder building automation tools for industries
-      that still run on spreadsheets. I write the AI workflows so
-      humans can do the interesting work.
-    </p>
+    <div>
+      <p class="hero-tagline">Co-founder. I automate the parts of CRE that still run on Excel.</p>
+      <p class="hero-desc">
+        A senior at the University of Miami, building the AI workflows so
+        humans can do the interesting work — not the manual data entry.
+      </p>
+    </div>
     <div class="hero-cta">
       <a href="#work" class="btn solid" data-hover><span>See the work</span></a>
       <a href="#contact" class="btn" data-hover><span>Say hello</span></a>
@@ -1345,7 +1367,7 @@
               <p>Founded and built multiple SaaS products focused on AI automation and business efficiency.</p>
               <ul>
                 <li>Built StackingPlanner.com — automating commercial real estate stacking plans with interactive visual layouts and saved dashboards.</li>
-                <li>Created scholairly.com — an AI-powered EdTech platform used by 100+ students.</li>
+                <li>Created scholairly.com — an AI-powered EdTech platform that reached <span class="count-num" data-target="147">147</span> student signups.</li>
                 <li>Owned the full product lifecycle: conception, development, launch, and user adoption.</li>
               </ul>
             </div>
@@ -1369,7 +1391,7 @@
             <div class="exp-detail-text">
               <p>Got hands-on with CRE fundamentals and found opportunities to modernize the workflow.</p>
               <ul>
-                <li>Sat in development meetings for major assets including a $500M mixed-use project in Atlanta (The Henry).</li>
+                <li>Sat in development meetings for major assets including a <span class="count-num" data-target="500" data-prefix="$" data-suffix="M">$500M</span> mixed-use project in Atlanta (The Henry).</li>
                 <li>Built a full-stack web app automating manual stacking plans — replacing Excel with interactive visualization.</li>
                 <li>Built comprehensive financial models evaluating cap rate, LTV, amortization, and leasing commissions.</li>
               </ul>
@@ -1419,8 +1441,8 @@
             <div class="exp-detail-text">
               <p>Ran the watersports program at a YMCA overnight camp — safety systems, equipment, and staff leadership all under one role.</p>
               <ul>
-                <li>Directed all watersports programming, safety procedures, and staff management for 200+ campers and 80+ staff.</li>
-                <li>Oversaw a waterfront facility with 7 speedboats and $1M+ in equipment, coordinating schedules and risk management protocols to keep operations safe site-wide.</li>
+                <li>Directed all watersports programming, safety procedures, and staff management for <span class="count-num" data-target="200" data-suffix="+">200+</span> campers and <span class="count-num" data-target="80" data-suffix="+">80+</span> staff.</li>
+                <li>Oversaw a waterfront facility with <span class="count-num" data-target="7" data-suffix="">7</span> speedboats and <span class="count-num" data-target="1" data-prefix="$" data-suffix="M+">$1M+</span> in equipment, coordinating schedules and risk management protocols to keep operations safe site-wide.</li>
                 <li>Combined safety leadership with staff development — mentoring counselors and helping build the program's reputation as a top watersports experience.</li>
               </ul>
             </div>
@@ -1476,7 +1498,7 @@
           <div class="exp-detail">
             <div class="inv-detail-inner exp-detail-text">
               <ul>
-                <li>Manage financial operations for 170+ members — preparing and submitting SAFAC budgets, tracking revenue, expenses, and sponsorship contributions, and working with the executive board to allocate resources across professional, social, and philanthropic initiatives.</li>
+                <li>Manage financial operations for <span class="count-num" data-target="170" data-suffix="+">170+</span> members — preparing and submitting SAFAC budgets, tracking revenue, expenses, and sponsorship contributions, and working with the executive board to allocate resources across professional, social, and philanthropic initiatives.</li>
               </ul>
             </div>
           </div>
@@ -1652,7 +1674,7 @@
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>An AI-powered learning platform that centralizes the workflow — intelligent tools built around how students actually study. Currently serving 100+ active users.</p>
+                <p>An AI-powered learning platform that centralizes the workflow — intelligent tools built around how students actually study.</p>
               </div>
             </div>
             <div>
@@ -1660,7 +1682,7 @@
                 <span class="proj-label">Highlights</span>
                 <ul>
                   <li>AI-assisted study tools tailored to individual learning styles</li>
-                  <li>100+ active students and educators on the platform</li>
+                  <li>147 students and educators signed up over its run</li>
                   <li>Built and launched end-to-end — conception through user adoption</li>
                 </ul>
               </div>
@@ -2072,9 +2094,28 @@
       } else {
         item.classList.add('open');
         detail.style.maxHeight = detail.scrollHeight + 'px';
+        detail.querySelectorAll('.count-num').forEach(animateCount);
       }
     });
   });
+
+  // ---------- COUNT-UP NUMBERS (triggered above, on first accordion expand) ----------
+  function animateCount(el) {
+    if (el.dataset.animated) return;
+    el.dataset.animated = '1';
+    const target = parseFloat(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 900;
+    const start = performance.now();
+    function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = prefix + Math.round(target * eased) + suffix;
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
 
   // ---------- LIVE CLOCK ----------
   function pad(n) { return n < 10 ? '0' + n : n; }
@@ -2103,6 +2144,58 @@
       btn.style.transform = 'translate(0,0)';
     });
   });
+
+  // ---------- MAGNETIC HOVER extended to project nav rows + contact links
+  // (gentler pull than buttons since these are bigger/thinner elements) ----------
+  document.querySelectorAll('.proj-nav-item, .contact-block a').forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width/2;
+      const y = e.clientY - rect.top - rect.height/2;
+      el.style.transform = `translate(${x*0.05}px, ${y*0.08}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+
+  // ---------- HERO ROTATOR — cycles real facts already published elsewhere
+  // on the page (About's quick-facts list), reusing verified copy only ----------
+  (function heroRotator() {
+    const el = document.getElementById('heroRotator');
+    if (!el) return;
+    const facts = [
+      'Portfolio / 2026 Edition',
+      'Currently @ Goldenrod Companies',
+      'Building StackingPlanner + scholairly',
+      'Founder · Engineer · Operator',
+    ];
+    let i = 0;
+    setInterval(() => {
+      el.classList.add('swap');
+      setTimeout(() => {
+        i = (i + 1) % facts.length;
+        el.textContent = facts[i];
+        el.classList.remove('swap');
+      }, 350);
+    }, 3400);
+  })();
+
+  // ---------- HERO IMAGE PARALLAX — subtle lag while hero is roughly in view ----------
+  (function heroParallax() {
+    const wrap = document.getElementById('heroImageWrap');
+    if (!wrap) return;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (y < window.innerHeight) {
+          wrap.style.transform = `translateY(${y * 0.12}px)`;
+        }
+        ticking = false;
+      });
+    });
+  })();
 
   // ---------- OFF-HOURS CARDS: PHOTO FOLLOWS CURSOR (2D — no 3D transform,
   // which was fighting the track's mask-image edge-fade and the custom cursor
