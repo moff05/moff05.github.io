@@ -1612,10 +1612,10 @@
         </div>
         <div class="proj-nav-item reveal" data-target="pt" data-hover>
           <div class="proj-nav-num">/05</div>
-          <div class="proj-nav-name">Portfolio Manager</div>
+          <div class="proj-nav-name">StockStarter</div>
           <div class="proj-nav-meta">
             <span>FinTech</span>
-            <span>● Private</span>
+            <span>● Open Source</span>
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
@@ -1705,21 +1705,21 @@
           </div>
         </div>
 
-        <!-- Portfolio Manager -->
+        <!-- StockStarter -->
         <div class="proj-panel panel-pt" id="panel-pt">
           <div class="proj-panel-header">
-            <h3 class="proj-panel-title">Portfolio Manager</h3>
-            <span class="proj-visit coming">Private Repo</span>
+            <h3 class="proj-panel-title">StockStarter</h3>
+            <a href="https://github.com/moff05/stockstarter" target="_blank" rel="noopener" class="proj-visit" data-hover>GitHub ↗</a>
           </div>
           <div class="proj-body">
             <div>
               <div class="proj-section">
                 <span class="proj-label">The Problem</span>
-                <p>Real performance tracking — TWR, IRR, tax-loss harvesting, income — doesn't come standard on any broker export. Most investors either pay for a service that wants account access, or do it by hand in a spreadsheet.</p>
+                <p>I wanted real performance tracking — TWR, IRR, tax-loss harvesting, income — and kept running into the same two bad options everyone does: pay a service that wants your account credentials, or do it by hand in a spreadsheet.</p>
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>A self-hosted desktop app that ingests broker exports straight into a local database and turns raw transaction history into real portfolio analytics — fully offline-capable, with an AI chat layer to ask questions in plain English.</p>
+                <p>A self-hosted web app that turns broker export files into real portfolio analytics. Upload an Excel or CSV and it resolves holdings, pulls live prices, and tracks performance, income, risk, and taxes — with an AI chat layer to ask about your portfolio in plain English. It runs on your own server behind a password gate, so no third party ever sees your holdings.</p>
               </div>
             </div>
             <div>
@@ -1727,20 +1727,19 @@
                 <span class="proj-label">Highlights</span>
                 <ul>
                   <li>Time-weighted return and dollar-weighted IRR computed from actual cash-flow history, not estimated</li>
-                  <li>Per-position performance attribution, volatility, max drawdown, and Sharpe ratio</li>
                   <li>FIFO/HIFO tax-lot tracking with wash-sale risk flags and estimated tax savings</li>
                   <li>Built-in AI chat grounded in live holdings, prices, and transaction history</li>
-                  <li>Native Electron desktop app — available for Windows &amp; macOS (Apple Silicon), fully local, no accounts</li>
+                  <li>Self-hosted and open source — responsive on mobile, deployable via Docker or Railway, data never leaves your own server</li>
                 </ul>
               </div>
               <div class="proj-section">
                 <span class="proj-label">Stack</span>
                 <div class="proj-stack">
-                  <span data-tip="Runtime &amp; embedded local server">Bun</span>
-                  <span data-tip="Full-stack React framework">TanStack Start</span>
-                  <span data-tip="Local-only database, zero cloud">SQLite</span>
-                  <span data-tip="Native desktop packaging">Electron</span>
-                  <span data-tip="Powers the in-app portfolio chat">Claude AI</span>
+                  <span data-tip="Runtime, package manager &amp; bundler">Bun</span>
+                  <span data-tip="Full-stack React framework, file-based routing">TanStack Start</span>
+                  <span data-tip="Local SQLite cache, rebuilt from your uploads">SQLite</span>
+                  <span data-tip="Utility-first styling">Tailwind</span>
+                  <span data-tip="Powers the in-app portfolio AI chat">Claude AI</span>
                 </div>
               </div>
             </div>
