@@ -659,6 +659,13 @@
     flex-direction: column;
     align-items: center;
     will-change: transform;
+    z-index: 1;
+  }
+  /* the hexagon packs orbs close enough that a tooltip can reach into a
+     neighbor's space — promote the whole wrap so it always paints above
+     every sibling while its tooltip is open, regardless of DOM order */
+  .orb-wrap:hover, .orb-wrap:focus-within {
+    z-index: 30;
   }
   .orb-link {
     position: relative;
