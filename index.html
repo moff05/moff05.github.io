@@ -264,25 +264,14 @@
     overflow: hidden;
     padding-bottom: 0.18em;
     margin-bottom: -0.08em;
-    position: relative;
   }
   .hero-title .line span {
     display: inline-block;
+    transform: translateY(110%);
+    animation: rise 1.2s cubic-bezier(.2,.8,.2,1) forwards;
   }
-  /* entrance: a solid color plate covers each word, then wipes off to the
-     left revealing the text underneath — plate color matches the word's
-     own established identity color (ink for Nicholas, coral for Moffett) */
-  .hero-title .line::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    transform-origin: right center;
-    animation: wipeReveal 0.8s cubic-bezier(.65,0,.35,1) forwards;
-    pointer-events: none;
-  }
-  .hero-title .line:nth-child(1)::after { background: var(--ink); animation-delay: 0.2s; }
-  .hero-title .line:nth-child(2)::after { background: var(--accent); animation-delay: 0.58s; }
-  @keyframes wipeReveal { to { transform: scaleX(0); } }
+  .hero-title .line:nth-child(2) span { animation-delay: 0.15s; }
+  @keyframes rise { to { transform: translateY(0); } }
 
   /* explicit low z-index so the parallax transform (which creates its own
      stacking context) can never paint above the fixed nav (z-index:100) */
@@ -655,96 +644,75 @@
     font-weight: 400;
     margin-bottom: 1.25rem;
   }
-  /* orgs float as physics-lite orbs in a bounded field, evading the cursor
-     until you pin one down with a click */
+  /* orgs drift gently on the page itself — no card, no border, nothing to
+     chase — each one is a real link with its name/role always visible */
   .orbit-field {
     position: relative;
-    height: 420px;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    background: radial-gradient(circle at 26% 22%, rgba(255,61,46,0.07), transparent 55%), var(--bg-deep);
-    overflow: hidden;
-  }
-  .orbit-hint {
-    position: absolute;
-    top: 1.3rem; left: 1.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    pointer-events: none;
+    height: 380px;
   }
   .orb-wrap {
     position: absolute;
     top: 0; left: 0;
-    width: 96px; height: 96px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     will-change: transform;
   }
-  .orb {
-    width: 100%; height: 100%;
+  .orb-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+  }
+  .orb-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 14px; }
+  .orb-photo {
+    width: 96px; height: 96px;
     border-radius: 50%;
-    border: none;
     padding: 4px;
     background: var(--paper);
     box-shadow: 0 10px 26px -12px rgba(14,14,12,0.28);
-    cursor: pointer;
-    display: block;
-    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease;
   }
-  .orb img {
+  .orb-link:hover .orb-photo { box-shadow: 0 16px 34px -14px rgba(14,14,12,0.35); }
+  .orb-photo img {
     width: 100%; height: 100%;
     object-fit: cover;
     border-radius: 50%;
     display: block;
-    pointer-events: none;
   }
-  .orb:hover { transform: scale(1.08); box-shadow: 0 16px 34px -14px rgba(14,14,12,0.35); }
-  .orb:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .orb-wrap.active .orb {
-    transform: scale(1.22);
-    box-shadow: 0 0 0 3px var(--accent), 0 18px 40px -16px rgba(14,14,12,0.4);
+  .orb-label { margin-top: 0.7rem; text-align: center; }
+  .orb-label-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.25;
   }
-
-  .orb-detail {
-    margin-top: 1.5rem;
-    padding: 1.6rem 1.8rem;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--paper);
-    min-height: 30px;
-  }
-  .orb-detail-hint {
+  .orb-label-role {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--muted);
+    margin-top: 0.2rem;
   }
-  .orb-detail-body { display: none; }
-  .orb-detail.is-open .orb-detail-hint { display: none; }
-  .orb-detail.is-open .orb-detail-body { display: block; }
-  .orb-detail-head {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-  }
-  .orb-detail-name { font-family: 'Instrument Serif', serif; font-size: 1.7rem; letter-spacing: -0.01em; }
-  .orb-detail-role {
-    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--muted); margin-top: 0.25rem;
-  }
-  .orb-detail-desc { color: var(--ink-soft); line-height: 1.6; margin-top: 0.7rem; max-width: 60ch; }
-  .orb-detail-visit {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 0.55rem 1.1rem; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink);
-    white-space: nowrap; transition: background 0.3s ease, color 0.3s ease; flex-shrink: 0;
-  }
-  .orb-detail-visit:hover { background: var(--ink); color: var(--paper); }
 
+  /* below the desktop breakpoint, the floating field becomes a plain
+     wrapping grid — fractional seed positions get too cramped to avoid
+     overlap on narrow screens, so this swaps to something that can't break */
   @media (max-width: 900px) {
-    .orbit-field { height: 300px; }
-    .orb-wrap { width: 68px; height: 68px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .orb-wrap { transition: none; }
+    .orbit-field {
+      height: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.75rem 1.25rem;
+      padding: 0.5rem 0;
+    }
+    .orb-wrap { position: static; width: auto; transform: none !important; }
+    .orb-photo { width: 68px; height: 68px; }
   }
 
   @media (max-width: 900px) {
@@ -1536,52 +1504,67 @@
       <div class="involvement-label">Involvement</div>
 
       <div class="orbit-field" id="orbitField">
-        <span class="orbit-hint">Click an orb — good luck catching one</span>
 
         <div class="orb-wrap" data-org="ai">
-          <button class="orb" type="button" aria-label="AI Business Association">
-            <img src="logos/ai-business-association.jpg" alt="AI Business Association">
-          </button>
+          <a class="orb-link" href="https://www.instagram.com/aibusinessassociation/" target="_blank" rel="noopener" data-hover title="Co-founding a new AI + business org at UMiami — first semester in progress, full write-up coming soon.">
+            <span class="orb-photo"><img src="logos/ai-business-association.jpg" alt="AI Business Association"></span>
+            <span class="orb-label">
+              <span class="orb-label-name">AI Business Association</span>
+              <span class="orb-label-role">Co-Founder &amp; VP</span>
+            </span>
+          </a>
         </div>
-        <div class="orb-wrap" data-org="akpsi">
-          <button class="orb" type="button" aria-label="Alpha Kappa Psi">
-            <img src="logos/akpsi.png" alt="Alpha Kappa Psi">
-          </button>
-        </div>
-        <div class="orb-wrap" data-org="wrestling">
-          <button class="orb" type="button" aria-label="UMiami Club Wrestling">
-            <img src="logos/umiami-wrestling.jpg" alt="UMiami Club Wrestling">
-          </button>
-        </div>
-        <div class="orb-wrap" data-org="rem">
-          <button class="orb" type="button" aria-label="REM on Campus">
-            <img src="logos/rem-on-campus.webp" alt="REM on Campus">
-          </button>
-        </div>
-        <div class="orb-wrap" data-org="beta">
-          <button class="orb" type="button" aria-label="Beta Theta Pi">
-            <img src="logos/beta-theta-pi.png" alt="Beta Theta Pi">
-          </button>
-        </div>
-        <div class="orb-wrap" data-org="uwake">
-          <button class="orb" type="button" aria-label="UWake">
-            <img src="logos/uwake.jpg" alt="UWake">
-          </button>
-        </div>
-      </div>
 
-      <div class="orb-detail" id="orbDetail">
-        <p class="orb-detail-hint">Click an orb above to see the role.</p>
-        <div class="orb-detail-body">
-          <div class="orb-detail-head">
-            <div>
-              <div class="orb-detail-name" id="orbDetailName"></div>
-              <div class="orb-detail-role" id="orbDetailRole"></div>
-            </div>
-            <a class="orb-detail-visit" id="orbDetailVisit" target="_blank" rel="noopener" data-hover>Visit ↗</a>
-          </div>
-          <p class="orb-detail-desc" id="orbDetailDesc"></p>
+        <div class="orb-wrap" data-org="akpsi">
+          <a class="orb-link" href="https://www.instagram.com/umakpsi/" target="_blank" rel="noopener" data-hover title="Manage financial operations for 170+ members — SAFAC budgets, revenue, expenses, and sponsorship contributions.">
+            <span class="orb-photo"><img src="logos/akpsi.png" alt="Alpha Kappa Psi"></span>
+            <span class="orb-label">
+              <span class="orb-label-name">Alpha Kappa Psi</span>
+              <span class="orb-label-role">Treasurer</span>
+            </span>
+          </a>
         </div>
+
+        <div class="orb-wrap" data-org="wrestling">
+          <a class="orb-link" href="https://www.instagram.com/umiamiwrestling/" target="_blank" rel="noopener" data-hover>
+            <span class="orb-photo"><img src="logos/umiami-wrestling.jpg" alt="UMiami Club Wrestling"></span>
+            <span class="orb-label">
+              <span class="orb-label-name">UMiami Club Wrestling</span>
+              <span class="orb-label-role">VP &amp; Treasurer</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="orb-wrap" data-org="rem">
+          <a class="orb-link" href="https://www.remandcompany.com/remoncampus" target="_blank" rel="noopener" data-hover>
+            <span class="orb-photo"><img src="logos/rem-on-campus.webp" alt="REM on Campus"></span>
+            <span class="orb-label">
+              <span class="orb-label-name">REM on Campus</span>
+              <span class="orb-label-role">Strategist</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="orb-wrap" data-org="beta">
+          <a class="orb-link" href="https://miami.beta.org/" target="_blank" rel="noopener" data-hover>
+            <span class="orb-photo"><img src="logos/beta-theta-pi.png" alt="Beta Theta Pi"></span>
+            <span class="orb-label">
+              <span class="orb-label-name">Beta Theta Pi</span>
+              <span class="orb-label-role">Philanthropy Committee</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="orb-wrap" data-org="uwake">
+          <a class="orb-link" href="https://www.instagram.com/umwake/" target="_blank" rel="noopener" data-hover>
+            <span class="orb-photo"><img src="logos/uwake.jpg" alt="UWake"></span>
+            <span class="orb-label">
+              <span class="orb-label-name">UWake</span>
+              <span class="orb-label-role">Member</span>
+            </span>
+          </a>
+        </div>
+
       </div>
     </div>
 
@@ -2340,161 +2323,97 @@
     wrap.addEventListener('dragstart', (e) => e.preventDefault());
   })();
 
-  // ---------- INVOLVEMENT ORBIT FIELD — orgs float and flee the cursor
-  // (a "shy gravity": proximity pushes an orb's anchor away, then it
-  // springs back home once you leave it alone) until clicked, which pins
-  // it in place and opens its detail card below the field ----------
+  // ---------- INVOLVEMENT ORBIT FIELD — orgs drift with a gentle idle
+  // wobble; below 900px this collapses to a plain wrapping grid (CSS
+  // handles it, this script just stays out of the way) ----------
   (function () {
     const field = document.getElementById('orbitField');
     if (!field) return;
 
-    const ORG_DATA = {
-      ai: {
-        name: 'AI Business Association', role: 'Co-Founder & VP',
-        href: 'https://www.instagram.com/aibusinessassociation/',
-        desc: 'Co-founding a new AI + business org at UMiami — first semester in progress, full write-up coming soon.'
-      },
-      akpsi: {
-        name: 'Alpha Kappa Psi', role: 'Treasurer',
-        href: 'https://www.instagram.com/umakpsi/',
-        desc: 'Manage financial operations for <span class="count-num" data-target="170" data-suffix="+">170+</span> members — preparing and submitting SAFAC budgets, tracking revenue, expenses, and sponsorship contributions, and working with the executive board to allocate resources across professional, social, and philanthropic initiatives.'
-      },
-      wrestling: { name: 'UMiami Club Wrestling', role: 'VP & Treasurer', href: 'https://www.instagram.com/umiamiwrestling/' },
-      rem: { name: 'REM on Campus', role: 'Strategist', href: 'https://www.remandcompany.com/remoncampus' },
-      beta: { name: 'Beta Theta Pi', role: 'Philanthropy Committee', href: 'https://miami.beta.org/' },
-      uwake: { name: 'UWake', role: 'Member', href: 'https://www.instagram.com/umwake/' },
-    };
-
     const wraps = [...field.querySelectorAll('.orb-wrap')];
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const canHover = window.matchMedia('(pointer: fine)').matches;
-
-    const detail = document.getElementById('orbDetail');
-    const detailName = document.getElementById('orbDetailName');
-    const detailRole = document.getElementById('orbDetailRole');
-    const detailDesc = document.getElementById('orbDetailDesc');
-    const detailVisit = document.getElementById('orbDetailVisit');
-
-    let activeKey = null;
-    function selectOrb(key, wrap) {
-      if (activeKey === key) {
-        activeKey = null;
-        wraps.forEach(w => w.classList.remove('active'));
-        detail.classList.remove('is-open');
-        return;
-      }
-      activeKey = key;
-      wraps.forEach(w => w.classList.toggle('active', w === wrap));
-      const data = ORG_DATA[key];
-      detailName.textContent = data.name;
-      detailRole.textContent = data.role;
-      detailVisit.href = data.href;
-      if (data.desc) {
-        detailDesc.style.display = '';
-        detailDesc.innerHTML = data.desc;
-        detailDesc.querySelectorAll('.count-num').forEach(animateCount);
-      } else {
-        detailDesc.style.display = 'none';
-        detailDesc.innerHTML = '';
-      }
-      detail.classList.add('is-open');
-    }
-
-    wraps.forEach(wrap => {
-      wrap.querySelector('.orb').addEventListener('click', () => selectOrb(wrap.dataset.org, wrap));
-    });
+    const isMobileLayout = () => window.innerWidth <= 900;
 
     // loose, non-grid scatter of home positions (as fractions of field size)
     const seeds = [
-      { xf: 0.13, yf: 0.30 }, { xf: 0.32, yf: 0.70 }, { xf: 0.50, yf: 0.26 },
-      { xf: 0.68, yf: 0.68 }, { xf: 0.84, yf: 0.32 }, { xf: 0.93, yf: 0.66 },
+      { xf: 0.13, yf: 0.28 }, { xf: 0.32, yf: 0.68 }, { xf: 0.50, yf: 0.24 },
+      { xf: 0.68, yf: 0.66 }, { xf: 0.84, yf: 0.30 }, { xf: 0.93, yf: 0.64 },
     ];
+    const wrapWidth = 150;
+    const orbRadius = 48;
 
-    const orbSize = () => (window.innerWidth <= 900 ? 68 : 96);
     let bounds = field.getBoundingClientRect();
-
     const state = wraps.map((wrap, i) => {
       const s = seeds[i % seeds.length];
       return {
-        wrap, homeXf: s.xf, homeYf: s.yf,
-        x: 0, y: 0, ax: 0, ay: 0, homeX: 0, homeY: 0,
+        wrap, homeXf: s.xf, homeYf: s.yf, homeX: 0, homeY: 0,
         phase: Math.random() * Math.PI * 2,
-        speed: 0.4 + Math.random() * 0.3,
-        wobble: 10 + Math.random() * 8,
+        speed: 0.35 + Math.random() * 0.25,
+        wobble: 8 + Math.random() * 6,
       };
     });
 
     function layoutHome() {
-      const r = orbSize() / 2 + 10;
+      const halfW = wrapWidth / 2;
       state.forEach(o => {
-        o.homeX = Math.min(Math.max(o.homeXf * bounds.width, r), Math.max(bounds.width - r, r));
-        o.homeY = Math.min(Math.max(o.homeYf * bounds.height, r), Math.max(bounds.height - r, r));
-        if (o.ax === 0 && o.ay === 0) { o.ax = o.homeX; o.ay = o.homeY; o.x = o.homeX; o.y = o.homeY; }
+        o.homeX = Math.min(Math.max(o.homeXf * bounds.width, halfW), Math.max(bounds.width - halfW, halfW));
+        o.homeY = Math.min(Math.max(o.homeYf * bounds.height, orbRadius), Math.max(bounds.height - orbRadius - 40, orbRadius));
       });
     }
 
-    function placeStatic() {
-      const r = orbSize() / 2;
+    function render(withWobble, t) {
+      const halfW = wrapWidth / 2;
       state.forEach(o => {
-        o.wrap.style.transform = `translate(${(o.homeX - r).toFixed(1)}px, ${(o.homeY - r).toFixed(1)}px)`;
+        let x = o.homeX, y = o.homeY;
+        if (withWobble) {
+          x += Math.cos(t * o.speed + o.phase) * o.wobble;
+          y += Math.sin(t * o.speed * 1.3 + o.phase) * o.wobble * 0.6;
+        }
+        o.wrap.style.transform = `translate(${(x - halfW).toFixed(1)}px, ${(y - orbRadius).toFixed(1)}px)`;
       });
     }
 
-    function resize() { bounds = field.getBoundingClientRect(); layoutHome(); if (reduceMotion) placeStatic(); }
+    let running = false, t = 0;
+    function resize() {
+      if (isMobileLayout()) return;
+      bounds = field.getBoundingClientRect();
+      layoutHome();
+      if (!running) render(false, 0);
+    }
     window.addEventListener('resize', resize);
     window.addEventListener('load', resize);
     resize();
 
-    if (reduceMotion) { placeStatic(); return; }
+    if (reduceMotion) return;
 
-    let running = false, t = 0;
     function tick() {
+      if (isMobileLayout()) { running = false; return; }
       t += 0.016;
-      const r = orbSize() / 2;
-      bounds = field.getBoundingClientRect(); // viewport-relative — must refresh every frame, not just on resize, since it also shifts on scroll
-
-      state.forEach(o => {
-        // spring anchor back toward its home slot
-        o.ax += (o.homeX - o.ax) * 0.02;
-        o.ay += (o.homeY - o.ay) * 0.02;
-
-        // shy gravity: cursor proximity pushes the anchor away
-        if (canHover) {
-          const fx = mouseX - bounds.left, fy = mouseY - bounds.top;
-          const dx = o.ax - fx, dy = o.ay - fy;
-          const dist = Math.hypot(dx, dy);
-          const threshold = 130;
-          if (dist < threshold && dist > 0.01) {
-            const force = (1 - dist / threshold) * 46;
-            o.ax += (dx / dist) * force * 0.06;
-            o.ay += (dy / dist) * force * 0.06;
-          }
-        }
-
-        o.ax = Math.min(Math.max(o.ax, r + 8), Math.max(bounds.width - r - 8, r + 8));
-        o.ay = Math.min(Math.max(o.ay, r + 8), Math.max(bounds.height - r - 8, r + 8));
-
-        // gentle idle orbit wobble around the anchor
-        const wobX = Math.cos(t * o.speed + o.phase) * o.wobble;
-        const wobY = Math.sin(t * o.speed * 1.3 + o.phase) * o.wobble * 0.6;
-
-        o.x += (o.ax + wobX - o.x) * 0.12;
-        o.y += (o.ay + wobY - o.y) * 0.12;
-
-        o.wrap.style.transform = `translate(${(o.x - r).toFixed(1)}px, ${(o.y - r).toFixed(1)}px)`;
-      });
-
+      render(true, t);
       if (running) requestAnimationFrame(tick);
     }
 
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting && !running) { running = true; requestAnimationFrame(tick); }
+        if (e.isIntersecting && !isMobileLayout() && !running) { running = true; requestAnimationFrame(tick); }
         else if (!e.isIntersecting) { running = false; }
       });
     }, { threshold: 0.1 });
     io.observe(field);
   })();
+
+  // ---------- MAGNETIC HOVER on involvement orbs (gentle pull + lift,
+  // combined into one transform since a CSS :hover rule would otherwise
+  // fight the JS-driven translate) ----------
+  document.querySelectorAll('.orb-link').forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = `translate(${(x * 0.12).toFixed(1)}px, ${(y * 0.12).toFixed(1)}px) scale(1.06)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
 
   // ---------- PROJECT SHOWCASE ----------
   document.querySelectorAll('.proj-nav-item').forEach(item => {
