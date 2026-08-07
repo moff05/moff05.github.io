@@ -30,7 +30,7 @@
     --bg-deep: #e9e2d6;
     --ink: #0e0e0c;
     --ink-soft: #2a2a26;
-    --muted: #6b6862;
+    --muted: #65625d;
     --line: #c9c2b6;
     --paper: #fbf8f2;
     --accent: #ff3d2e;       /* electric coral */
@@ -279,7 +279,7 @@
 
   .hero-image {
     width: 100%;
-    aspect-ratio: 4/5;
+    aspect-ratio: 1/1;
     background: var(--bg-deep);
     border-radius: 6px;
     overflow: hidden;
@@ -438,16 +438,6 @@
     margin-bottom: 3rem;
     gap: 2rem;
     flex-wrap: wrap;
-  }
-  .section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 1rem;
   }
   .section-title {
     font-family: 'Instrument Serif', serif;
@@ -685,9 +675,8 @@
     margin-top: 0.4rem;
     padding: 0.85rem 1rem 0.85rem 1.7rem;
     background: var(--paper);
-    border: 1px solid var(--line);
     border-radius: 10px;
-    box-shadow: 0 14px 30px -14px rgba(14,14,12,0.32);
+    box-shadow: 0 10px 26px -12px rgba(14,14,12,0.28);
     font-family: 'Inter', sans-serif;
     font-size: 0.78rem;
     line-height: 1.55;
@@ -1365,7 +1354,6 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <span class="section-num">01 — About</span>
         <h2 class="section-title"><span class="title-inner">A little <em>about me</em>,<br/>since you're here.</span></h2>
       </div>
       <p class="section-sub">A senior at the University of Miami building at the intersection of AI, automation, and the businesses that need both.</p>
@@ -1398,7 +1386,6 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <span class="section-num">02 — Work</span>
         <h2 class="section-title"><span class="title-inner">Selected <em>experience</em>.</span></h2>
       </div>
       <p class="section-sub">Click any role to expand.</p>
@@ -1423,7 +1410,7 @@
               <p>Developing AI-powered workflows that automate multifamily and commercial real estate analysis at scale.</p>
               <ul>
                 <li>Built automation pipelines using n8n, OpenAI, and Claude that transform raw tenancy schedules into structured Excel financial models.</li>
-                <li>Engineered prompt systems and scripts extracting submarket comps, property data, and lease info — reducing hours of manual analysis to minutes.</li>
+                <li>Engineered prompt systems and scripts extracting submarket comps, property data, and lease info, reducing hours of manual analysis to minutes.</li>
                 <li>Integrated spreadsheet templates with AI workflows for streamlined internal data processing.</li>
               </ul>
             </div>
@@ -1447,7 +1434,7 @@
             <div class="exp-detail-text">
               <p>Founded and built multiple SaaS products focused on AI automation and business efficiency.</p>
               <ul>
-                <li>Built StackingPlanner.com — automating commercial real estate stacking plans with interactive visual layouts and saved dashboards.</li>
+                <li>Built StackingPlanner.com, automating commercial real estate stacking plans with interactive visual layouts and saved dashboards.</li>
                 <li>Created scholairly.com — an AI-powered EdTech platform that reached <span class="count-num" data-target="147">147</span> student signups.</li>
                 <li>Owned the full product lifecycle: conception, development, launch, and user adoption.</li>
               </ul>
@@ -1473,7 +1460,7 @@
               <p>Got hands-on with CRE fundamentals and found opportunities to modernize the workflow.</p>
               <ul>
                 <li>Sat in development meetings for major assets including a <span class="count-num" data-target="500" data-prefix="$" data-suffix="M">$500M</span> mixed-use project in Atlanta (The Henry).</li>
-                <li>Built a full-stack web app automating manual stacking plans — replacing Excel with interactive visualization.</li>
+                <li>Built a full-stack web app automating manual stacking plans, replacing Excel with interactive visualization.</li>
                 <li>Built comprehensive financial models evaluating cap rate, LTV, amortization, and leasing commissions.</li>
               </ul>
             </div>
@@ -1520,11 +1507,11 @@
         <div class="exp-detail">
           <div class="exp-detail-inner">
             <div class="exp-detail-text">
-              <p>Ran the watersports program at a YMCA overnight camp — safety systems, equipment, and staff leadership all under one role.</p>
+              <p>Ran the watersports program at a YMCA overnight camp: safety systems, equipment, and staff leadership all under one role.</p>
               <ul>
                 <li>Directed all watersports programming, safety procedures, and staff management for <span class="count-num" data-target="200" data-suffix="+">200+</span> campers and <span class="count-num" data-target="80" data-suffix="+">80+</span> staff.</li>
                 <li>Oversaw a waterfront facility with <span class="count-num" data-target="7" data-suffix="">7</span> speedboats and <span class="count-num" data-target="1" data-prefix="$" data-suffix="M+">$1M+</span> in equipment, coordinating schedules and risk management protocols to keep operations safe site-wide.</li>
-                <li>Combined safety leadership with staff development — mentoring counselors and helping build the program's reputation as a top watersports experience.</li>
+                <li>Combined safety leadership with staff development, mentoring counselors and helping build the program's reputation as a top watersports experience.</li>
                 <li>Led watersports at a nationally recognized camp — Newsweek named Camp High Harbour one of <em>America's Best Summer Camps</em> in 2024.</li>
               </ul>
             </div>
@@ -1624,7 +1611,6 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <span class="section-num">03 — Projects</span>
         <h2 class="section-title"><span class="title-inner">What I've <em>built</em>.</span></h2>
       </div>
       <p class="section-sub">Click any project to expand.</p>
@@ -1694,11 +1680,11 @@
             <div>
               <div class="proj-section">
                 <span class="proj-label">The Problem</span>
-                <p>At SK Commercial Realty, I watched analysts rebuild the same stacking plan in Excel for every property — hours of manual work for a static file nobody could share, update, or search without starting from scratch.</p>
+                <p>At SK Commercial Realty, I watched analysts rebuild the same stacking plan in Excel for every property. Hours of manual work for a static file nobody could share, update, or search without starting from scratch.</p>
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>The President of SK Investment Group asked for a better Excel template. I built a full-stack SaaS instead — it turns any tenancy schedule, messy or clean, into an interactive, color-coded building chart in seconds, with a natural-language AI assistant built in from day one.</p>
+                <p>The President of SK Investment Group asked for a better Excel template. I built a full-stack SaaS instead: it turns any tenancy schedule, messy or clean, into an interactive, color-coded building chart in seconds, with a natural-language AI assistant built in from day one.</p>
               </div>
             </div>
             <div>
@@ -1706,7 +1692,7 @@
                 <span class="proj-label">Highlights</span>
                 <ul>
                   <li>AI-powered Excel parser ingests messy, non-standard rent rolls — no fixed template required</li>
-                  <li>Natural-language AI assistant reconfigures colors, labels, fonts, and per-block overrides on request — and can flag ROFR encumbrances and rights per suite</li>
+                  <li>Natural-language AI assistant reconfigures colors, labels, fonts, and per-block overrides on request, and can flag ROFR encumbrances and rights per suite</li>
                   <li>Shareable public plan links with live chart rendering, plus named version-history snapshots for any plan</li>
                   <li>Stripe-gated Pro tier unlocks logo upload, Modern/Bubbly chart styles, custom fonts, and PDF/PPTX export</li>
                   <li>Persistent Python chart worker — fast, cold-start-free rendering</li>
@@ -1739,11 +1725,11 @@
             <div>
               <div class="proj-section">
                 <span class="proj-label">The Problem</span>
-                <p>I kept watching students juggle a different app for every task — one for notes, one for flashcards, one for the syllabus PDF, one for the calendar — with nothing tying it together.</p>
+                <p>I kept watching students juggle a different app for every task: one for notes, one for flashcards, one for the syllabus PDF, one for the calendar. Nothing tied it together.</p>
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>So I built scholairly — one platform with AI tools built around how students actually study: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and a document Q&amp;A tool for asking questions straight out of a PDF.</p>
+                <p>So I built scholairly, one platform with AI tools built around how students actually study: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and a document Q&amp;A tool for asking questions straight out of a PDF.</p>
               </div>
             </div>
             <div>
@@ -1775,11 +1761,11 @@
             <div>
               <div class="proj-section">
                 <span class="proj-label">The Problem</span>
-                <p>I wanted real performance tracking — TWR, IRR, tax-loss harvesting, income — and kept running into the same two bad options everyone does: pay a service that wants your account credentials, or do it by hand in a spreadsheet.</p>
+                <p>I wanted real performance tracking (TWR, IRR, tax-loss harvesting, income) and kept running into the same two bad options everyone does: pay a service that wants your account credentials, or do it by hand in a spreadsheet.</p>
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>A self-hosted web app that turns broker export files into real portfolio analytics. Upload an Excel or CSV and it resolves holdings, pulls live prices, and tracks performance, income, risk, and taxes — with an AI chat layer to ask about your portfolio in plain English. It runs on your own server behind a password gate, so no third party ever sees your holdings.</p>
+                <p>A self-hosted web app that turns broker export files into real portfolio analytics. Upload an Excel or CSV and it resolves holdings, pulls live prices, and tracks performance, income, risk, and taxes, with an AI chat layer to ask about your portfolio in plain English. It runs on your own server behind a password gate, so no third party ever sees your holdings.</p>
               </div>
             </div>
             <div>
@@ -1789,7 +1775,7 @@
                   <li>Time-weighted return and dollar-weighted IRR computed from actual cash-flow history, not estimated</li>
                   <li>FIFO/HIFO tax-lot tracking with wash-sale risk flags and estimated tax savings</li>
                   <li>Built-in AI chat grounded in live holdings, prices, and transaction history</li>
-                  <li>Self-hosted and open source — responsive on mobile, deployable via Docker or Railway, data never leaves your own server</li>
+                  <li>Self-hosted and open source, responsive on mobile, deployable via Docker or Railway, data never leaves your own server</li>
                 </ul>
               </div>
               <div class="proj-section">
@@ -1816,7 +1802,7 @@
             <div>
               <div class="proj-section">
                 <span class="proj-label">The Problem</span>
-                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work — re-keying tenancy data into models, then hunting across scattered sources for market context before any real analysis could start.</p>
+                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work: re-keying tenancy data into models, then hunting across scattered sources for market context before any real analysis could start.</p>
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
@@ -1864,11 +1850,11 @@
               <div class="proj-section">
                 <span class="proj-label">Highlights</span>
                 <ul>
-                  <li>Import a job from a URL, pasted text, or a screenshot — an AI pass extracts the structured fields, handles JS-rendered listings automatically</li>
+                  <li>Import a job from a URL, pasted text, or a screenshot: an AI pass extracts the structured fields, handles JS-rendered listings automatically</li>
                   <li>5-category AI fit scorecard, gap analysis, tailored resume bullets, and a cover letter draft with tone/angle controls — auto-generated per job</li>
                   <li>Free Priorities strip ranks deadlines and stale follow-ups by urgency with zero AI calls; Coach overlay adds persistent-memory chat for everything else</li>
                   <li>Candidate Strength: rubric-scored readiness assessment, point values anchored via structured outputs so repeat scores don't drift</li>
-                  <li>No accounts, no API key — a 3-step setup collects your background and drops you straight into the tracker</li>
+                  <li>No accounts, no API key: a 3-step setup collects your background and drops you straight into the tracker</li>
                 </ul>
               </div>
               <div class="proj-section">
@@ -1895,7 +1881,6 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <span class="section-num">04 — Off the clock</span>
         <h2 class="section-title"><span class="title-inner">Life outside <em>the laptop</em>.</span></h2>
       </div>
       <p class="section-sub">Hover to pause, drag to explore.</p>
