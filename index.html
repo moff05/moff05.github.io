@@ -87,11 +87,11 @@
     width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--ink);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
     pointer-events: none;
     z-index: 9999;
     mix-blend-mode: difference;
-    transition: width 0.25s ease, height 0.25s ease, background 0.25s ease;
+    transition: transform 0.25s ease, background 0.25s ease;
   }
   .cursor-ring {
     position: fixed;
@@ -99,15 +99,17 @@
     width: 40px; height: 40px;
     border-radius: 50%;
     border: 1px solid rgba(14,14,12,0.4);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
     pointer-events: none;
     z-index: 9998;
     mix-blend-mode: difference;
-    transition: width 0.3s cubic-bezier(.2,.8,.2,1), height 0.3s cubic-bezier(.2,.8,.2,1), border-color 0.3s ease, background 0.3s ease;
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), border-color 0.3s ease, background 0.3s ease;
   }
-  .cursor.is-hover { width: 0; height: 0; }
+  /* scale replaces width/height so this animates transform, not layout —
+     0.001 instead of 0 keeps it a valid, animatable scale value */
+  .cursor.is-hover { transform: translate(-50%, -50%) scale(0.001); }
   .cursor-ring.is-hover {
-    width: 72px; height: 72px;
+    transform: translate(-50%, -50%) scale(1.8);
     background: var(--paper);
     border-color: var(--paper);
     mix-blend-mode: difference;
@@ -171,14 +173,16 @@
     content: '';
     position: absolute;
     bottom: 0; left: 0;
-    width: 0; height: 1px;
+    width: 100%; height: 1px;
     background: var(--accent);
-    transition: width 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
   }
   .nav-links a:hover { color: var(--accent); }
-  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover::after { transform: scaleX(1); }
   .nav-links a.active { color: var(--accent); }
-  .nav-links a.active::after { width: 100%; }
+  .nav-links a.active::after { transform: scaleX(1); }
 
   .nav-status {
     display: flex;
@@ -582,11 +586,16 @@
   .exp-item.open .exp-plus::after { background: var(--paper); }
 
   .exp-detail {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(.2,.8,.2,1);
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(.2,.8,.2,1);
+  }
+  .exp-item.open .exp-detail {
+    grid-template-rows: 1fr;
   }
   .exp-detail-inner {
+    overflow: hidden;
+    min-height: 0;
     padding: 0 0.5rem 2rem 0.5rem;
     display: grid;
     grid-template-columns: 80px 1fr;
@@ -639,6 +648,8 @@
   .orbit-field {
     position: relative;
     height: 560px;
+    max-width: 640px;
+    margin: 0 auto;
   }
   .orb-wrap {
     position: absolute;
@@ -1268,8 +1279,10 @@
 
   /* ---------- SCROLL PROGRESS ---------- */
   .scroll-progress {
-    position: fixed; top: 0; left: 0; height: 2.5px; width: 0%;
-    background: var(--accent); z-index: 300; transition: width 0.1s linear;
+    position: fixed; top: 0; left: 0; height: 2.5px; width: 100%;
+    background: var(--accent); z-index: 300;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.1s linear;
     pointer-events: none;
   }
 
@@ -2113,7 +2126,7 @@
     const h = document.documentElement;
     const max = h.scrollHeight - h.clientHeight;
     const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
-    scrollProgress.style.width = pct + '%';
+    scrollProgress.style.transform = `scaleX(${pct / 100})`;
   }
   window.addEventListener('scroll', updateScrollProgress);
   updateScrollProgress();
@@ -2141,17 +2154,10 @@
       const isOpen = item.classList.contains('open');
       // close others
       document.querySelectorAll('.exp-item.open').forEach(o => {
-        if (o !== item) {
-          o.classList.remove('open');
-          o.querySelector('.exp-detail').style.maxHeight = '0px';
-        }
+        if (o !== item) o.classList.remove('open');
       });
-      if (isOpen) {
-        item.classList.remove('open');
-        detail.style.maxHeight = '0px';
-      } else {
-        item.classList.add('open');
-        detail.style.maxHeight = detail.scrollHeight + 'px';
+      item.classList.toggle('open', !isOpen);
+      if (!isOpen) {
         detail.querySelectorAll('.count-num').forEach(animateCount);
       }
     });
@@ -2301,10 +2307,10 @@
         wrap.scrollLeft -= velocity;
         velocity *= 0.94;
       }
-      // wrap around for seamless loop
+      // wrap around for seamless loop (modulo handles any single-frame jump size,
+      // not just increments smaller than halfWidth — matters for fast flicks/drags)
       if (halfWidth > 0) {
-        if (wrap.scrollLeft >= halfWidth) wrap.scrollLeft -= halfWidth;
-        if (wrap.scrollLeft < 0) wrap.scrollLeft += halfWidth;
+        wrap.scrollLeft = ((wrap.scrollLeft % halfWidth) + halfWidth) % halfWidth;
       }
       requestAnimationFrame(tick);
     }
