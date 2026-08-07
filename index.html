@@ -661,6 +661,7 @@
     will-change: transform;
   }
   .orb-link {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -668,6 +669,42 @@
     transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
   }
   .orb-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 14px; }
+  /* only orgs with more to say (AI Biz Assoc, AKPsi) get this span —
+     reuses the same coral arrow-bullet marker as the Work/Highlights lists */
+  .orb-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 230px;
+    margin-top: 0.4rem;
+    padding: 0.85rem 1rem 0.85rem 1.7rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 14px 30px -14px rgba(14,14,12,0.32);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 20;
+  }
+  .orb-tooltip::before {
+    content: '→';
+    position: absolute;
+    left: 0.6rem;
+    top: 0.85rem;
+    color: var(--accent);
+  }
+  .orb-link:hover .orb-tooltip,
+  .orb-link:focus-visible .orb-tooltip {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
   .orb-photo {
     width: 96px; height: 96px;
     border-radius: 50%;
@@ -1509,22 +1546,24 @@
       <div class="orbit-field" id="orbitField">
 
         <div class="orb-wrap" data-org="ai">
-          <a class="orb-link" href="https://www.instagram.com/aibusinessassociation/" target="_blank" rel="noopener" data-hover title="Co-founding a new AI + business org at UMiami — first semester in progress, full write-up coming soon.">
+          <a class="orb-link" href="https://www.instagram.com/aibusinessassociation/" target="_blank" rel="noopener" data-hover>
             <span class="orb-photo"><img src="logos/ai-business-association.jpg" alt="AI Business Association"></span>
             <span class="orb-label">
               <span class="orb-label-name">AI Business Association</span>
               <span class="orb-label-role">Co-Founder &amp; VP</span>
             </span>
+            <span class="orb-tooltip">Co-founding a new AI + business org at UMiami — first semester in progress, full write-up coming soon.</span>
           </a>
         </div>
 
         <div class="orb-wrap" data-org="akpsi">
-          <a class="orb-link" href="https://www.instagram.com/umakpsi/" target="_blank" rel="noopener" data-hover title="Manage financial operations for 170+ members — SAFAC budgets, revenue, expenses, and sponsorship contributions.">
+          <a class="orb-link" href="https://www.instagram.com/umakpsi/" target="_blank" rel="noopener" data-hover>
             <span class="orb-photo"><img src="logos/akpsi.png" alt="Alpha Kappa Psi"></span>
             <span class="orb-label">
               <span class="orb-label-name">Alpha Kappa Psi</span>
               <span class="orb-label-role">Treasurer</span>
             </span>
+            <span class="orb-tooltip">Manage financial operations for 170+ members — SAFAC budgets, revenue, expenses, and sponsorship contributions.</span>
           </a>
         </div>
 
