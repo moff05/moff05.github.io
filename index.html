@@ -961,6 +961,25 @@
     gap: 2.5rem;
   }
 
+  .proj-shots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .proj-shots a {
+    display: block;
+    line-height: 0;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .proj-shots a:hover {
+    box-shadow: 0 20px 36px -18px rgba(0,0,0,0.35);
+    transform: translateY(-2px);
+  }
+  .proj-shots img { display: block; width: 100%; height: auto; }
+
   .proj-section { margin-bottom: 1.6rem; }
   .proj-section:last-child { margin-bottom: 0; }
 
@@ -1072,6 +1091,7 @@
     .proj-nav-arrow { display: none; }
     .proj-panel { padding: 1.8rem 1.4rem; }
     .proj-body { grid-template-columns: 1fr; gap: 1.5rem; }
+    .proj-shots { grid-template-columns: 1fr; }
   }
 
   /* ---------- OFF HOURS (SCROLLING CARDS) ---------- */
@@ -1789,12 +1809,17 @@
           <div>
             <div class="proj-panel-header">
               <h3 class="proj-panel-title">StockStarter</h3>
-              <div class="proj-links">
-                <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
-                <a href="https://github.com/moff05/stockstarter" target="_blank" rel="noopener" class="proj-visit" data-hover>GitHub ↗</a>
-              </div>
+              <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
             </div>
             <p class="proj-access">Password-gated demo, synthetic data only — password: <code>joVgb2h5EiIXbMOMIYF3</code></p>
+          </div>
+          <div class="proj-shots">
+            <a href="https://stockstarter-production.up.railway.app/dashboard" target="_blank" rel="noopener" data-hover>
+              <img src="projects/stockstarter/dashboard.jpg" alt="StockStarter dashboard showing portfolio value, a NAV chart over time, and a per-position unrealized P/L treemap" loading="lazy" />
+            </a>
+            <a href="https://stockstarter-production.up.railway.app/holdings" target="_blank" rel="noopener" data-hover>
+              <img src="projects/stockstarter/holdings.jpg" alt="StockStarter holdings table with FIFO/HIFO tax lots, beta, yield, and top/worst performer breakdowns" loading="lazy" />
+            </a>
           </div>
           <div class="proj-body">
             <div>
