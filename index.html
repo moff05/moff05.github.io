@@ -935,6 +935,26 @@
   .proj-visit:hover { background: var(--ink); color: var(--paper); }
   .proj-visit.coming { border-color: var(--line); color: var(--muted); pointer-events: none; }
 
+  .proj-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+  .proj-access {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    margin-top: 1rem;
+  }
+  .proj-access code {
+    font-family: inherit;
+    font-size: 0.72rem;
+    padding: 0.18rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    background: var(--bg);
+    letter-spacing: 0.04em;
+  }
+
   .proj-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1766,9 +1786,15 @@
 
         <!-- StockStarter -->
         <div class="proj-panel panel-pt" id="panel-pt">
-          <div class="proj-panel-header">
-            <h3 class="proj-panel-title">StockStarter</h3>
-            <a href="https://github.com/moff05/stockstarter" target="_blank" rel="noopener" class="proj-visit" data-hover>GitHub ↗</a>
+          <div>
+            <div class="proj-panel-header">
+              <h3 class="proj-panel-title">StockStarter</h3>
+              <div class="proj-links">
+                <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
+                <a href="https://github.com/moff05/stockstarter" target="_blank" rel="noopener" class="proj-visit" data-hover>GitHub ↗</a>
+              </div>
+            </div>
+            <p class="proj-access">Password-gated demo, synthetic data only — password: <code>joVgb2h5EiIXbMOMIYF3</code></p>
           </div>
           <div class="proj-body">
             <div>
