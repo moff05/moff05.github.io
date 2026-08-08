@@ -1864,7 +1864,7 @@
               <h3 class="proj-panel-title">StockStarter</h3>
               <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
             </div>
-            <p class="proj-access">Password-gated demo, synthetic data only — password: <code>joVgb2h5EiIXbMOMIYF3</code></p>
+            <p class="proj-access">No signup — upload a statement (synthetic is fine) and it stays in <code>localStorage</code> on your device, nowhere else</p>
           </div>
           <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
@@ -1882,7 +1882,7 @@
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>A self-hosted web app that turns broker export files into real portfolio analytics. Upload an Excel or CSV and it resolves holdings, pulls live prices, and tracks performance, income, risk, and taxes, with an AI chat layer to ask about your portfolio in plain English. It runs on your own server behind a password gate, so no third party ever sees your holdings.</p>
+                <p>A web app that turns broker export files into real portfolio analytics. Upload an Excel or CSV and it resolves holdings, pulls live prices, and tracks performance, income, risk, and taxes, with an AI chat layer to ask about your portfolio in plain English. Your transactions are parsed and stored entirely in the browser — no account, no login, no server-side database of anyone's holdings.</p>
               </div>
             </div>
             <div>
@@ -1892,7 +1892,7 @@
                   <li>Time-weighted return and dollar-weighted IRR computed from actual cash-flow history, not estimated</li>
                   <li>FIFO/HIFO tax-lot tracking with wash-sale risk flags and estimated tax savings</li>
                   <li>Built-in AI chat grounded in live holdings, prices, and transaction history</li>
-                  <li>Self-hosted and open source, responsive on mobile, deployable via Docker or Railway, data never leaves your own server</li>
+                  <li>Open source and self-hostable, but the live demo needs none of that — data never leaves your browser's local storage</li>
                 </ul>
               </div>
               <div class="proj-section">
@@ -1900,7 +1900,7 @@
                 <div class="proj-stack">
                   <span data-tip="Runtime, package manager &amp; bundler">Bun</span>
                   <span data-tip="Full-stack React framework, file-based routing">TanStack Start</span>
-                  <span data-tip="Local SQLite cache, rebuilt from your uploads">SQLite</span>
+                  <span data-tip="Your transactions never leave the browser">localStorage</span>
                   <span data-tip="Utility-first styling">Tailwind</span>
                   <span data-tip="Powers the in-app portfolio AI chat">Claude AI</span>
                 </div>
