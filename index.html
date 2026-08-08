@@ -966,19 +966,72 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
-  .proj-shots a {
+  .proj-shots button {
     display: block;
+    width: 100%;
     line-height: 0;
     border: 1px solid var(--line);
     border-radius: 20px;
     overflow: hidden;
+    background: none;
+    padding: 0;
+    cursor: pointer;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
-  .proj-shots a:hover {
+  .proj-shots button:hover {
     box-shadow: 0 20px 36px -18px rgba(0,0,0,0.35);
     transform: translateY(-2px);
   }
   .proj-shots img { display: block; width: 100%; height: auto; }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: rgba(14,14,12,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5vh 5vw;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  }
+  .lightbox.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0s linear 0s;
+  }
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 14px;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.6);
+    transform: scale(0.96);
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+  }
+  .lightbox.active .lightbox-img { transform: scale(1); }
+  .lightbox-close {
+    position: absolute;
+    top: 1.8rem; right: 1.8rem;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: transparent;
+    color: #fff;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.6); }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox, .lightbox-img { transition: none; }
+  }
 
   .proj-section { margin-bottom: 1.6rem; }
   .proj-section:last-child { margin-bottom: 0; }
@@ -1714,7 +1767,7 @@
           <div class="proj-nav-name">StockStarter</div>
           <div class="proj-nav-meta">
             <span>FinTech</span>
-            <span>● Open Source</span>
+            <span class="live">● Live</span>
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
@@ -1814,12 +1867,12 @@
             <p class="proj-access">Password-gated demo, synthetic data only — password: <code>joVgb2h5EiIXbMOMIYF3</code></p>
           </div>
           <div class="proj-shots">
-            <a href="https://stockstarter-production.up.railway.app/dashboard" target="_blank" rel="noopener" data-hover>
+            <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/stockstarter/dashboard.jpg" alt="StockStarter dashboard showing portfolio value, a NAV chart over time, and a per-position unrealized P/L treemap" loading="lazy" />
-            </a>
-            <a href="https://stockstarter-production.up.railway.app/holdings" target="_blank" rel="noopener" data-hover>
+            </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/stockstarter/holdings.jpg" alt="StockStarter holdings table with FIFO/HIFO tax lots, beta, yield, and top/worst performer breakdowns" loading="lazy" />
-            </a>
+            </button>
           </div>
           <div class="proj-body">
             <div>
@@ -2099,6 +2152,11 @@
     <span>Built with care</span>
   </div>
 </footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button type="button" class="lightbox-close" aria-label="Close image" data-hover>✕</button>
+  <img class="lightbox-img" src="" alt="" />
+</div>
 
 <script>
   // ---------- CUSTOM CURSOR ----------
@@ -2512,6 +2570,38 @@
       const panel = document.getElementById('panel-' + target);
       if (panel) panel.classList.add('active');
     });
+  });
+
+  // ---------- SCREENSHOT LIGHTBOX ----------
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  let lightboxReturnFocus = null;
+
+  function openLightbox(trigger) {
+    const img = trigger.querySelector('img');
+    if (!img) return;
+    lightboxReturnFocus = trigger;
+    lightboxImg.src = img.currentSrc || img.src;
+    lightboxImg.alt = img.alt || '';
+    lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lightboxClose.focus();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lightboxReturnFocus) lightboxReturnFocus.focus();
+  }
+  document.querySelectorAll('.proj-shot-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => openLightbox(trigger));
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
   });
 
   // ---------- SMOOTH SCROLL ----------
