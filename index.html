@@ -1004,7 +1004,10 @@
     transition: opacity 0.3s ease, visibility 0s linear 0s;
   }
   .lightbox-img {
-    max-width: 100%;
+    /* 780 CSS px caps physical width at ~1560px on a 2x (Retina) display —
+       matching our source screenshots' native ~1500-1568px resolution, so the
+       browser never has to upscale them (which is what caused the blur). */
+    max-width: min(94vw, 780px);
     max-height: 100%;
     border-radius: 14px;
     box-shadow: 0 30px 70px -20px rgba(0,0,0,0.6);
