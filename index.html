@@ -901,6 +901,7 @@
   .proj-panel.panel-pt::before { background: linear-gradient(90deg, #8effc1, #1f9d55); }
   .proj-panel.panel-cd::before { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
   .proj-panel.panel-ai::before { background: linear-gradient(90deg, #4dffea, #4d6bff); }
+  .proj-panel.panel-sg::before { background: linear-gradient(90deg, #5eb1ff, #3d5afe); }
 
   .proj-panel-header {
     display: flex;
@@ -1774,6 +1775,15 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
+        <div class="proj-nav-item reveal" data-target="sg" data-hover>
+          <div class="proj-nav-num">/06</div>
+          <div class="proj-nav-name">Signal</div>
+          <div class="proj-nav-meta">
+            <span>Productivity</span>
+            <span>● Personal</span>
+          </div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
       </nav>
 
       <!-- Right panels -->
@@ -2000,6 +2010,49 @@
                   <span data-tip="Type-safe frontend &amp; backend">TypeScript</span>
                   <span data-tip="Cloud SQLite database">Turso</span>
                   <span data-tip="Powers scoring, chat &amp; extraction">Groq</span>
+                  <span data-tip="Hosting &amp; CI/CD">Vercel</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Signal -->
+        <div class="proj-panel panel-sg" id="panel-sg">
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">Signal</h3>
+            <a href="https://github.com/moff05/signal" target="_blank" rel="noopener" class="proj-visit" data-hover>View Code ↗</a>
+          </div>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>I kept defaulting to asking an AI assistant to "put this on my calendar" — there was no single fast place to capture a task, a deadline, or a someday idea, and no quick way to see what actually mattered today without re-triaging everything myself.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>A personal capture tool, installed as an iPhone home-screen PWA plus a Scriptable widget, that unifies three kinds of entries under one fast-capture flow: fixed-time events pushed one-way to Google Calendar, deadline tasks whose urgency auto-escalates as the date nears, and someday/backlog items that just sit until touched. A daily "pick your signal" ritual is the only manual triage step.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Exactly one manual priority decision — urgency is computed automatically from date proximity, not hand-triaged</li>
+                  <li>iPhone home-screen PWA + Scriptable widget for one-tap capture from anywhere</li>
+                  <li>One-way sync pushes fixed-time events straight to Google Calendar</li>
+                  <li>AI-assisted capture parses freeform text into the right entry type</li>
+                  <li>Web push reminders as deadlines approach</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="App Router &amp; API routes">Next.js</span>
+                  <span data-tip="Type-safe frontend &amp; backend">TypeScript</span>
+                  <span data-tip="Cloud SQLite database">Turso</span>
+                  <span data-tip="Freeform-text entry parsing">OpenAI</span>
+                  <span data-tip="Deadline &amp; reminder notifications">Web Push</span>
                   <span data-tip="Hosting &amp; CI/CD">Vercel</span>
                 </div>
               </div>
