@@ -136,6 +136,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* space-between alone has no floor — on widths just above the 800px
+       breakpoint where links + status both still show, the two can end up
+       nearly touching (the "Contact" link crowding "Currently @ Goldenrod")
+       once the row gets tight. gap guarantees a minimum regardless. */
+    gap: 1.5rem;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     background: rgba(241,236,228,0.6);
@@ -206,7 +211,11 @@
     100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
   }
 
-  @media (max-width: 800px) {
+  /* raised from 800px: right around 800-880px, nav-links + nav-status were
+     both still visible but the row was too narrow for them, so "Contact"
+     crowded right up against the status dot before either had a chance to
+     hide */
+  @media (max-width: 880px) {
     nav.top { padding: 1rem 1.25rem; }
     .nav-links { display: none; }
     .nav-status { display: none; }
@@ -752,6 +761,30 @@
     .inv-item.tier-a .inv-photo { width: 68px; height: 68px; }
     .inv-item.tier-b .inv-photo { width: 48px; height: 48px; }
   }
+  /* the AI Business Association / AKPsi tooltip only ever appeared on
+     :hover — on a touchscreen there's no hover state to trigger it at all,
+     so the extra detail was simply unreachable. Targets touch capability
+     directly (not a width breakpoint) since a tablet or a desktop with a
+     touchscreen has the same problem regardless of viewport size. */
+  @media (hover: none) {
+    .inv-tooltip {
+      position: static;
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      width: auto;
+      max-width: 190px;
+      margin: 0.4rem auto 0;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      text-align: center;
+      font-size: 0.66rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .inv-tooltip::before { display: none; }
+  }
 
   @media (max-width: 900px) {
     .exp-row {
@@ -760,11 +793,23 @@
       padding: 1.5rem 0;
     }
     .exp-num { display: none; }
+    /* N&S Digital's logo is a bare <img>, not wrapped in .org-link (it's
+       Nicholas's own company, nothing to link to) — hide both forms, or
+       the anchor-wrapped ones leave an emptied grid cell and the bare one
+       renders unplaced */
     .exp-logo { display: none; }
-    .exp-company { grid-column: 1; grid-row: 1; font-size: 0.8rem; color: var(--muted); }
-    .exp-role { grid-column: 1; grid-row: 2; }
-    .exp-date { grid-column: 1; grid-row: 3; }
-    .exp-plus { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+    .org-link { display: none; }
+    /* .exp-company/.exp-role are grandchildren of .exp-row (nested one
+       level inside this wrapper), so grid-column/row on them directly
+       does nothing — placing the wrapper itself is what actually works.
+       Explicit placement here also matters because the Tutor row has no
+       .exp-plus: without it, auto-placement had nothing blocking column 2
+       and would shove this wrapper sideways into the empty plus-button
+       column instead of stacking above the date. */
+    .exp-info { grid-column: 1; grid-row: 1; }
+    .exp-company { font-size: 0.8rem; color: var(--muted); }
+    .exp-date { grid-column: 1; grid-row: 2; }
+    .exp-plus { grid-column: 2; grid-row: 1 / 3; align-self: center; }
     .exp-detail-inner { grid-template-columns: 1fr; padding: 0 0 1.5rem 0; }
     .exp-detail-text { grid-column: 1; }
   }
@@ -1563,7 +1608,7 @@
         <div class="exp-row">
           <div class="exp-num">/01</div>
           <a class="org-link" href="https://www.linkedin.com/company/goldenrod-companies" target="_blank" rel="noopener" aria-label="Goldenrod Companies on LinkedIn"><img class="exp-logo" src="logos/goldenrod.png" alt="Goldenrod"></a>
-          <div>
+          <div class="exp-info">
             <div class="exp-company">Goldenrod Companies</div>
             <div class="exp-role">Investment Intern, Real Estate Tech</div>
           </div>
@@ -1587,7 +1632,7 @@
         <div class="exp-row">
           <div class="exp-num">/02</div>
           <img class="exp-logo" src="logos/ns-digital.svg" alt="N&S Digital">
-          <div>
+          <div class="exp-info">
             <div class="exp-company">N&amp;S Digital LLC</div>
             <div class="exp-role">Co-Founder</div>
           </div>
@@ -1611,7 +1656,7 @@
         <div class="exp-row">
           <div class="exp-num">/03</div>
           <a class="org-link" href="https://www.linkedin.com/company/sk-commercial-realty" target="_blank" rel="noopener" aria-label="SK Commercial Realty on LinkedIn"><img class="exp-logo" src="logos/sk-commercial.png" alt="SK Commercial Realty"></a>
-          <div>
+          <div class="exp-info">
             <div class="exp-company">SK Commercial Realty</div>
             <div class="exp-role">Commercial Real Estate Intern</div>
           </div>
@@ -1635,7 +1680,7 @@
         <div class="exp-row">
           <div class="exp-num">/04</div>
           <a class="org-link" href="https://eduply.com/" target="_blank" rel="noopener" aria-label="Eduply website"><img class="exp-logo" src="logos/eduply.png" alt="Eduply"></a>
-          <div>
+          <div class="exp-info">
             <div class="exp-company">Eduply</div>
             <div class="exp-role">Generative AI Prompt Engineer</div>
           </div>
@@ -1659,7 +1704,7 @@
         <div class="exp-row">
           <div class="exp-num">/05</div>
           <a class="org-link" href="https://www.linkedin.com/company/ymca-camp-high-harbour-services" target="_blank" rel="noopener" aria-label="YMCA Camp High Harbour on LinkedIn"><img class="exp-logo" src="logos/ymca.png" alt="YMCA"></a>
-          <div>
+          <div class="exp-info">
             <div class="exp-company">YMCA Camp High Harbour</div>
             <div class="exp-role">Program Director — Watersports</div>
           </div>
@@ -1683,7 +1728,7 @@
         <div class="exp-row">
           <div class="exp-num">/06</div>
           <a class="org-link" href="https://jcacademymiami.com/" target="_blank" rel="noopener" aria-label="JC Academy Miami website"><img class="exp-logo" src="logos/jc-academy.png" alt="JC Academy"></a>
-          <div>
+          <div class="exp-info">
             <div class="exp-company">Acadomia &amp; JC Academy Miami</div>
             <div class="exp-role">Tutor</div>
           </div>
