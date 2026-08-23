@@ -393,6 +393,10 @@
     }
     .hero-cta { align-items: flex-start; }
     .hero-image { max-width: 80%; }
+    /* the clock and city were secondary info that just wrapped awkwardly
+       next to the (longer, more useful) rotating fact line on narrow
+       screens — drop them here the same way nav-status drops below 800px */
+    #clock, .hero-location { display: none; }
   }
 
   /* ---------- MARQUEE ---------- */
@@ -1177,8 +1181,14 @@
       border-bottom: 1px solid var(--line);
       display: flex;
       overflow-x: auto;
+      overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      /* without this, a touch swipe that isn't perfectly horizontal gets
+         claimed by the page's vertical scroll too — same finger drag
+         scrolling the nav sideways AND the whole page down at once */
+      touch-action: pan-x;
+      overscroll-behavior-x: contain;
     }
     .proj-nav::-webkit-scrollbar { display: none; }
     .proj-nav-item {
@@ -1461,7 +1471,7 @@
   </ul>
   <div class="nav-status">
     <span class="status-dot"></span>
-    <span id="status-text">Currently @ Goldenrod Companies · Remote</span>
+    <span id="status-text">Currently @ Goldenrod</span>
   </div>
 </nav>
 
@@ -1470,7 +1480,7 @@
   <div class="hero-meta">
     <span id="heroRotator" class="hero-rotator">Portfolio / 2026 Edition</span>
     <span id="clock">--:--:-- EST</span>
-    <span>Atlanta · Miami</span>
+    <span class="hero-location">Atlanta · Miami</span>
   </div>
 
   <div class="hero-main">
