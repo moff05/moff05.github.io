@@ -214,13 +214,14 @@
   }
 
   /* ---------- HERO ---------- */
+  /* Deliberately NOT min-height:100vh + justify-content:space-between —
+     that used to spread hero-meta/hero-main/hero-bottom across a full
+     viewport regardless of actual content height, leaving a large dead
+     gap above the tagline/CTAs on most screens. Content now just stacks
+     with its own margins, so the tagline sits right under the name. */
   .hero {
     position: relative;
-    min-height: 100vh;
-    padding: 5.5rem 2.5rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 5.5rem 2.5rem 3rem;
     overflow: hidden;
   }
 
@@ -251,7 +252,7 @@
     grid-template-columns: 1.5fr 1fr;
     gap: 3rem;
     align-items: center;
-    margin: 1.5rem 0 1.5rem;
+    margin: 1.5rem 0 1rem;
   }
 
   .hero-title {
@@ -329,8 +330,8 @@
     grid-template-columns: 2fr 1fr;
     gap: 3rem;
     align-items: end;
-    margin-top: 2rem;
-    padding-top: 2rem;
+    margin-top: 1rem;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--line);
   }
 
@@ -668,8 +669,12 @@
     align-items: center;
     text-decoration: none;
     transition: transform 0.25s ease;
+    z-index: 1;
   }
-  .inv-item:hover, .inv-item:focus-visible { transform: translateY(-3px); }
+  /* row 1's tooltip reaches down into row 2 — promote the hovered item
+     above every sibling regardless of which row it's in, or row 2's own
+     content (later in DOM) paints over the tooltip instead of under it */
+  .inv-item:hover, .inv-item:focus-visible { transform: translateY(-3px); z-index: 30; }
   .inv-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 14px; }
   .inv-photo {
     border-radius: 50%;
@@ -778,7 +783,7 @@
     border-right: 1px solid var(--line);
   }
   .proj-nav-item {
-    padding: 1.5rem 1.6rem;
+    padding: 0.9rem 1.4rem;
     border-bottom: 1px solid var(--line);
     cursor: pointer;
     position: relative;
@@ -818,19 +823,19 @@
 
   .proj-nav-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: var(--muted);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
   }
   .proj-nav-name {
     font-family: 'Instrument Serif', serif;
-    font-size: 1.6rem;
-    line-height: 1.05;
+    font-size: 1.2rem;
+    line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--ink);
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.25rem;
   }
   .proj-nav-meta {
     display: flex;
@@ -951,25 +956,14 @@
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
   }
-  /* compact projects: one column, a single merged paragraph instead of
-     Problem/What I Built, no Highlights list — just enough to place the
-     project, plus the Stack tags every project keeps regardless */
-  .proj-body.compact {
-    display: block;
-  }
-  .proj-blurb {
-    font-size: 0.97rem;
-    color: var(--ink-soft);
-    line-height: 1.65;
-    max-width: 640px;
-    margin-bottom: 1.6rem;
-  }
 
   .proj-shots {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
+  /* Signal only has one real screenshot (its login gate) — constrain it
+     instead of stretching a single image across the full two-column width */
   .proj-shots.single {
     grid-template-columns: 1fr;
     max-width: 420px;
@@ -1883,17 +1877,39 @@
             <h3 class="proj-panel-title">scholairly</h3>
             <a href="https://scholairly.com" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
-          <div class="proj-shots single">
+          <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/scholairly/landing.jpg" alt="scholairly landing page: study smarter with syllabus upload, tasks, reminders, and study tools" loading="lazy" />
             </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/scholairly/dashboard.jpg" alt="scholairly Academic Hub dashboard showing enrolled classes, upcoming tasks, and a calendar of assignments and exams" loading="lazy" />
+            </button>
           </div>
-          <div class="proj-body compact">
-            <p class="proj-blurb">One AI-powered study platform instead of five disconnected apps: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and document Q&amp;A. Co-founded at N&amp;S Digital — 147 students and educators signed up over its run.</p>
-            <div class="proj-section">
-              <span class="proj-label">Stack</span>
-              <div class="proj-stack">
-                <span>Generative AI</span><span>SaaS</span>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>I kept watching students juggle a different app for every task: one for notes, one for flashcards, one for the syllabus PDF, one for the calendar. Nothing tied it together.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>So I built scholairly, one platform with AI tools built around how students actually study: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and a document Q&amp;A tool for asking questions straight out of a PDF.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Class-specific AI chatbots, syllabus analysis, and auto-generated flashcards and practice tests</li>
+                  <li>147 students and educators signed up over its run</li>
+                  <li>Built and launched end-to-end — conception through user adoption</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span>Generative AI</span><span>SaaS</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1901,25 +1917,51 @@
 
         <!-- StockStarter -->
         <div class="proj-panel panel-pt" id="panel-pt">
-          <div class="proj-panel-header">
-            <h3 class="proj-panel-title">StockStarter</h3>
-            <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
+          <div>
+            <div class="proj-panel-header">
+              <h3 class="proj-panel-title">StockStarter</h3>
+              <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
+            </div>
+            <p class="proj-access">No signup — upload a statement (synthetic is fine) and it stays in <code>localStorage</code> on your device, nowhere else</p>
           </div>
-          <div class="proj-shots single">
+          <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/stockstarter/dashboard.jpg" alt="StockStarter dashboard showing portfolio value, a NAV chart over time, and a per-position unrealized P/L treemap" loading="lazy" />
             </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/stockstarter/holdings.jpg" alt="StockStarter holdings table with FIFO/HIFO tax lots, beta, yield, and top/worst performer breakdowns" loading="lazy" />
+            </button>
           </div>
-          <div class="proj-body compact">
-            <p class="proj-blurb">Turns a broker export into real portfolio analytics — TWR/IRR performance, FIFO/HIFO tax-loss harvesting, income tracking, and an AI chat layer — entirely in the browser. No account, no server ever sees anyone's holdings. Open source and self-hostable.</p>
-            <div class="proj-section">
-              <span class="proj-label">Stack</span>
-              <div class="proj-stack">
-                <span data-tip="Runtime, package manager &amp; bundler">Bun</span>
-                <span data-tip="Full-stack React framework, file-based routing">TanStack Start</span>
-                <span data-tip="Your transactions never leave the browser">localStorage</span>
-                <span data-tip="Utility-first styling">Tailwind</span>
-                <span data-tip="Powers the in-app portfolio AI chat">Claude AI</span>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>I wanted real performance tracking (TWR, IRR, tax-loss harvesting, income) and kept running into the same two bad options everyone does: pay a service that wants your account credentials, or do it by hand in a spreadsheet.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>A web app that turns broker export files into real portfolio analytics. Upload an Excel or CSV and it resolves holdings, pulls live prices, and tracks performance, income, risk, and taxes, with an AI chat layer to ask about your portfolio in plain English. Your transactions are parsed and stored entirely in the browser — no account, no login, no server-side database of anyone's holdings.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Time-weighted return and dollar-weighted IRR computed from actual cash-flow history, not estimated</li>
+                  <li>FIFO/HIFO tax-lot tracking with wash-sale risk flags and estimated tax savings</li>
+                  <li>Built-in AI chat grounded in live holdings, prices, and transaction history</li>
+                  <li>Open source and self-hostable, but the live demo needs none of that — data never leaves your browser's local storage</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="Runtime, package manager &amp; bundler">Bun</span>
+                  <span data-tip="Full-stack React framework, file-based routing">TanStack Start</span>
+                  <span data-tip="Your transactions never leave the browser">localStorage</span>
+                  <span data-tip="Utility-first styling">Tailwind</span>
+                  <span data-tip="Powers the in-app portfolio AI chat">Claude AI</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1931,12 +1973,32 @@
             <h3 class="proj-panel-title">AI Automation Suite</h3>
             <span class="proj-visit coming">Internal Build</span>
           </div>
-          <div class="proj-body compact">
-            <p class="proj-blurb">An internal AI toolkit at Goldenrod Companies that keeps growing as new bottlenecks come up: n8n pipelines turn raw tenancy schedules into structured Excel financial models, and a market intelligence portal pulls demographic, employer, and real estate data for any market into one AI-written brief — cutting hours of manual analyst work down to minutes.</p>
-            <div class="proj-section">
-              <span class="proj-label">Stack</span>
-              <div class="proj-stack">
-                <span data-tip="No-code workflow automation">n8n</span><span data-tip="Structured field extraction">OpenAI</span><span data-tip="Structured field extraction &amp; narrative generation">Claude</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work: re-keying tenancy data into models, then hunting across scattered sources for market context before any real analysis could start.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>An internal AI toolkit that keeps growing as new bottlenecks come up: n8n pipelines that turn raw tenancy schedules into structured Excel financial models, and a market intelligence portal that pulls demographic, employer, and real estate data for any market into one AI-written brief.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Automated extraction of submarket comps, property data, and lease terms — no manual data entry</li>
+                  <li>Prompt system queries OpenAI and Claude for structured field extraction, feeding existing Excel templates directly</li>
+                  <li>Market intelligence portal aggregates employer, demographic, and real estate data per market behind company login, with an AI-generated narrative brief</li>
+                  <li>Reduced multi-hour manual analysis to minutes per asset</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="No-code workflow automation">n8n</span><span data-tip="Structured field extraction">OpenAI</span><span data-tip="Structured field extraction &amp; narrative generation">Claude</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1995,17 +2057,38 @@
               <img src="projects/signal/login.jpg" alt="Signal's passcode-gated entry screen — a personal capture tool, private by design" loading="lazy" />
             </button>
           </div>
-          <div class="proj-body compact">
-            <p class="proj-blurb">One fast-capture flow instead of five different places: fixed-time events pushed to Google Calendar, deadline tasks whose urgency auto-escalates as the date nears, and someday/backlog items that just sit until touched. Installed as an iPhone home-screen PWA plus a Scriptable widget; a daily "pick your signal" ritual is the only manual triage step. Passcode-gated for personal use.</p>
-            <div class="proj-section">
-              <span class="proj-label">Stack</span>
-              <div class="proj-stack">
-                <span data-tip="App Router &amp; API routes">Next.js</span>
-                <span data-tip="Type-safe frontend &amp; backend">TypeScript</span>
-                <span data-tip="Cloud SQLite database">Turso</span>
-                <span data-tip="Fast LLM inference for note summarization">Groq</span>
-                <span data-tip="Daily triage-reminder notifications">Web Push</span>
-                <span data-tip="Hosting &amp; CI/CD">Vercel</span>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>I kept defaulting to asking an AI assistant to "put this on my calendar" — there was no single fast place to capture a task, a deadline, or a someday idea, and no quick way to see what actually mattered today without re-triaging everything myself.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>A personal capture tool, installed as an iPhone home-screen PWA plus a Scriptable widget, that unifies three kinds of entries under one fast-capture flow: fixed-time events pushed one-way to Google Calendar, deadline tasks whose urgency auto-escalates as the date nears, and someday/backlog items that just sit until touched. A daily "pick your signal" ritual is the only manual triage step. Passcode-gated for personal use.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Exactly one manual priority decision — urgency is computed automatically from date proximity, not hand-triaged</li>
+                  <li>iPhone home-screen PWA + Scriptable widget for one-tap capture from anywhere</li>
+                  <li>One-way sync pushes fixed-time events straight to Google Calendar</li>
+                  <li>AI condenses long freeform notes into a clean title, keeping the full text as an expandable detail</li>
+                  <li>Daily push reminder nudges the triage ritual — silent once you've already picked today's Signal</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="App Router &amp; API routes">Next.js</span>
+                  <span data-tip="Type-safe frontend &amp; backend">TypeScript</span>
+                  <span data-tip="Cloud SQLite database">Turso</span>
+                  <span data-tip="Fast LLM inference for note summarization">Groq</span>
+                  <span data-tip="Daily triage-reminder notifications">Web Push</span>
+                  <span data-tip="Hosting &amp; CI/CD">Vercel</span>
+                </div>
               </div>
             </div>
           </div>
@@ -2017,21 +2100,45 @@
             <h3 class="proj-panel-title">World Cup Kits</h3>
             <a href="https://world-cup-kits-xi.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
-          <div class="proj-shots single">
+          <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/world-cup-kits/brazil-stats.jpg" alt="Brazil's World Cup dashboard: 23 tournaments, full win/loss/goal record, biggest rival, and top scorers" loading="lazy" />
             </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/world-cup-kits/brazil-1970-story.jpg" alt="Annotated 1970 World Cup story for Brazil with an archival Pelé photo, sourced from Wikimedia Commons" loading="lazy" />
+            </button>
           </div>
-          <div class="proj-body compact">
-            <p class="proj-blurb">Every nation that's ever appeared at a World Cup — 83 of 83 fully documented, kit history and stories included — built on an autonomous pipeline: an AI research agent works a queue from Wikipedia and Wikimedia Commons, and a Node.js watcher converts, commits, and deploys each new file straight to production with no manual step in between. 78.5% of tournament entries carry an archival kit photo, only set when a freely-licensed match exists.</p>
-            <div class="proj-section">
-              <span class="proj-label">Stack</span>
-              <div class="proj-stack">
-                <span data-tip="Frontend SPA">React</span>
-                <span data-tip="Build tool &amp; dev server">Vite</span>
-                <span data-tip="Client-side routing">React Router</span>
-                <span data-tip="Data pipeline watcher &amp; auto-deploy">Node.js</span>
-                <span data-tip="Hosting, auto-deploys on every data push">Vercel</span>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>I wanted one place with a nation's complete World Cup story — kit history, the real match record, and the stories behind each tournament — instead of piecing it together across a dozen Wikipedia tables.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>A reference archive covering every nation that's ever appeared at a World Cup, built around an autonomous pipeline rather than manual entry: an AI research agent works a queue of 83 countries, researching each one from Wikipedia and Wikimedia Commons and writing a structured JSON file. A Node.js watcher picks up new files, converts them, patches them into the site, and commits and pushes straight to production — no manual step between research and a live deploy.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>83 of 83 nations fully documented — every country to ever appear at a World Cup, 1930 to 2026</li>
+                  <li>78.5% of tournament entries carry an archival kit photo sourced from Wikimedia Commons — only set when a freely-licensed match exists, never guessed</li>
+                  <li>Fully autonomous pipeline: research agent → structured JSON → file watcher → git commit and push → live Vercel deploy</li>
+                  <li>Per-country dashboard computed straight from match data: win/loss record, biggest win and loss, head-to-head rival history, top scorers</li>
+                  <li>Editorial per-tournament stories alongside the raw stats — kit lore, iconic matches, not just numbers</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="Frontend SPA">React</span>
+                  <span data-tip="Build tool &amp; dev server">Vite</span>
+                  <span data-tip="Client-side routing">React Router</span>
+                  <span data-tip="Data pipeline watcher &amp; auto-deploy">Node.js</span>
+                  <span data-tip="Hosting, auto-deploys on every data push">Vercel</span>
+                </div>
               </div>
             </div>
           </div>
@@ -2043,15 +2150,31 @@
             <h3 class="proj-panel-title">Hacky Sack CV</h3>
             <a href="https://github.com/moff05/hackysack-cv" target="_blank" rel="noopener" class="proj-visit" data-hover>View Code ↗</a>
           </div>
-          <div class="proj-body compact">
-            <p class="proj-blurb">A computer vision pipeline for hacky sack gameplay video: YOLOv8 pose tracking plus ByteTrack follows each player, a Kalman filter smooths the sack's flight through occlusion, and touch/drop detection combines proximity with a velocity-inflection check instead of distance alone. Still early — no trained sack detector yet, so it falls back to color-threshold detection for now.</p>
-            <div class="proj-section">
-              <span class="proj-label">Stack</span>
-              <div class="proj-stack">
-                <span data-tip="Pipeline &amp; detection logic">Python</span>
-                <span data-tip="Pose tracking model">YOLOv8 (Ultralytics)</span>
-                <span data-tip="Persistent multi-player tracking">ByteTrack</span>
-                <span data-tip="Video I/O &amp; HUD overlay">OpenCV</span>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <p>A computer vision pipeline for hacky sack gameplay video: YOLOv8 pose tracking plus ByteTrack follows each player, a Kalman filter smooths the sack's flight through occlusion, and touch/drop detection combines proximity with a velocity-inflection check instead of distance alone. Still early — no trained sack detector yet, so it falls back to color-threshold detection for now.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>YOLOv8 pose model + ByteTrack keeps a persistent ID per player across the clip, tracking ankle, knee, and chest keypoints every frame</li>
+                  <li>Constant-velocity Kalman filter smooths sack tracking through occlusion and short misses instead of losing the trail</li>
+                  <li>Touch detection checks proximity to a keypoint and a downward-to-upward velocity inflection, not distance alone — cuts down false positives</li>
+                  <li>Sack detection falls back gracefully: a trained YOLO model first, then HSV color-threshold blob detection, so it never hard-fails on unlabeled footage</li>
+                  <li>Ships a synthetic test-clip generator so the whole pipeline is verifiable before pointing it at real footage or training a detector</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="Pipeline &amp; detection logic">Python</span>
+                  <span data-tip="Pose tracking model">YOLOv8 (Ultralytics)</span>
+                  <span data-tip="Persistent multi-player tracking">ByteTrack</span>
+                  <span data-tip="Video I/O &amp; HUD overlay">OpenCV</span>
+                </div>
               </div>
             </div>
           </div>
