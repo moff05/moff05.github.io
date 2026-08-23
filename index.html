@@ -587,13 +587,14 @@
 
   .exp-detail {
     display: grid;
-    grid-template-rows: 0fr;
+    grid-template-rows: minmax(0, 0fr);
     transition: grid-template-rows 0.5s cubic-bezier(.2,.8,.2,1);
   }
   .exp-item.open .exp-detail {
-    grid-template-rows: 1fr;
+    grid-template-rows: minmax(0, 1fr);
   }
   .exp-detail-inner {
+    box-sizing: border-box;
     overflow: hidden;
     min-height: 0;
     padding: 0 0.5rem 2rem 0.5rem;
@@ -631,59 +632,87 @@
   .exp-item.exp-noexpand:hover { background: transparent; }
 
   .involvement-section {
-    margin-top: 3rem;
+    margin-top: 2.25rem;
   }
   .involvement-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
     font-weight: 500;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
-  /* orgs cluster in a tight ring on the page itself — no card, no border,
-     nothing to chase — each one is a real link with its name/role always
-     visible, exactly one line each */
-  .orbit-field {
-    position: relative;
-    height: 560px;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-  .orb-wrap {
-    position: absolute;
-    top: 0; left: 0;
-    width: 175px;
+  /* two rows, no card, no border — each org is a real link. Row 1 is the
+     two officer/founder roles (the only ones with more to say, hence the
+     tooltip); row 2 is everything else at one consistent smaller size, so
+     it reads as "these two, then the rest" instead of a continuous shrink */
+  .involvement-rows {
     display: flex;
     flex-direction: column;
     align-items: center;
-    will-change: transform;
-    z-index: 1;
+    gap: 1.75rem;
+    padding: 0.25rem 0 0.75rem;
   }
-  /* the hexagon packs orbs close enough that a tooltip can reach into a
-     neighbor's space — promote the whole wrap so it always paints above
-     every sibling while its tooltip is open, regardless of DOM order */
-  .orb-wrap:hover, .orb-wrap:focus-within {
-    z-index: 30;
+  .involvement-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.75rem 2.5rem;
   }
-  .orb-link {
+  .inv-item {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+    transition: transform 0.25s ease;
   }
-  .orb-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 14px; }
+  .inv-item:hover, .inv-item:focus-visible { transform: translateY(-3px); }
+  .inv-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 14px; }
+  .inv-photo {
+    border-radius: 50%;
+    padding: 5px;
+    background: var(--paper);
+    box-shadow: 0 8px 20px -11px rgba(14,14,12,0.28);
+    transition: box-shadow 0.3s ease;
+  }
+  .inv-item:hover .inv-photo { box-shadow: 0 14px 28px -13px rgba(14,14,12,0.35); }
+  .inv-photo img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+  }
+  .inv-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+  .inv-role {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .inv-item.tier-a .inv-photo { width: 84px; height: 84px; }
+  .inv-item.tier-a .inv-name { font-size: 0.82rem; margin-top: 0.65rem; }
+  .inv-item.tier-a .inv-role { font-size: 0.62rem; margin-top: 0.22rem; }
+  .inv-item.tier-b .inv-photo { width: 60px; height: 60px; }
+  .inv-item.tier-b .inv-name { font-size: 0.72rem; margin-top: 0.5rem; }
+  .inv-item.tier-b .inv-role { font-size: 0.56rem; margin-top: 0.2rem; }
   /* only orgs with more to say (AI Biz Assoc, AKPsi) get this span —
      reuses the same coral arrow-bullet marker as the Work/Highlights lists */
-  .orb-tooltip {
+  .inv-tooltip {
     position: absolute;
     top: 100%;
     left: 50%;
     width: 230px;
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
     padding: 0.85rem 1rem 0.85rem 1.7rem;
     background: var(--paper);
     border-radius: 10px;
@@ -699,66 +728,22 @@
     transition: opacity 0.25s ease, transform 0.25s ease;
     z-index: 20;
   }
-  .orb-tooltip::before {
+  .inv-tooltip::before {
     content: '→';
     position: absolute;
     left: 0.6rem;
     top: 0.85rem;
     color: var(--accent);
   }
-  .orb-link:hover .orb-tooltip,
-  .orb-link:focus-visible .orb-tooltip {
+  .inv-item:hover .inv-tooltip,
+  .inv-item:focus-visible .inv-tooltip {
     opacity: 1;
     transform: translate(-50%, 0);
   }
-  .orb-photo {
-    width: 96px; height: 96px;
-    border-radius: 50%;
-    padding: 6px;
-    background: var(--paper);
-    box-shadow: 0 10px 26px -12px rgba(14,14,12,0.28);
-    transition: box-shadow 0.3s ease;
-  }
-  .orb-link:hover .orb-photo { box-shadow: 0 16px 34px -14px rgba(14,14,12,0.35); }
-  .orb-photo img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    border-radius: 50%;
-    display: block;
-  }
-  .orb-label { margin-top: 0.7rem; text-align: center; max-width: 175px; }
-  .orb-label-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: var(--ink);
-    line-height: 1.25;
-    white-space: nowrap;
-  }
-  .orb-label-role {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.25rem;
-    white-space: nowrap;
-  }
-
-  /* below the desktop breakpoint, the floating field becomes a plain
-     wrapping grid — fractional seed positions get too cramped to avoid
-     overlap on narrow screens, so this swaps to something that can't break */
-  @media (max-width: 900px) {
-    .orbit-field {
-      height: auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.75rem 1.25rem;
-      padding: 0.5rem 0;
-    }
-    .orb-wrap { position: static; width: auto; transform: none !important; }
-    .orb-photo { width: 68px; height: 68px; }
+  @media (max-width: 700px) {
+    .involvement-row { gap: 1.5rem 1.5rem; }
+    .inv-item.tier-a .inv-photo { width: 68px; height: 68px; }
+    .inv-item.tier-b .inv-photo { width: 48px; height: 48px; }
   }
 
   @media (max-width: 900px) {
@@ -825,6 +810,9 @@
   .proj-nav-item[data-target="pt"]::before { background: linear-gradient(180deg, #8effc1, #1f9d55); }
   .proj-nav-item[data-target="cd"]::before { background: linear-gradient(180deg, #c4b5fd, #7c3aed); }
   .proj-nav-item[data-target="ai"]::before { background: linear-gradient(180deg, #4dffea, #4d6bff); }
+  .proj-nav-item[data-target="sg"]::before { background: linear-gradient(180deg, #5eb1ff, #3d5afe); }
+  .proj-nav-item[data-target="wck"]::before { background: linear-gradient(180deg, #ffd166, #2b3a67); }
+  .proj-nav-item[data-target="hs"]::before { background: linear-gradient(180deg, #d4ff6b, #00b8a9); }
   .proj-nav-item.active::before,
   .proj-nav-item:hover::before { opacity: 1; }
 
@@ -902,6 +890,8 @@
   .proj-panel.panel-cd::before { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
   .proj-panel.panel-ai::before { background: linear-gradient(90deg, #4dffea, #4d6bff); }
   .proj-panel.panel-sg::before { background: linear-gradient(90deg, #5eb1ff, #3d5afe); }
+  .proj-panel.panel-wck::before { background: linear-gradient(90deg, #ffd166, #2b3a67); }
+  .proj-panel.panel-hs::before { background: linear-gradient(90deg, #d4ff6b, #00b8a9); }
 
   .proj-panel-header {
     display: flex;
@@ -961,11 +951,29 @@
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
   }
+  /* compact projects: one column, a single merged paragraph instead of
+     Problem/What I Built, no Highlights list — just enough to place the
+     project, plus the Stack tags every project keeps regardless */
+  .proj-body.compact {
+    display: block;
+  }
+  .proj-blurb {
+    font-size: 0.97rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    max-width: 640px;
+    margin-bottom: 1.6rem;
+  }
 
   .proj-shots {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+  }
+  .proj-shots.single {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto 1.8rem;
   }
   .proj-shots button {
     display: block;
@@ -1126,6 +1134,43 @@
   .proj-stack span[data-tip]:hover::after {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+  }
+
+  .legacy-projects {
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .legacy-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .legacy-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 2rem;
+  }
+  .legacy-item { display: block; }
+  .legacy-name {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.3rem;
+  }
+  .legacy-desc {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  @media (max-width: 700px) {
+    .legacy-list { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 960px) {
@@ -1481,11 +1526,9 @@
       </aside>
 
       <div class="about-body reveal">
-        <p>My introduction to generative AI began at <strong>Eduply</strong>, where I worked as a prompt-engineering intern, designing tools for educators, including chatbots that were later adopted by Atlanta Public Schools and Georgia Tech. That experience showed me how much value exists in bridging the gap between raw AI capabilities and practical business tools.</p>
+        <p>I enjoy finding manual, repeatable processes and building automated versions of them. That instinct started at <strong>Eduply</strong>, where I built AI tools for educators later adopted by Atlanta Public Schools and Georgia Tech, and sharpened at <strong>SK Commercial Realty</strong>, where a request for a faster stacking-plan template became the seed for <strong>N&S Digital</strong>, the firm I co-founded to ship <strong>StackingPlanner</strong> and <strong>Scholairly</strong>.</p>
 
-        <p>The following summer at <strong>SK Commercial Realty</strong>, I sat in development meetings for major assets (including The Henry, a $500M mixed-use project in Atlanta) and I got a clear look at how CRE deals actually get done. During that same internship, the President of SK Investment Group asked me to find a faster way to generate stacking plans. He meant a better Excel template; I interpreted it as a Python script and a web application. That project became the seed for <strong>N&S Digital LLC</strong>, the software firm I co-founded to ship tools like <strong>StackingPlanner</strong> and <strong>Scholairly</strong>.</p>
-
-        <p>Today, as an Investment Intern at <strong>Goldenrod Companies</strong>, I build custom AI workflows and automation pipelines for internal use. It's the kind of work I want to keep doing: <strong>finding the manual bottleneck, building the automated system, and giving people their time back.</strong></p>
+        <p>Now, as an Investment Intern at <strong>Goldenrod Companies</strong>, I build AI workflows for market research, reporting, and deal analysis. I'm working toward a career in financial analysis because expertise and AI fluency have to grow together: <strong>AI can generate an answer instantly, but only real domain knowledge tells you when it's wrong.</strong></p>
       </div>
     </div>
   </div>
@@ -1517,7 +1560,6 @@
         <div class="exp-detail">
           <div class="exp-detail-inner">
             <div class="exp-detail-text">
-              <p>Developing AI-powered workflows that automate multifamily and commercial real estate analysis at scale.</p>
               <ul>
                 <li>Built automation pipelines using n8n, OpenAI, and Claude that transform raw tenancy schedules into structured Excel financial models.</li>
                 <li>Engineered prompt systems and scripts extracting submarket comps, property data, and lease info, reducing hours of manual analysis to minutes.</li>
@@ -1542,7 +1584,6 @@
         <div class="exp-detail">
           <div class="exp-detail-inner">
             <div class="exp-detail-text">
-              <p>Founded and built multiple SaaS products focused on AI automation and business efficiency.</p>
               <ul>
                 <li>Built StackingPlanner.com, automating commercial real estate stacking plans with interactive visual layouts and saved dashboards.</li>
                 <li>Created scholairly.com — an AI-powered EdTech platform that reached <span class="count-num" data-target="147">147</span> student signups.</li>
@@ -1567,7 +1608,6 @@
         <div class="exp-detail">
           <div class="exp-detail-inner">
             <div class="exp-detail-text">
-              <p>Got hands-on with CRE fundamentals and found opportunities to modernize the workflow.</p>
               <ul>
                 <li>Sat in development meetings for major assets including a <span class="count-num" data-target="500" data-prefix="$" data-suffix="M">$500M</span> mixed-use project in Atlanta (The Henry).</li>
                 <li>Built a full-stack web app automating manual stacking plans, replacing Excel with interactive visualization.</li>
@@ -1592,7 +1632,6 @@
         <div class="exp-detail">
           <div class="exp-detail-inner">
             <div class="exp-detail-text">
-              <p>Designed and optimized generative AI tools for educational institutions.</p>
               <ul>
                 <li>Built AI chatbots adopted by Atlanta Public Schools and Georgia Tech for curriculum planning.</li>
                 <li>Created a video lesson planner tool generating tailored lesson plans for educators and administrators.</li>
@@ -1617,11 +1656,9 @@
         <div class="exp-detail">
           <div class="exp-detail-inner">
             <div class="exp-detail-text">
-              <p>Ran the watersports program at a YMCA overnight camp: safety systems, equipment, and staff leadership all under one role.</p>
               <ul>
                 <li>Directed all watersports programming, safety procedures, and staff management for <span class="count-num" data-target="200" data-suffix="+">200+</span> campers and <span class="count-num" data-target="80" data-suffix="+">80+</span> staff.</li>
-                <li>Oversaw a waterfront facility with <span class="count-num" data-target="7" data-suffix="">7</span> speedboats and <span class="count-num" data-target="1" data-prefix="$" data-suffix="M+">$1M+</span> in equipment, coordinating schedules and risk management protocols to keep operations safe site-wide.</li>
-                <li>Combined safety leadership with staff development, mentoring counselors and helping build the program's reputation as a top watersports experience.</li>
+                <li>Oversaw a waterfront facility with <span class="count-num" data-target="7" data-suffix="">7</span> speedboats and <span class="count-num" data-target="1" data-prefix="$" data-suffix="M+">$1M+</span> in equipment, mentoring counselors while keeping schedules and risk management on track site-wide.</li>
                 <li>Led watersports at a nationally recognized camp — Newsweek named Camp High Harbour one of <em>America's Best Summer Camps</em> in 2024.</li>
               </ul>
             </div>
@@ -1646,67 +1683,47 @@
     <div class="involvement-section reveal">
       <div class="involvement-label">Involvement</div>
 
-      <div class="orbit-field" id="orbitField">
+      <div class="involvement-rows">
 
-        <div class="orb-wrap" data-org="ai">
-          <a class="orb-link" href="https://www.instagram.com/aibusinessassociation/" target="_blank" rel="noopener" data-hover>
-            <span class="orb-photo"><img src="logos/ai-business-association.jpg" alt="AI Business Association"></span>
-            <span class="orb-label">
-              <span class="orb-label-name">AI Business Association</span>
-              <span class="orb-label-role">Co-Founder &amp; VP</span>
-            </span>
-            <span class="orb-tooltip">Co-founding a new AI + business org at UMiami — first semester in progress, full write-up coming soon.</span>
+        <div class="involvement-row tier-a-row">
+          <a class="inv-item tier-a" href="https://www.instagram.com/aibusinessassociation/" target="_blank" rel="noopener" data-hover>
+            <span class="inv-photo"><img src="logos/ai-business-association.jpg" alt="AI Business Association"></span>
+            <span class="inv-name">AI Business Association</span>
+            <span class="inv-role">Co-Founder &amp; VP</span>
+            <span class="inv-tooltip">Co-founding a new AI + business org at UMiami — first semester in progress, full write-up coming soon.</span>
+          </a>
+
+          <a class="inv-item tier-a" href="https://www.instagram.com/umakpsi/" target="_blank" rel="noopener" data-hover>
+            <span class="inv-photo"><img src="logos/akpsi.png" alt="Alpha Kappa Psi"></span>
+            <span class="inv-name">Alpha Kappa Psi</span>
+            <span class="inv-role">Treasurer</span>
+            <span class="inv-tooltip">Manage financial operations for 170+ members — SAFAC budgets, revenue, expenses, and sponsorship contributions.</span>
           </a>
         </div>
 
-        <div class="orb-wrap" data-org="akpsi">
-          <a class="orb-link" href="https://www.instagram.com/umakpsi/" target="_blank" rel="noopener" data-hover>
-            <span class="orb-photo"><img src="logos/akpsi.png" alt="Alpha Kappa Psi"></span>
-            <span class="orb-label">
-              <span class="orb-label-name">Alpha Kappa Psi</span>
-              <span class="orb-label-role">Treasurer</span>
-            </span>
-            <span class="orb-tooltip">Manage financial operations for 170+ members — SAFAC budgets, revenue, expenses, and sponsorship contributions.</span>
+        <div class="involvement-row tier-b-row">
+          <a class="inv-item tier-b" href="https://www.instagram.com/umiamiwrestling/" target="_blank" rel="noopener" data-hover>
+            <span class="inv-photo"><img src="logos/umiami-wrestling.jpg" alt="UMiami Club Wrestling"></span>
+            <span class="inv-name">UMiami Club Wrestling</span>
+            <span class="inv-role">VP &amp; Treasurer</span>
           </a>
-        </div>
 
-        <div class="orb-wrap" data-org="wrestling">
-          <a class="orb-link" href="https://www.instagram.com/umiamiwrestling/" target="_blank" rel="noopener" data-hover>
-            <span class="orb-photo"><img src="logos/umiami-wrestling.jpg" alt="UMiami Club Wrestling"></span>
-            <span class="orb-label">
-              <span class="orb-label-name">UMiami Club Wrestling</span>
-              <span class="orb-label-role">VP &amp; Treasurer</span>
-            </span>
+          <a class="inv-item tier-b" href="https://www.remandcompany.com/remoncampus" target="_blank" rel="noopener" data-hover>
+            <span class="inv-photo"><img src="logos/rem-on-campus.webp" alt="REM on Campus"></span>
+            <span class="inv-name">REM on Campus</span>
+            <span class="inv-role">Strategist</span>
           </a>
-        </div>
 
-        <div class="orb-wrap" data-org="uwake">
-          <a class="orb-link" href="https://www.instagram.com/umwake/" target="_blank" rel="noopener" data-hover>
-            <span class="orb-photo"><img src="logos/uwake.jpg" alt="UWake"></span>
-            <span class="orb-label">
-              <span class="orb-label-name">UWake</span>
-              <span class="orb-label-role">Member</span>
-            </span>
+          <a class="inv-item tier-b" href="https://miami.beta.org/" target="_blank" rel="noopener" data-hover>
+            <span class="inv-photo"><img src="logos/beta-theta-pi.png" alt="Beta Theta Pi"></span>
+            <span class="inv-name">Beta Theta Pi</span>
+            <span class="inv-role">Philanthropy Committee</span>
           </a>
-        </div>
 
-        <div class="orb-wrap" data-org="beta">
-          <a class="orb-link" href="https://miami.beta.org/" target="_blank" rel="noopener" data-hover>
-            <span class="orb-photo"><img src="logos/beta-theta-pi.png" alt="Beta Theta Pi"></span>
-            <span class="orb-label">
-              <span class="orb-label-name">Beta Theta Pi</span>
-              <span class="orb-label-role">Philanthropy Committee</span>
-            </span>
-          </a>
-        </div>
-
-        <div class="orb-wrap" data-org="rem">
-          <a class="orb-link" href="https://www.remandcompany.com/remoncampus" target="_blank" rel="noopener" data-hover>
-            <span class="orb-photo"><img src="logos/rem-on-campus.webp" alt="REM on Campus"></span>
-            <span class="orb-label">
-              <span class="orb-label-name">REM on Campus</span>
-              <span class="orb-label-role">Strategist</span>
-            </span>
+          <a class="inv-item tier-b" href="https://www.instagram.com/umwake/" target="_blank" rel="noopener" data-hover>
+            <span class="inv-photo"><img src="logos/uwake.jpg" alt="UWake"></span>
+            <span class="inv-name">UWake</span>
+            <span class="inv-role">Member</span>
           </a>
         </div>
 
@@ -1780,7 +1797,25 @@
           <div class="proj-nav-name">Signal</div>
           <div class="proj-nav-meta">
             <span>Productivity</span>
-            <span>● Personal</span>
+            <span class="live">● Live</span>
+          </div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
+        <div class="proj-nav-item reveal" data-target="wck" data-hover>
+          <div class="proj-nav-num">/07</div>
+          <div class="proj-nav-name">World Cup Kits</div>
+          <div class="proj-nav-meta">
+            <span>Sports Data</span>
+            <span class="live">● Live</span>
+          </div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
+        <div class="proj-nav-item reveal" data-target="hs" data-hover>
+          <div class="proj-nav-num">/08</div>
+          <div class="proj-nav-name">Hacky Sack CV</div>
+          <div class="proj-nav-meta">
+            <span>Computer Vision</span>
+            <span>● In Progress</span>
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
@@ -1848,39 +1883,17 @@
             <h3 class="proj-panel-title">scholairly</h3>
             <a href="https://scholairly.com" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
-          <div class="proj-shots">
+          <div class="proj-shots single">
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/scholairly/landing.jpg" alt="scholairly landing page: study smarter with syllabus upload, tasks, reminders, and study tools" loading="lazy" />
             </button>
-            <button type="button" class="proj-shot-trigger" data-hover>
-              <img src="projects/scholairly/dashboard.jpg" alt="scholairly Academic Hub dashboard showing enrolled classes, upcoming tasks, and a calendar of assignments and exams" loading="lazy" />
-            </button>
           </div>
-          <div class="proj-body">
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">The Problem</span>
-                <p>I kept watching students juggle a different app for every task: one for notes, one for flashcards, one for the syllabus PDF, one for the calendar. Nothing tied it together.</p>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">What I Built</span>
-                <p>So I built scholairly, one platform with AI tools built around how students actually study: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and a document Q&amp;A tool for asking questions straight out of a PDF.</p>
-              </div>
-            </div>
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">Highlights</span>
-                <ul>
-                  <li>Class-specific AI chatbots, syllabus analysis, and auto-generated flashcards and practice tests</li>
-                  <li>147 students and educators signed up over its run</li>
-                  <li>Built and launched end-to-end — conception through user adoption</li>
-                </ul>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">Stack</span>
-                <div class="proj-stack">
-                  <span>Generative AI</span><span>SaaS</span>
-                </div>
+          <div class="proj-body compact">
+            <p class="proj-blurb">One AI-powered study platform instead of five disconnected apps: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and document Q&amp;A. Co-founded at N&amp;S Digital — 147 students and educators signed up over its run.</p>
+            <div class="proj-section">
+              <span class="proj-label">Stack</span>
+              <div class="proj-stack">
+                <span>Generative AI</span><span>SaaS</span>
               </div>
             </div>
           </div>
@@ -1888,51 +1901,25 @@
 
         <!-- StockStarter -->
         <div class="proj-panel panel-pt" id="panel-pt">
-          <div>
-            <div class="proj-panel-header">
-              <h3 class="proj-panel-title">StockStarter</h3>
-              <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
-            </div>
-            <p class="proj-access">No signup — upload a statement (synthetic is fine) and it stays in <code>localStorage</code> on your device, nowhere else</p>
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">StockStarter</h3>
+            <a href="https://stockstarter-production.up.railway.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
-          <div class="proj-shots">
+          <div class="proj-shots single">
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/stockstarter/dashboard.jpg" alt="StockStarter dashboard showing portfolio value, a NAV chart over time, and a per-position unrealized P/L treemap" loading="lazy" />
             </button>
-            <button type="button" class="proj-shot-trigger" data-hover>
-              <img src="projects/stockstarter/holdings.jpg" alt="StockStarter holdings table with FIFO/HIFO tax lots, beta, yield, and top/worst performer breakdowns" loading="lazy" />
-            </button>
           </div>
-          <div class="proj-body">
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">The Problem</span>
-                <p>I wanted real performance tracking (TWR, IRR, tax-loss harvesting, income) and kept running into the same two bad options everyone does: pay a service that wants your account credentials, or do it by hand in a spreadsheet.</p>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">What I Built</span>
-                <p>A web app that turns broker export files into real portfolio analytics. Upload an Excel or CSV and it resolves holdings, pulls live prices, and tracks performance, income, risk, and taxes, with an AI chat layer to ask about your portfolio in plain English. Your transactions are parsed and stored entirely in the browser — no account, no login, no server-side database of anyone's holdings.</p>
-              </div>
-            </div>
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">Highlights</span>
-                <ul>
-                  <li>Time-weighted return and dollar-weighted IRR computed from actual cash-flow history, not estimated</li>
-                  <li>FIFO/HIFO tax-lot tracking with wash-sale risk flags and estimated tax savings</li>
-                  <li>Built-in AI chat grounded in live holdings, prices, and transaction history</li>
-                  <li>Open source and self-hostable, but the live demo needs none of that — data never leaves your browser's local storage</li>
-                </ul>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">Stack</span>
-                <div class="proj-stack">
-                  <span data-tip="Runtime, package manager &amp; bundler">Bun</span>
-                  <span data-tip="Full-stack React framework, file-based routing">TanStack Start</span>
-                  <span data-tip="Your transactions never leave the browser">localStorage</span>
-                  <span data-tip="Utility-first styling">Tailwind</span>
-                  <span data-tip="Powers the in-app portfolio AI chat">Claude AI</span>
-                </div>
+          <div class="proj-body compact">
+            <p class="proj-blurb">Turns a broker export into real portfolio analytics — TWR/IRR performance, FIFO/HIFO tax-loss harvesting, income tracking, and an AI chat layer — entirely in the browser. No account, no server ever sees anyone's holdings. Open source and self-hostable.</p>
+            <div class="proj-section">
+              <span class="proj-label">Stack</span>
+              <div class="proj-stack">
+                <span data-tip="Runtime, package manager &amp; bundler">Bun</span>
+                <span data-tip="Full-stack React framework, file-based routing">TanStack Start</span>
+                <span data-tip="Your transactions never leave the browser">localStorage</span>
+                <span data-tip="Utility-first styling">Tailwind</span>
+                <span data-tip="Powers the in-app portfolio AI chat">Claude AI</span>
               </div>
             </div>
           </div>
@@ -1944,32 +1931,12 @@
             <h3 class="proj-panel-title">AI Automation Suite</h3>
             <span class="proj-visit coming">Internal Build</span>
           </div>
-          <div class="proj-body">
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">The Problem</span>
-                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work: re-keying tenancy data into models, then hunting across scattered sources for market context before any real analysis could start.</p>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">What I Built</span>
-                <p>An internal AI toolkit that keeps growing as new bottlenecks come up: n8n pipelines that turn raw tenancy schedules into structured Excel financial models, and a market intelligence portal that pulls demographic, employer, and real estate data for any market into one AI-written brief.</p>
-              </div>
-            </div>
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">Highlights</span>
-                <ul>
-                  <li>Automated extraction of submarket comps, property data, and lease terms — no manual data entry</li>
-                  <li>Prompt system queries OpenAI and Claude for structured field extraction, feeding existing Excel templates directly</li>
-                  <li>Market intelligence portal aggregates employer, demographic, and real estate data per market behind company login, with an AI-generated narrative brief</li>
-                  <li>Reduced multi-hour manual analysis to minutes per asset</li>
-                </ul>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">Stack</span>
-                <div class="proj-stack">
-                  <span data-tip="No-code workflow automation">n8n</span><span data-tip="Structured field extraction">OpenAI</span><span data-tip="Structured field extraction &amp; narrative generation">Claude</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
-                </div>
+          <div class="proj-body compact">
+            <p class="proj-blurb">An internal AI toolkit at Goldenrod Companies that keeps growing as new bottlenecks come up: n8n pipelines turn raw tenancy schedules into structured Excel financial models, and a market intelligence portal pulls demographic, employer, and real estate data for any market into one AI-written brief — cutting hours of manual analyst work down to minutes.</p>
+            <div class="proj-section">
+              <span class="proj-label">Stack</span>
+              <div class="proj-stack">
+                <span data-tip="No-code workflow automation">n8n</span><span data-tip="Structured field extraction">OpenAI</span><span data-tip="Structured field extraction &amp; narrative generation">Claude</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
               </div>
             </div>
           </div>
@@ -2021,40 +1988,70 @@
         <div class="proj-panel panel-sg" id="panel-sg">
           <div class="proj-panel-header">
             <h3 class="proj-panel-title">Signal</h3>
-            <a href="https://github.com/moff05/signal" target="_blank" rel="noopener" class="proj-visit" data-hover>View Code ↗</a>
+            <a href="https://signal-drab-omega.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
-          <div class="proj-body">
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">The Problem</span>
-                <p>I kept defaulting to asking an AI assistant to "put this on my calendar" — there was no single fast place to capture a task, a deadline, or a someday idea, and no quick way to see what actually mattered today without re-triaging everything myself.</p>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">What I Built</span>
-                <p>A personal capture tool, installed as an iPhone home-screen PWA plus a Scriptable widget, that unifies three kinds of entries under one fast-capture flow: fixed-time events pushed one-way to Google Calendar, deadline tasks whose urgency auto-escalates as the date nears, and someday/backlog items that just sit until touched. A daily "pick your signal" ritual is the only manual triage step.</p>
+          <div class="proj-shots single">
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/signal/login.jpg" alt="Signal's passcode-gated entry screen — a personal capture tool, private by design" loading="lazy" />
+            </button>
+          </div>
+          <div class="proj-body compact">
+            <p class="proj-blurb">One fast-capture flow instead of five different places: fixed-time events pushed to Google Calendar, deadline tasks whose urgency auto-escalates as the date nears, and someday/backlog items that just sit until touched. Installed as an iPhone home-screen PWA plus a Scriptable widget; a daily "pick your signal" ritual is the only manual triage step. Passcode-gated for personal use.</p>
+            <div class="proj-section">
+              <span class="proj-label">Stack</span>
+              <div class="proj-stack">
+                <span data-tip="App Router &amp; API routes">Next.js</span>
+                <span data-tip="Type-safe frontend &amp; backend">TypeScript</span>
+                <span data-tip="Cloud SQLite database">Turso</span>
+                <span data-tip="Fast LLM inference for note summarization">Groq</span>
+                <span data-tip="Daily triage-reminder notifications">Web Push</span>
+                <span data-tip="Hosting &amp; CI/CD">Vercel</span>
               </div>
             </div>
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">Highlights</span>
-                <ul>
-                  <li>Exactly one manual priority decision — urgency is computed automatically from date proximity, not hand-triaged</li>
-                  <li>iPhone home-screen PWA + Scriptable widget for one-tap capture from anywhere</li>
-                  <li>One-way sync pushes fixed-time events straight to Google Calendar</li>
-                  <li>AI condenses long freeform notes into a clean title, keeping the full text as an expandable detail</li>
-                  <li>Daily push reminder nudges the triage ritual — silent once you've already picked today's Signal</li>
-                </ul>
+          </div>
+        </div>
+
+        <!-- World Cup Kits -->
+        <div class="proj-panel panel-wck" id="panel-wck">
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">World Cup Kits</h3>
+            <a href="https://world-cup-kits-xi.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
+          </div>
+          <div class="proj-shots single">
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/world-cup-kits/brazil-stats.jpg" alt="Brazil's World Cup dashboard: 23 tournaments, full win/loss/goal record, biggest rival, and top scorers" loading="lazy" />
+            </button>
+          </div>
+          <div class="proj-body compact">
+            <p class="proj-blurb">Every nation that's ever appeared at a World Cup — 83 of 83 fully documented, kit history and stories included — built on an autonomous pipeline: an AI research agent works a queue from Wikipedia and Wikimedia Commons, and a Node.js watcher converts, commits, and deploys each new file straight to production with no manual step in between. 78.5% of tournament entries carry an archival kit photo, only set when a freely-licensed match exists.</p>
+            <div class="proj-section">
+              <span class="proj-label">Stack</span>
+              <div class="proj-stack">
+                <span data-tip="Frontend SPA">React</span>
+                <span data-tip="Build tool &amp; dev server">Vite</span>
+                <span data-tip="Client-side routing">React Router</span>
+                <span data-tip="Data pipeline watcher &amp; auto-deploy">Node.js</span>
+                <span data-tip="Hosting, auto-deploys on every data push">Vercel</span>
               </div>
-              <div class="proj-section">
-                <span class="proj-label">Stack</span>
-                <div class="proj-stack">
-                  <span data-tip="App Router &amp; API routes">Next.js</span>
-                  <span data-tip="Type-safe frontend &amp; backend">TypeScript</span>
-                  <span data-tip="Cloud SQLite database">Turso</span>
-                  <span data-tip="Fast LLM inference for note summarization">Groq</span>
-                  <span data-tip="Daily triage-reminder notifications">Web Push</span>
-                  <span data-tip="Hosting &amp; CI/CD">Vercel</span>
-                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hacky Sack CV -->
+        <div class="proj-panel panel-hs" id="panel-hs">
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">Hacky Sack CV</h3>
+            <a href="https://github.com/moff05/hackysack-cv" target="_blank" rel="noopener" class="proj-visit" data-hover>View Code ↗</a>
+          </div>
+          <div class="proj-body compact">
+            <p class="proj-blurb">A computer vision pipeline for hacky sack gameplay video: YOLOv8 pose tracking plus ByteTrack follows each player, a Kalman filter smooths the sack's flight through occlusion, and touch/drop detection combines proximity with a velocity-inflection check instead of distance alone. Still early — no trained sack detector yet, so it falls back to color-threshold detection for now.</p>
+            <div class="proj-section">
+              <span class="proj-label">Stack</span>
+              <div class="proj-stack">
+                <span data-tip="Pipeline &amp; detection logic">Python</span>
+                <span data-tip="Pose tracking model">YOLOv8 (Ultralytics)</span>
+                <span data-tip="Persistent multi-player tracking">ByteTrack</span>
+                <span data-tip="Video I/O &amp; HUD overlay">OpenCV</span>
               </div>
             </div>
           </div>
@@ -2062,6 +2059,21 @@
 
       </div><!-- /.proj-panels -->
     </div><!-- /.proj-showcase -->
+
+    <div class="legacy-projects reveal">
+      <div class="legacy-label">Older builds, no longer live</div>
+      <div class="legacy-list">
+        <div class="legacy-item">
+          <span class="legacy-name">ToonaTools</span>
+          <span class="legacy-desc">AI tools built for the counselors at the summer camp I worked at — generated devotionals and activity plans, and filled in counselor evaluations digitally instead of on paper.</span>
+        </div>
+        <div class="legacy-item">
+          <span class="legacy-name">Steal the Meal</span>
+          <span class="legacy-desc">Scraped local fast food menus to surface the best nearby deal. Never quite worked well enough to use.</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2543,81 +2555,6 @@
     wrap.addEventListener('dragstart', (e) => e.preventDefault());
   })();
 
-  // ---------- INVOLVEMENT ORBIT FIELD — orgs drift with a gentle idle
-  // wobble; below 900px this collapses to a plain wrapping grid (CSS
-  // handles it, this script just stays out of the way) ----------
-  (function () {
-    const field = document.getElementById('orbitField');
-    if (!field) return;
-
-    const wraps = [...field.querySelectorAll('.orb-wrap')];
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobileLayout = () => window.innerWidth <= 900;
-
-    // hexagonal ring, centered on the field — clustered together instead
-    // of scattered across the full width
-    const wrapWidth = 175;
-    const orbRadius = 48;
-    const clusterRadius = 185;
-    const angles = [-90, -30, 30, 90, 150, 210].map(deg => deg * Math.PI / 180);
-
-    let bounds = field.getBoundingClientRect();
-    const state = wraps.map((wrap, i) => ({
-      wrap, angle: angles[i % angles.length], homeX: 0, homeY: 0,
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.35 + Math.random() * 0.25,
-      wobble: 8 + Math.random() * 6,
-    }));
-
-    function layoutHome() {
-      const cx = bounds.width / 2;
-      const cy = bounds.height / 2;
-      state.forEach(o => {
-        o.homeX = cx + Math.cos(o.angle) * clusterRadius;
-        o.homeY = cy + Math.sin(o.angle) * clusterRadius;
-      });
-    }
-
-    function render(withWobble, t) {
-      const halfW = wrapWidth / 2;
-      state.forEach(o => {
-        let x = o.homeX, y = o.homeY;
-        if (withWobble) {
-          x += Math.cos(t * o.speed + o.phase) * o.wobble;
-          y += Math.sin(t * o.speed * 1.3 + o.phase) * o.wobble * 0.6;
-        }
-        o.wrap.style.transform = `translate(${(x - halfW).toFixed(1)}px, ${(y - orbRadius).toFixed(1)}px)`;
-      });
-    }
-
-    let running = false, t = 0;
-    function resize() {
-      if (isMobileLayout()) return;
-      bounds = field.getBoundingClientRect();
-      layoutHome();
-      if (!running) render(false, 0);
-    }
-    window.addEventListener('resize', resize);
-    window.addEventListener('load', resize);
-    resize();
-
-    if (reduceMotion) return;
-
-    function tick() {
-      if (isMobileLayout()) { running = false; return; }
-      t += 0.016;
-      render(true, t);
-      if (running) requestAnimationFrame(tick);
-    }
-
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting && !isMobileLayout() && !running) { running = true; requestAnimationFrame(tick); }
-        else if (!e.isIntersecting) { running = false; }
-      });
-    }, { threshold: 0.1 });
-    io.observe(field);
-  })();
 
   // ---------- MAGNETIC HOVER on involvement orbs (gentle pull + lift,
   // combined into one transform since a CSS :hover rule would otherwise
