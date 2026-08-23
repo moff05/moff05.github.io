@@ -1167,16 +1167,27 @@
 
   @media (max-width: 960px) {
     .proj-showcase { grid-template-columns: 1fr; }
+    /* 8 project names no longer fit evenly in one row (flex:1 with the
+       browser default min-width:auto refuses to shrink a flex item below
+       its own text content, so the row overflowed instead of compressing).
+       Scroll horizontally instead of squeezing — same pattern as the Off
+       Hours card track below. */
     .proj-nav {
       border-right: none;
       border-bottom: 1px solid var(--line);
       display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+    .proj-nav::-webkit-scrollbar { display: none; }
     .proj-nav-item {
-      flex: 1;
+      flex: 0 0 auto;
+      min-width: 150px;
       padding: 1.1rem 1rem;
       border-bottom: none;
       border-right: 1px solid var(--line);
+      white-space: nowrap;
     }
     .proj-nav-item:last-child { border-right: none; }
     .proj-nav-item.active::after { top: auto; left: 0; right: 0; bottom: -1px; width: auto; height: 2px; }
@@ -1512,7 +1523,7 @@
           <li><span>Based</span><strong>Atlanta / Miami</strong></li>
           <li><span>Studying</span><strong>Business Tech · CS · Math</strong></li>
           <li><span>Currently</span><strong>Goldenrod Companies</strong></li>
-          <li><span>Building</span><strong>scholairly · stackingplanner</strong></li>
+          <li><span>Building</span><strong>Scholairly · stackingplanner</strong></li>
           <li><span>Roles</span><strong>Founder · Engineer · Operator</strong></li>
         </ul>
       </aside>
@@ -1578,7 +1589,7 @@
             <div class="exp-detail-text">
               <ul>
                 <li>Built StackingPlanner.com, automating commercial real estate stacking plans with interactive visual layouts and saved dashboards.</li>
-                <li>Created scholairly.com — an AI-powered EdTech platform that reached <span class="count-num" data-target="147">147</span> student signups.</li>
+                <li>Created Scholairly.com — an AI-powered EdTech platform that reached <span class="count-num" data-target="147">147</span> student signups.</li>
                 <li>Owned the full product lifecycle: conception, development, launch, and user adoption.</li>
               </ul>
             </div>
@@ -1748,21 +1759,21 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item reveal" data-target="cd" data-hover>
-          <div class="proj-nav-num">/02</div>
-          <div class="proj-nav-name">Career Dashboard</div>
-          <div class="proj-nav-meta">
-            <span>Career Tech</span>
-            <span class="live">● Live</span>
-          </div>
-          <span class="proj-nav-arrow">→</span>
-        </div>
         <div class="proj-nav-item reveal" data-target="ai" data-hover>
-          <div class="proj-nav-num">/03</div>
+          <div class="proj-nav-num">/02</div>
           <div class="proj-nav-name">AI Suite</div>
           <div class="proj-nav-meta">
             <span>Automation</span>
             <span>● Internal</span>
+          </div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
+        <div class="proj-nav-item reveal" data-target="cd" data-hover>
+          <div class="proj-nav-num">/03</div>
+          <div class="proj-nav-name">Career Dashboard</div>
+          <div class="proj-nav-meta">
+            <span>Career Tech</span>
+            <span class="live">● Live</span>
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
@@ -1777,7 +1788,7 @@
         </div>
         <div class="proj-nav-item reveal" data-target="sc" data-hover>
           <div class="proj-nav-num">/05</div>
-          <div class="proj-nav-name">scholairly</div>
+          <div class="proj-nav-name">Scholairly</div>
           <div class="proj-nav-meta">
             <span>EdTech</span>
             <span class="live">● Live</span>
@@ -1869,15 +1880,55 @@
           </div>
         </div>
 
+        <!-- AI Automation Suite -->
+        <div class="proj-panel panel-ai" id="panel-ai">
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">AI Automation Suite</h3>
+            <span class="proj-visit coming">Internal Build</span>
+          </div>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work: re-keying tenancy data into models, then hunting across scattered sources for market context before any real analysis could start.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>An internal AI toolkit that keeps growing as new bottlenecks come up: n8n pipelines that turn raw tenancy schedules into structured Excel financial models, and a market intelligence portal that pulls demographic, employer, and real estate data for any market into one AI-written brief.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Automated extraction of submarket comps, property data, and lease terms — no manual data entry</li>
+                  <li>Prompt system queries OpenAI and Claude for structured field extraction, feeding existing Excel templates directly</li>
+                  <li>Market intelligence portal aggregates employer, demographic, and real estate data per market behind company login, with an AI-generated narrative brief</li>
+                  <li>Reduced multi-hour manual analysis to minutes per asset</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="No-code workflow automation">n8n</span><span data-tip="Structured field extraction">OpenAI</span><span data-tip="Structured field extraction &amp; narrative generation">Claude</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Career Dashboard -->
         <div class="proj-panel panel-cd" id="panel-cd">
           <div class="proj-panel-header">
             <h3 class="proj-panel-title">Career Dashboard</h3>
             <a href="https://career-dashboard-ten.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
-          <div class="proj-shots single">
+          <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/career-dashboard/dashboard.jpg" alt="Career Dashboard job tracker showing a saved role with a 70/100 AI fit score" loading="lazy" />
+            </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/career-dashboard/add-job.jpg" alt="Adding a job to Career Dashboard: paste a link or job description and it fills in the details" loading="lazy" />
             </button>
           </div>
           <div class="proj-body">
@@ -1910,43 +1961,6 @@
                   <span data-tip="Cloud SQLite database">Turso</span>
                   <span data-tip="Powers scoring, chat &amp; extraction">Groq</span>
                   <span data-tip="Hosting &amp; CI/CD">Vercel</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI Automation Suite -->
-        <div class="proj-panel panel-ai" id="panel-ai">
-          <div class="proj-panel-header">
-            <h3 class="proj-panel-title">AI Automation Suite</h3>
-            <span class="proj-visit coming">Internal Build</span>
-          </div>
-          <div class="proj-body">
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">The Problem</span>
-                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work: re-keying tenancy data into models, then hunting across scattered sources for market context before any real analysis could start.</p>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">What I Built</span>
-                <p>An internal AI toolkit that keeps growing as new bottlenecks come up: n8n pipelines that turn raw tenancy schedules into structured Excel financial models, and a market intelligence portal that pulls demographic, employer, and real estate data for any market into one AI-written brief.</p>
-              </div>
-            </div>
-            <div>
-              <div class="proj-section">
-                <span class="proj-label">Highlights</span>
-                <ul>
-                  <li>Automated extraction of submarket comps, property data, and lease terms — no manual data entry</li>
-                  <li>Prompt system queries OpenAI and Claude for structured field extraction, feeding existing Excel templates directly</li>
-                  <li>Market intelligence portal aggregates employer, demographic, and real estate data per market behind company login, with an AI-generated narrative brief</li>
-                  <li>Reduced multi-hour manual analysis to minutes per asset</li>
-                </ul>
-              </div>
-              <div class="proj-section">
-                <span class="proj-label">Stack</span>
-                <div class="proj-stack">
-                  <span data-tip="No-code workflow automation">n8n</span><span data-tip="Structured field extraction">OpenAI</span><span data-tip="Structured field extraction &amp; narrative generation">Claude</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
                 </div>
               </div>
             </div>
@@ -2005,18 +2019,18 @@
           </div>
         </div>
 
-        <!-- scholairly -->
+        <!-- Scholairly -->
         <div class="proj-panel panel-sc" id="panel-sc">
           <div class="proj-panel-header">
-            <h3 class="proj-panel-title">scholairly</h3>
+            <h3 class="proj-panel-title">Scholairly</h3>
             <a href="https://scholairly.com" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
           <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
-              <img src="projects/scholairly/landing.jpg" alt="scholairly landing page: study smarter with syllabus upload, tasks, reminders, and study tools" loading="lazy" />
+              <img src="projects/scholairly/landing.jpg" alt="Scholairly landing page: study smarter with syllabus upload, tasks, reminders, and study tools" loading="lazy" />
             </button>
             <button type="button" class="proj-shot-trigger" data-hover>
-              <img src="projects/scholairly/dashboard.jpg" alt="scholairly Academic Hub dashboard showing enrolled classes, upcoming tasks, and a calendar of assignments and exams" loading="lazy" />
+              <img src="projects/scholairly/dashboard.jpg" alt="Scholairly Academic Hub dashboard showing enrolled classes, upcoming tasks, and a calendar of assignments and exams" loading="lazy" />
             </button>
           </div>
           <div class="proj-body">
@@ -2027,7 +2041,7 @@
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>So I built scholairly, one platform with AI tools built around how students actually study: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and a document Q&amp;A tool for asking questions straight out of a PDF.</p>
+                <p>So I built Scholairly, one platform with AI tools built around how students actually study: class-specific chatbots, syllabus analysis, auto-generated flashcards and practice tests, a scheduling assistant, and a document Q&amp;A tool for asking questions straight out of a PDF.</p>
               </div>
             </div>
             <div>
@@ -2055,9 +2069,12 @@
             <h3 class="proj-panel-title">Signal</h3>
             <a href="https://signal-drab-omega.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
           </div>
-          <div class="proj-shots single">
+          <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/signal/dashboard.jpg" alt="Signal's daily capture flow: today's signals and a triaged backlog" loading="lazy" />
+            </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/signal/new-signal.jpg" alt="Creating a new Signal: choose Someday, Deadline, or Specific time" loading="lazy" />
             </button>
           </div>
           <div class="proj-body">
@@ -2351,7 +2368,7 @@
         <li><a href="https://linkedin.com/in/nicholas-moffett" target="_blank" rel="noopener" data-hover>LinkedIn ↗</a></li>
         <li><a href="https://github.com/moff05" target="_blank" rel="noopener" data-hover>GitHub ↗</a></li>
         <li><a href="https://stackingplanner.com" target="_blank" rel="noopener" data-hover>StackingPlanner ↗</a></li>
-        <li><a href="https://scholairly.com" target="_blank" rel="noopener" data-hover>scholairly ↗</a></li>
+        <li><a href="https://scholairly.com" target="_blank" rel="noopener" data-hover>Scholairly ↗</a></li>
         <li><a href="mailto:nicmoffett5@gmail.com" data-hover>Email ↗</a></li>
       </ul>
     </div>
