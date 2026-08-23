@@ -211,11 +211,13 @@
     100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
   }
 
-  /* raised from 800px: right around 800-880px, nav-links + nav-status were
-     both still visible but the row was too narrow for them, so "Contact"
-     crowded right up against the status dot before either had a chance to
-     hide */
-  @media (max-width: 880px) {
+  /* kept at 800px, same as before — widening this to "fix" the crowding
+     below cost more than it solved: it hid Contact/Work/etc entirely on
+     any device sitting in the 800-880px band (tablets, landscape phones)
+     that could see them fine before. The gap on nav.top above is what
+     actually stops the crowding, without shrinking the range where the
+     links are visible at all. */
+  @media (max-width: 800px) {
     nav.top { padding: 1rem 1.25rem; }
     .nav-links { display: none; }
     .nav-status { display: none; }
@@ -1261,17 +1263,23 @@
   }
   .off-track-wrap {
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+    /* clip only — position comes from a transform on .off-track now, not
+       native scrollLeft. iOS Safari is well known to silently ignore (or
+       only intermittently honor) JS writes to scrollLeft on an element
+       with -webkit-overflow-scrolling:touch until the user has manually
+       touch-scrolled it once, which is exactly why the auto-scroll never
+       moved on mobile before a first touch — a transform is immune to
+       that, since it isn't native scroll at all. */
+    overflow: hidden;
     position: relative;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
     cursor: grab;
-    -webkit-overflow-scrolling: touch;
+    /* hand ALL touch gesture handling to the pointer events below — this
+       is a free-drag interaction, not a native scroll, so the browser
+       shouldn't try to interpret touch moves as scroll/zoom itself */
+    touch-action: none;
     -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
   }
-  .off-track-wrap::-webkit-scrollbar { display: none; }
   .off-track-wrap.dragging { cursor: grabbing; }
   .off-track-wrap.dragging .off-card { transition: none; pointer-events: none; }
 
@@ -1281,6 +1289,7 @@
     width: max-content;
     user-select: none;
     -webkit-user-select: none;
+    will-change: transform;
   }
 
   .off-card {
@@ -2651,6 +2660,13 @@
   });
 
   // ---------- OFF-HOURS MARQUEE: AUTO-SCROLL + DRAG ----------
+  // Position lives in a plain JS `offset` var applied via transform, not
+  // wrap.scrollLeft — iOS Safari is well documented to silently ignore (or
+  // only intermittently honor) JS writes to scrollLeft on an element using
+  // -webkit-overflow-scrolling:touch until the user has touch-scrolled it
+  // at least once, which is exactly why auto-scroll never moved on mobile.
+  // A transform sidesteps native scroll entirely, so it isn't subject to
+  // that quirk.
   (function offHoursInit() {
     const wrap = document.querySelector('.off-track-wrap');
     const track = document.getElementById('offTrack');
@@ -2659,7 +2675,8 @@
     let autoOn = true;
     let isDragging = false;
     let startX = 0;
-    let startScroll = 0;
+    let startOffset = 0;
+    let offset = 0;
     let halfWidth = 0;
     let velocity = 0;
     let lastX = 0;
@@ -2674,18 +2691,19 @@
 
     function tick() {
       if (autoOn && !isDragging) {
-        wrap.scrollLeft += 0.6;
+        offset += 0.6;
       }
       // momentum after drag
       if (!isDragging && Math.abs(velocity) > 0.1) {
-        wrap.scrollLeft -= velocity;
+        offset -= velocity;
         velocity *= 0.94;
       }
       // wrap around for seamless loop (modulo handles any single-frame jump size,
       // not just increments smaller than halfWidth — matters for fast flicks/drags)
       if (halfWidth > 0) {
-        wrap.scrollLeft = ((wrap.scrollLeft % halfWidth) + halfWidth) % halfWidth;
+        offset = ((offset % halfWidth) + halfWidth) % halfWidth;
       }
+      track.style.transform = `translateX(${-offset}px)`;
       requestAnimationFrame(tick);
     }
     tick();
@@ -2700,7 +2718,7 @@
       startX = e.clientX;
       lastX = e.clientX;
       lastT = performance.now();
-      startScroll = wrap.scrollLeft;
+      startOffset = offset;
       velocity = 0;
       wrap.classList.add('dragging');
       try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
@@ -2710,7 +2728,7 @@
     wrap.addEventListener('pointermove', (e) => {
       if (!isDragging) return;
       const dx = e.clientX - startX;
-      wrap.scrollLeft = startScroll - dx;
+      offset = startOffset - dx;
       // track velocity for momentum
       const now = performance.now();
       const dt = now - lastT;
