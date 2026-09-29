@@ -675,6 +675,12 @@
     flex-wrap: wrap;
     gap: 1.75rem 2.5rem;
   }
+  /* tier-b items keep a fixed footprint regardless of label length, so a
+     longer org name can't throw off row balance the way "Real Estate &
+     Finance Association" did before being shortened to REFA below —
+     flex-wrap (not grid) is kept deliberately so a wrapped row still
+     re-centers itself instead of left-aligning under a fixed column grid */
+  .involvement-row.tier-b-row .inv-item { width: 84px; }
   .inv-item {
     position: relative;
     display: flex;
@@ -721,8 +727,11 @@
   .inv-item.tier-a .inv-name { font-size: 0.82rem; margin-top: 0.65rem; }
   .inv-item.tier-a .inv-role { font-size: 0.62rem; margin-top: 0.22rem; }
   .inv-item.tier-b .inv-photo { width: 60px; height: 60px; }
-  .inv-item.tier-b .inv-name { font-size: 0.72rem; margin-top: 0.5rem; }
-  .inv-item.tier-b .inv-role { font-size: 0.56rem; margin-top: 0.2rem; }
+  /* names in this tier range from "UWake" to "REFA" — wrap to 2 lines
+     within the fixed-width item above instead of nowrap, so a longer name
+     can't force its item (and the row's balance) wider than its siblings */
+  .inv-item.tier-b .inv-name { font-size: 0.72rem; margin-top: 0.5rem; white-space: normal; text-align: center; }
+  .inv-item.tier-b .inv-role { font-size: 0.56rem; margin-top: 0.2rem; white-space: normal; text-align: center; }
   /* only orgs with more to say (AI Biz Assoc, AKPsi) get this span —
      reuses the same coral arrow-bullet marker as the Work/Highlights lists */
   .inv-tooltip {
@@ -762,6 +771,7 @@
     .involvement-row { gap: 1.5rem 1.5rem; }
     .inv-item.tier-a .inv-photo { width: 68px; height: 68px; }
     .inv-item.tier-b .inv-photo { width: 48px; height: 48px; }
+    .involvement-row.tier-b-row .inv-item { width: 68px; }
   }
   /* the AI Business Association / AKPsi tooltip only ever appeared on
      :hover — on a touchscreen there's no hover state to trigger it at all,
@@ -1799,7 +1809,7 @@
 
           <a class="inv-item tier-b" href="https://www.linkedin.com/company/umrefa" target="_blank" rel="noopener" data-hover>
             <span class="inv-photo"><img src="logos/refa.png" alt="Real Estate &amp; Finance Association"></span>
-            <span class="inv-name">Real Estate &amp; Finance Association</span>
+            <span class="inv-name">REFA</span>
             <span class="inv-role">Member</span>
           </a>
         </div>
