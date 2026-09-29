@@ -867,6 +867,8 @@
   .proj-nav-item[data-target="sg"]::before { background: linear-gradient(180deg, #5eb1ff, #3d5afe); }
   .proj-nav-item[data-target="wck"]::before { background: linear-gradient(180deg, #ffd166, #2b3a67); }
   .proj-nav-item[data-target="hs"]::before { background: linear-gradient(180deg, #d4ff6b, #00b8a9); }
+  .proj-nav-item[data-target="bc"]::before { background: linear-gradient(180deg, #f4a261, #2a9d8f); }
+  .proj-nav-item[data-target="cim"]::before { background: linear-gradient(180deg, #6b5b95, #4dd0e1); }
   .proj-nav-item.active::before,
   .proj-nav-item:hover::before { opacity: 1; }
 
@@ -946,6 +948,8 @@
   .proj-panel.panel-sg::before { background: linear-gradient(90deg, #5eb1ff, #3d5afe); }
   .proj-panel.panel-wck::before { background: linear-gradient(90deg, #ffd166, #2b3a67); }
   .proj-panel.panel-hs::before { background: linear-gradient(90deg, #d4ff6b, #00b8a9); }
+  .proj-panel.panel-bc::before { background: linear-gradient(90deg, #f4a261, #2a9d8f); }
+  .proj-panel.panel-cim::before { background: linear-gradient(90deg, #6b5b95, #4dd0e1); }
 
   .proj-panel-header {
     display: flex;
@@ -1628,9 +1632,9 @@
           <div class="exp-detail-inner">
             <div class="exp-detail-text">
               <ul>
-                <li>Built automation pipelines using n8n, OpenAI, and Claude that transform raw tenancy schedules into structured Excel financial models.</li>
-                <li>Engineered prompt systems and scripts extracting submarket comps, property data, and lease info, reducing hours of manual analysis to minutes.</li>
-                <li>Integrated spreadsheet templates with AI workflows for streamlined internal data processing.</li>
+                <li>Built an end-to-end automated underwriting pipeline using the Claude API to ingest unstructured deal documents (OMs, T-12s, rent rolls) and live FRED/Treasury data to populate financial models and automate comps analysis.</li>
+                <li>Designed a market intelligence tool ranking 224 metro markets on economic, real estate, and demographic metrics, replacing manual Excel-based submarket comparisons.</li>
+                <li>Built an automated ETL pipeline that parses semi-structured Yardi tenancy data into a unified dashboard, eliminating manual rent-roll and lease-renewal tracking.</li>
               </ul>
             </div>
           </div>
@@ -1645,7 +1649,7 @@
             <div class="exp-company">N&amp;S Digital LLC</div>
             <div class="exp-role">Co-Founder</div>
           </div>
-          <div class="exp-date">Apr 2025 — Present</div>
+          <div class="exp-date">Apr 2025 — Apr 2026</div>
           <div class="exp-plus" aria-hidden="true"></div>
         </div>
         <div class="exp-detail">
@@ -1886,6 +1890,24 @@
           </div>
           <span class="proj-nav-arrow">→</span>
         </div>
+        <div class="proj-nav-item reveal" data-target="bc" data-hover>
+          <div class="proj-nav-num">/09</div>
+          <div class="proj-nav-name">8bit CRE</div>
+          <div class="proj-nav-meta">
+            <span>CRE + Game Design</span>
+            <span class="live">● Live</span>
+          </div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
+        <div class="proj-nav-item reveal" data-target="cim" data-hover>
+          <div class="proj-nav-num">/10</div>
+          <div class="proj-nav-name">CIM 423 3D World</div>
+          <div class="proj-nav-meta">
+            <span>VR / Unity</span>
+            <span class="live">● Live</span>
+          </div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
       </nav>
 
       <!-- Right panels -->
@@ -1954,27 +1976,27 @@
             <div>
               <div class="proj-section">
                 <span class="proj-label">The Problem</span>
-                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work: re-keying tenancy data into models, then hunting across scattered sources for market context before any real analysis could start.</p>
+                <p>Investment analysts at Goldenrod Companies were losing hours per deal to repeatable manual work: re-keying deal documents and tenancy data into models by hand, then hunting across scattered sources for market context before any real analysis could start.</p>
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>An internal AI toolkit that keeps growing as new bottlenecks come up: n8n pipelines that turn raw tenancy schedules into structured Excel financial models, and a market intelligence portal that pulls demographic, employer, and real estate data for any market into one AI-written brief.</p>
+                <p>An internal AI toolkit that keeps growing as new bottlenecks come up: an automated underwriting pipeline that turns a deal's OM, T-12, and rent roll into a populated financial model using the Claude API and live FRED/Treasury data, an ETL pipeline that turns raw Yardi tenancy schedules into an executive dashboard, and a market intelligence portal that pulls demographic, employer, and real estate data for any market into one AI-written brief.</p>
               </div>
             </div>
             <div>
               <div class="proj-section">
                 <span class="proj-label">Highlights</span>
                 <ul>
-                  <li>Automated extraction of submarket comps, property data, and lease terms — no manual data entry</li>
-                  <li>Prompt system queries OpenAI and Claude for structured field extraction, feeding existing Excel templates directly</li>
-                  <li>Market intelligence portal aggregates employer, demographic, and real estate data per market behind company login, with an AI-generated narrative brief</li>
+                  <li>Automated underwriting pipeline extracts deal data from unstructured OMs, T-12s, and rent rolls, then populates financial models with live FRED/Treasury comps and financing data</li>
+                  <li>Market intelligence tool ranks 224 metro markets on economic, real estate, and demographic metrics for instant submarket comparisons</li>
+                  <li>ETL pipeline normalizes semi-structured Yardi tenancy data into a unified dashboard, eliminating manual rent-roll and lease-renewal tracking</li>
                   <li>Reduced multi-hour manual analysis to minutes per asset</li>
                 </ul>
               </div>
               <div class="proj-section">
                 <span class="proj-label">Stack</span>
                 <div class="proj-stack">
-                  <span data-tip="No-code workflow automation">n8n</span><span data-tip="Structured field extraction">OpenAI</span><span data-tip="Structured field extraction &amp; narrative generation">Claude</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
+                  <span data-tip="Deal-document extraction &amp; underwriting pipeline">Claude API</span><span data-tip="Live comps &amp; financing data">FRED/Treasury APIs</span><span data-tip="No-code workflow automation">n8n</span><span data-tip="Backend for the market intelligence portal">FastAPI</span><span data-tip="Output format for analyst-ready models">Excel</span>
                 </div>
               </div>
             </div>
@@ -1989,10 +2011,10 @@
           </div>
           <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
-              <img src="projects/career-dashboard/dashboard.jpg" alt="Career Dashboard job tracker showing a saved role with a 70/100 AI fit score" loading="lazy" />
+              <img src="projects/career-dashboard/dashboard.jpg" alt="Career Dashboard job tracker showing 24 tracked roles with AI fit scores from 64 to 88 out of 100" loading="lazy" />
             </button>
             <button type="button" class="proj-shot-trigger" data-hover>
-              <img src="projects/career-dashboard/add-job.jpg" alt="Adding a job to Career Dashboard: paste a link or job description and it fills in the details" loading="lazy" />
+              <img src="projects/career-dashboard/add-job.jpg" alt="Career Dashboard's Discovered tab: postings from tracked companies' career pages, scored and staged for one-click review" loading="lazy" />
             </button>
           </div>
           <div class="proj-body">
@@ -2003,7 +2025,7 @@
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>A tracker-first job dashboard built around two AI features that earn their place: an in-depth fit score on any job you import, and a coach that actually knows your background. Multi-user with no accounts and no API key to bring — every visitor gets their own scoped data from a 3-step setup.</p>
+                <p>A tracker-first job dashboard built around AI features that earn their place: an in-depth fit score on any job you import, a coach that actually knows your background, and a weekly scan of your own tracked companies' career pages that surfaces new postings for review. Multi-user with no accounts — every visitor gets their own scoped data from a 3-step setup, with a recovery key as the only way back in.</p>
               </div>
             </div>
             <div>
@@ -2012,9 +2034,10 @@
                 <ul>
                   <li>Import a job from a URL, pasted text, or a screenshot: an AI pass extracts the structured fields, handles JS-rendered listings automatically</li>
                   <li>5-category AI fit scorecard, gap analysis, tailored resume bullets, and a cover letter draft with tone/angle controls — auto-generated per job</li>
-                  <li>Free Priorities strip ranks deadlines and stale follow-ups by urgency with zero AI calls; Coach overlay adds persistent-memory chat for everything else</li>
-                  <li>Candidate Strength: rubric-scored readiness assessment, point values anchored via structured outputs so repeat scores don't drift</li>
-                  <li>No accounts, no API key: a 3-step setup collects your background and drops you straight into the tracker</li>
+                  <li>Weekly board scan reviews every company you're tracking, scores new postings with the same fit rubric, and stages them in a Discovered queue — nothing touches your tracker without a click</li>
+                  <li>Standalone Connections and Companies CRM, decoupled from any one job — log a contact or target before you have a role tracked there</li>
+                  <li>Free Priorities strip ranks deadlines, connection follow-ups, and interview prep by urgency with zero AI calls; Coach overlay adds persistent-memory chat for everything else</li>
+                  <li>No accounts, no API key: a 3-step setup collects your background and hands you a recovery key — the only way back into your data on a new device</li>
                 </ul>
               </div>
               <div class="proj-section">
@@ -2209,7 +2232,7 @@
                 <span class="proj-label">Highlights</span>
                 <ul>
                   <li>83 of 83 nations fully documented — every country to ever appear at a World Cup, 1930 to 2026</li>
-                  <li>78.5% of tournament entries carry an archival kit photo sourced from Wikimedia Commons — only set when a freely-licensed match exists, never guessed</li>
+                  <li>91.2% of tournament entries carry an archival kit photo sourced from Wikimedia Commons — only set when a freely-licensed match exists, never guessed</li>
                   <li>Fully autonomous pipeline: research agent → structured JSON → file watcher → git commit and push → live Vercel deploy</li>
                   <li>Per-country dashboard computed straight from match data: win/loss record, biggest win and loss, head-to-head rival history, top scorers</li>
                   <li>Editorial per-tournament stories alongside the raw stats — kit lore, iconic matches, not just numbers</li>
@@ -2238,17 +2261,17 @@
           <div class="proj-body">
             <div>
               <div class="proj-section">
-                <p>A computer vision pipeline for hacky sack gameplay video: YOLOv8 pose tracking plus ByteTrack follows each player, a Kalman filter smooths the sack's flight through occlusion, and touch/drop detection combines proximity with a velocity-inflection check instead of distance alone. Still early — no trained sack detector yet, so it falls back to color-threshold detection for now.</p>
+                <p>A computer vision pipeline for hacky sack gameplay video: YOLOv8 pose tracking plus BoT-SORT with appearance re-identification keeps a persistent ID per player, a trained YOLO sack detector (color-threshold detection as a fallback) tracks the sack itself, and touch/drop detection combines proximity with a velocity-inflection check instead of distance alone. Everything runs locally — no hosted service or API key required.</p>
               </div>
             </div>
             <div>
               <div class="proj-section">
                 <span class="proj-label">Highlights</span>
                 <ul>
-                  <li>YOLOv8 pose model + ByteTrack keeps a persistent ID per player across the clip, tracking ankle, knee, and chest keypoints every frame</li>
-                  <li>Constant-velocity Kalman filter smooths sack tracking through occlusion and short misses instead of losing the trail</li>
+                  <li>YOLOv8 pose model + BoT-SORT with appearance re-identification keeps a persistent ID per player across the clip, tracking ankle, knee, and chest keypoints every frame</li>
+                  <li>Trained YOLO sack detector (from 180 bootstrapped examples) runs first, falling back to HSV color-threshold blob detection when no trained weights are available — never hard-fails on unlabeled footage</li>
                   <li>Touch detection checks proximity to a keypoint and a downward-to-upward velocity inflection, not distance alone — cuts down false positives</li>
-                  <li>Sack detection falls back gracefully: a trained YOLO model first, then HSV color-threshold blob detection, so it never hard-fails on unlabeled footage</li>
+                  <li>Outputs an annotated video, a timestamped JSON report, and an interactive session-review page — not just a number</li>
                   <li>Ships a synthetic test-clip generator so the whole pipeline is verifiable before pointing it at real footage or training a detector</li>
                 </ul>
               </div>
@@ -2257,8 +2280,108 @@
                 <div class="proj-stack">
                   <span data-tip="Pipeline &amp; detection logic">Python</span>
                   <span data-tip="Pose tracking model">YOLOv8 (Ultralytics)</span>
-                  <span data-tip="Persistent multi-player tracking">ByteTrack</span>
+                  <span data-tip="Persistent multi-player tracking with re-ID">BoT-SORT</span>
                   <span data-tip="Video I/O &amp; HUD overlay">OpenCV</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8bit CRE -->
+        <div class="proj-panel panel-bc" id="panel-bc">
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">8bit CRE</h3>
+            <a href="https://8bit-cre.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗</a>
+          </div>
+          <div class="proj-shots">
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/8bit-cre/landing.jpg" alt="8bit CRE landing page: manage a $5 million commercial real estate fund for ten years across six sectors" loading="lazy" />
+            </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/8bit-cre/gameplay.jpg" alt="8bit CRE fund manager's desk showing cash available, equity invested, and fund value against the 2.25x target" loading="lazy" />
+            </button>
+          </div>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>CRE fundamentals are usually learned by watching real deals play out over years, one at a time. There's no fast, repeatable way to build intuition for how financing, hold periods, repairs, and market cycles actually interact.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>A browser strategy game: manage a $5M fund across six CRE sectors for ten years, choosing financing, riding out repairs and market cycles, and exiting deals under real amortization and cap-rate math, not a simplified toy model.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Real financial engine underneath: 30-year loan amortization, refinancing, deferred repairs, and IRR/equity-multiple math, validated against a parallel Python reference implementation</li>
+                  <li>Six sectors with independently evolving cap rates and growth rates, a financing choice on every deal, and in-hold events that can force a decision mid-campaign</li>
+                  <li>Deterministic seeds reproduce a full campaign exactly — same seed, same starting opportunities, every replay</li>
+                  <li>TypeScript simulation and Python reference compared transition-by-transition in automated tests, not just spot-checked</li>
+                  <li>No account, no backend — one campaign autosaves in the browser</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="UI &amp; game screens">React</span>
+                  <span data-tip="Simulation engine &amp; UI">TypeScript</span>
+                  <span data-tip="Build tool &amp; dev server">Vite</span>
+                  <span data-tip="Reference financial model for parity testing">Python</span>
+                  <span data-tip="Cross-browser regression coverage">Playwright</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CIM 423 3D World -->
+        <div class="proj-panel panel-cim" id="panel-cim">
+          <div class="proj-panel-header">
+            <h3 class="proj-panel-title">CIM 423 3D World</h3>
+            <a href="https://cim423-3d-world.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Build Log ↗</a>
+          </div>
+          <div class="proj-shots">
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/cim423/docking-bay.jpg" alt="CIM 423 3D World: the Docking Bay room with a hazard-striped airlock, cargo barrels, and two space-suit mannequins" loading="lazy" />
+            </button>
+            <button type="button" class="proj-shot-trigger" data-hover>
+              <img src="projects/cim423/lab.jpg" alt="CIM 423 3D World: the Lab room with an artifact glowing on a pedestal, where the story's twist happens" loading="lazy" />
+            </button>
+          </div>
+          <div class="proj-body">
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">The Problem</span>
+                <p>A class assignment to build a Meta Quest VR experience from scratch: a written story, a 3D environment, then real interactivity, with every AI call logged and disclosed, not just used silently.</p>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">What I Built</span>
+                <p>A short narrative VR walkthrough of a dead space station, built room by room in Unity for Meta Quest: a ship AI voice guides you from the Docking Bay through a Corridor and Control Room into a Lab, where the story's actual twist happens. I directed every asset, room layout, and interaction decision; Claude Code did the Unity implementation.</p>
+              </div>
+            </div>
+            <div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights</span>
+                <ul>
+                  <li>Room-by-room set design (Docking Bay, Corridor, Control Room, Lab) built from primitives plus Kenney asset packs, with a custom-generated starfield skybox and three real 3D ringed planets, not a flat texture</li>
+                  <li>An AI ship voice narrates the whole walkthrough; one scripted twist moment breaks the silence in the Lab</li>
+                  <li>Built and deployed to real Meta Quest hardware through an on-device build/cast pipeline, not just tested in the Unity editor</li>
+                  <li>Two real bugs only surfaced on physical hardware, caught and fixed after on-device testing</li>
+                  <li>Every AI call disclosed per assignment: what was generated versus what I directed</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Stack</span>
+                <div class="proj-stack">
+                  <span data-tip="Game engine">Unity</span>
+                  <span data-tip="Gameplay &amp; interaction scripting">C#</span>
+                  <span data-tip="Target hardware">Meta Quest</span>
+                  <span data-tip="Environment props">Kenney Asset Packs</span>
+                  <span data-tip="Directed implementation of every room &amp; interaction">Claude Code</span>
                 </div>
               </div>
             </div>
