@@ -2388,7 +2388,7 @@
                   <li>Room-by-room set design (Docking Bay, Corridor, Control Room, Lab) built from primitives plus Kenney asset packs, with a custom-generated starfield skybox and three real 3D ringed planets, not a flat texture</li>
                   <li>An AI ship voice narrates the whole walkthrough; one scripted twist moment breaks the silence in the Lab</li>
                   <li>Built and deployed to real Meta Quest hardware through an on-device build/cast pipeline, not just tested in the Unity editor</li>
-                  <li>Headset testing exposed bugs the Editor never showed (dead controllers, dialogue that never advanced, UI that didn't render in stereo), each root-caused from on-device logs</li>
+                  <li>Headset testing exposed bugs the Editor never showed (dead controllers, dialogue that never advanced, UI that didn't render in stereo), each root-caused from on-device logs. The last one: the ending hid the floor and gravity kept pulling for 12 seconds, so the player free-fell about 700 m. The log showed the camera at y = -669</li>
                   <li>Six-step ordered interaction chain with custom VR door wheels and an in-scene keyboard, since Quest's system keyboard doesn't work in immersive apps</li>
                 </ul>
               </div>
