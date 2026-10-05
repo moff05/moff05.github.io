@@ -1049,6 +1049,15 @@
     transform: translateY(-2px);
   }
   .proj-shots img { display: block; width: 100%; height: auto; }
+  .proj-video {
+    grid-column: 1 / -1;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    line-height: 0;
+    background: #000;
+  }
+  .proj-video video { display: block; width: 100%; height: auto; }
 
   /* ---------- LIGHTBOX ---------- */
   .lightbox {
@@ -2363,6 +2372,11 @@
             <a href="https://cim423-3d-world.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Build Log ↗</a>
           </div>
           <div class="proj-shots">
+            <div class="proj-video">
+              <video controls preload="none" playsinline poster="projects/cim423/headset-walkthrough-poster.jpg" aria-label="Derelict: full playthrough on a Meta Quest 3, with me playing in the corner">
+                <source src="projects/cim423/headset-walkthrough.mp4" type="video/mp4" />
+              </video>
+            </div>
             <button type="button" class="proj-shot-trigger" data-hover>
               <img src="projects/cim423/docking-bay.jpg" alt="Derelict: the Docking Bay room with a hazard-striped airlock, cargo barrels, and two space-suit mannequins" loading="lazy" />
             </button>
@@ -2378,7 +2392,7 @@
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
-                <p>A short narrative VR walkthrough of a dead space station, built room by room in Unity for Meta Quest: a ship AI voice guides you from the Docking Bay through a Corridor and Control Room into a Lab, where the story's actual twist happens. I directed every asset, room layout, and interaction decision; Claude Code did the Unity implementation.</p>
+                <p>A short narrative VR walkthrough of a dead space station, built room by room in Unity for Meta Quest: a ship AI named ECHO guides you from the Docking Bay through a Corridor and Control Room into a Lab, where the story's actual twist happens. I directed every asset, room layout, and interaction decision; Claude Code did the Unity implementation.</p>
               </div>
             </div>
             <div>
@@ -2386,7 +2400,7 @@
                 <span class="proj-label">Highlights</span>
                 <ul>
                   <li>Room-by-room set design (Docking Bay, Corridor, Control Room, Lab) built from primitives plus Kenney asset packs, with a custom-generated starfield skybox and three real 3D ringed planets, not a flat texture</li>
-                  <li>An AI ship voice narrates the whole walkthrough; one scripted twist moment breaks the silence in the Lab</li>
+                  <li>ECHO, the ship AI, guides you through the whole run with on-screen dialogue you advance with the trigger; one scripted twist moment breaks the silence in the Lab</li>
                   <li>Built and deployed to real Meta Quest hardware through an on-device build/cast pipeline, not just tested in the Unity editor</li>
                   <li>Headset testing exposed bugs the Editor never showed (dead controllers, dialogue that never advanced, UI that didn't render in stereo), each root-caused from on-device logs. The last one: the ending hid the floor and gravity kept pulling for 12 seconds, so the player free-fell about 700 m. The log showed the camera at y = -669</li>
                   <li>Six-step ordered interaction chain with custom VR door wheels and an in-scene keyboard, since Quest's system keyboard doesn't work in immersive apps</li>
