@@ -1058,6 +1058,18 @@
     background: #000;
   }
   .proj-video video { display: block; width: 100%; height: auto; }
+  .proj-duo { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .proj-duo figure { margin: 0; }
+  .proj-duo .proj-video { border-radius: 14px; }
+  .proj-duo figcaption {
+    margin-top: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.67rem;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 700px) { .proj-duo { grid-template-columns: 1fr; } }
 
   /* ---------- LIGHTBOX ---------- */
   .lightbox {
@@ -2372,16 +2384,24 @@
             <a href="https://cim423-3d-world.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>VR Blog ↗</a>
           </div>
           <div class="proj-shots">
-            <div class="proj-video">
-              <video controls preload="none" playsinline poster="projects/cim423/music-world-poster.jpg" aria-label="Music World: walkthrough of the hub and genre rooms in MUD Foundation">
+            <div class="proj-duo">
+              <figure>
+                <div class="proj-video">
+                  <video controls preload="none" playsinline poster="projects/cim423/music-world-poster.jpg" aria-label="Music World: walkthrough of the hub and genre rooms in MUD Foundation">
                 <source src="projects/cim423/music-world-walkthrough.mp4" type="video/mp4" />
                 <track kind="captions" src="projects/cim423/music-world-walkthrough.vtt" srclang="en" label="English" default />
               </video>
-            </div>
-            <div class="proj-video">
-              <video controls preload="none" playsinline poster="projects/cim423/headset-walkthrough-poster.jpg" aria-label="Day 181: full playthrough on a Meta Quest 3, with me playing in the corner">
+                </div>
+                <figcaption>Music World · MUD Foundation</figcaption>
+              </figure>
+              <figure>
+                <div class="proj-video">
+                  <video controls preload="none" playsinline poster="projects/cim423/headset-walkthrough-poster.jpg" aria-label="Day 181: full playthrough on a Meta Quest 3, with me playing in the corner">
                 <source src="projects/cim423/headset-walkthrough.mp4" type="video/mp4" />
               </video>
+                </div>
+                <figcaption>Day 181 · Unity on Meta Quest</figcaption>
+              </figure>
             </div>
           </div>
           <div class="proj-body">
@@ -2398,11 +2418,16 @@
             </div>
             <div>
               <div class="proj-section">
-                <span class="proj-label">Highlights</span>
+                <span class="proj-label">Highlights · Music World</span>
                 <ul>
-                  <li>Music World: every like is a shared counter in MUD's store, so the All-Time Four frames in each room re-rank for everyone as votes come in; ties go to whoever was liked first</li>
-                  <li>Music World: each genre room has its own layout, lighting and furniture (rock stage, hip-hop DJ riser, electronic dance floor, country saloon), with zone-based music that changes as you walk between rooms</li>
-                  <li>Music World: the Encore button syncs through the same store, so everyone in a room sees the confetti when anyone presses it; a hidden Golden Record in each room unlocks a finale in the hub</li>
+                  <li>every like is a shared counter in MUD's store, so the All-Time Four frames in each room re-rank for everyone as votes come in; ties go to whoever was liked first</li>
+                  <li>each genre room has its own layout, lighting and furniture (rock stage, hip-hop DJ riser, electronic dance floor, country saloon), with zone-based music that changes as you walk between rooms</li>
+                  <li>the Encore button syncs through the same store, so everyone in a room sees the confetti when anyone presses it; a hidden Golden Record in each room unlocks a finale in the hub</li>
+                </ul>
+              </div>
+              <div class="proj-section">
+                <span class="proj-label">Highlights · Day 181</span>
+                <ul>
                   <li>Room-by-room set design (Docking Bay, Corridor, Control Room, Lab) built from primitives plus Kenney asset packs, with a custom-generated starfield skybox and three real 3D ringed planets, not a flat texture</li>
                   <li>ECHO, the ship AI, guides you through the whole run with on-screen dialogue you advance with the trigger; one scripted twist moment breaks the silence in the Lab</li>
                   <li>Built and deployed to real Meta Quest hardware through an on-device build/cast pipeline, not just tested in the Unity editor</li>
