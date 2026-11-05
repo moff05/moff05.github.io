@@ -1079,6 +1079,7 @@
   }
   .proj-video video { display: block; width: 100%; height: auto; }
   .proj-duo { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .proj-duo.three { grid-template-columns: repeat(3, 1fr); }
   .proj-duo figure { margin: 0; }
   .proj-duo .proj-video { border-radius: 14px; }
   .proj-duo figcaption {
@@ -1089,7 +1090,8 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
-  @media (max-width: 700px) { .proj-duo { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .proj-duo.three { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 700px) { .proj-duo, .proj-duo.three { grid-template-columns: 1fr; } }
 
   /* ---------- LIGHTBOX ---------- */
   .lightbox {
@@ -1979,14 +1981,14 @@
           <div class="proj-nav-dates">Updated Aug 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item reveal" data-target="cim" data-started="2026-09" data-updated="2026-10" data-hover>
+        <div class="proj-nav-item reveal" data-target="cim" data-started="2026-09" data-updated="2026-11" data-hover>
           <div class="proj-nav-num">/10</div>
           <div class="proj-nav-name">VR Projects</div>
           <div class="proj-nav-meta">
             <span>Virtual Reality</span>
             <span class="live">● Live</span>
           </div>
-          <div class="proj-nav-dates">Updated Oct 2026</div>
+          <div class="proj-nav-dates">Updated Nov 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
       </nav>
@@ -2451,12 +2453,12 @@
           <div class="proj-panel-header">
             <div class="proj-title-wrap">
               <h3 class="proj-panel-title">VR Projects</h3>
-              <p class="proj-dates" data-dates-for="cim">Started Sep 2026 · Updated Oct 2026</p>
+              <p class="proj-dates" data-dates-for="cim">Started Sep 2026 · Updated Nov 2026</p>
             </div>
             <a href="https://cim423-3d-world.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>VR Blog ↗</a>
           </div>
           <div class="proj-shots">
-            <div class="proj-duo">
+            <div class="proj-duo three">
               <figure>
                 <div class="proj-video">
                   <video controls preload="none" playsinline poster="projects/cim423/music-world-poster.jpg" aria-label="Music World: walkthrough of the hub and genre rooms in MUD Foundation">
@@ -2474,18 +2476,27 @@
                 </div>
                 <figcaption>Day 181 · Unity on Meta Quest</figcaption>
               </figure>
+              <figure>
+                <div class="proj-video">
+                  <video controls preload="none" playsinline poster="projects/cim423/nightshift-walkthrough-poster.jpg" aria-label="Night Shift Vinyl: full playthrough on a Meta Quest 3 with bare hand tracking, with me playing in the corner">
+                <source src="projects/cim423/nightshift-walkthrough.mp4" type="video/mp4" />
+              </video>
+                </div>
+                <figcaption>Night Shift Vinyl · Hand tracking</figcaption>
+              </figure>
             </div>
           </div>
           <div class="proj-body">
             <div>
               <div class="proj-section">
                 <span class="proj-label">The Problem</span>
-                <p>Two University of Miami VR assignments: build a Meta Quest experience from a story, then design a shared social space people can visit together.</p>
+                <p>Three University of Miami VR assignments: build a Meta Quest experience from a story, design a shared social space people can visit together, then build a hands-only task simulation for the Quest.</p>
               </div>
               <div class="proj-section">
                 <span class="proj-label">What I Built</span>
                 <p><strong>Music World:</strong> a multiplayer studio hub with four genre rooms and 80 artists, where visitors vote and the community's top four fill each room's frames.</p>
                 <p><strong>Day 181:</strong> a narrative walkthrough of a dead space station in Unity for Meta Quest, guided by a ship AI named ECHO. I directed every asset, layout and interaction; Claude Code did the Unity implementation.</p>
+                <p><strong>Night Shift Vinyl:</strong> a lo-fi vinyl DJ lounge for Meta Quest that you run with bare hands, no controllers. Load a record, drop the needle, poke a pad, twist a filter dial and slide the master fader, each step changing what you hear. I directed the room and the interactions; Claude built the models, textures, audio and code, and I tuned the feel on a real headset.</p>
               </div>
             </div>
             <div>
@@ -2496,6 +2507,8 @@
                   <li>Music World: each room has its own layout and look, with music that changes as you walk</li>
                   <li>Day 181: built and tested on real Quest hardware, with bugs root-caused from on-device logs (including a 700 m free-fall)</li>
                   <li>Day 181: six-step interaction chain with custom VR door wheels and an in-scene keyboard</li>
+                  <li>Night Shift Vinyl: playtested on a Quest 3 and fixed what real hands exposed, from a pinch threshold optical tracking can never reach to a record that could slip through the desk</li>
+                  <li>Night Shift Vinyl: a browser version of the same session you can play on the project page</li>
                 </ul>
               </div>
               <div class="proj-section">
@@ -2508,6 +2521,8 @@
                   <span data-tip="Scripting for the Music World space">JavaScript</span>
                   <span data-tip="Environment props">Kenney Asset Packs</span>
                   <span data-tip="Directed implementation of every room &amp; interaction">Claude Code</span>
+                  <span data-tip="Modeled the Night Shift Vinyl room from scripts">Blender</span>
+                  <span data-tip="Hand tracking and pinch/poke interaction">XR Interaction Toolkit</span>
                 </div>
               </div>
             </div>
