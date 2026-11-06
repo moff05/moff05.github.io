@@ -12,7 +12,7 @@
     {
       "name": "This site",
       "status": "Building",
-      "blurb": "Rebuilding nmoffett.com with more motion and contrast, plus this live feed of what I am working on.",
+      "blurb": "Reworking nmoffett.com into one cohesive editorial look, with a live feed of what I am building and a cleaner Involvement section.",
       "tags": ["HTML", "CSS", "JS"],
       "repo": "moff05.github.io",
       "url": "https://github.com/moff05/moff05.github.io"
