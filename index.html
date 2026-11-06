@@ -30,7 +30,7 @@
     --bg-deep: #e9e2d6;
     --ink: #0e0e0c;
     --ink-soft: #2a2a26;
-    --muted: #65625d;
+    --muted: #57544e;
     --line: #c9c2b6;
     --paper: #fbf8f2;
     --accent: #ff3d2e;       /* electric coral */
@@ -800,6 +800,47 @@
     .inv-tooltip::before { display: none; }
   }
 
+  /* ---- Involvement v2: two featured leadership cards (description always
+     visible, no hover needed), then the rest as a tidy grid of pills ---- */
+  .involvement-section { margin-top: 4rem; }
+  .involvement-label { font-size: 0.8rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .involvement-label::after { content: ''; flex: 1; height: 1px; background: var(--line, rgba(14,14,12,0.15)); }
+  .involvement-rows { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; align-items: stretch; padding: 0; }
+  .involvement-row { display: contents; }
+  .inv-item { background: var(--paper); border-radius: 16px; box-shadow: 0 1px 0 rgba(14,14,12,0.06), 0 12px 28px -18px rgba(14,14,12,0.35); transition: transform .25s ease, box-shadow .25s ease; }
+  .inv-item:hover, .inv-item:focus-visible { transform: translateY(-4px); box-shadow: 0 1px 0 rgba(14,14,12,0.06), 0 22px 36px -18px rgba(14,14,12,0.4); }
+  .inv-photo { box-shadow: none; background: #fff; border: 1px solid rgba(14,14,12,0.08); flex: none; }
+  .inv-item:hover .inv-photo { box-shadow: none; }
+  .inv-item.tier-a { grid-column: span 3; display: grid; grid-template-columns: 88px 1fr; column-gap: 1.25rem; align-items: start; padding: 1.5rem; text-align: left; position: relative; overflow: hidden; }
+  .inv-item.tier-a::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent); }
+  .inv-item.tier-a .inv-photo { grid-row: 1 / span 3; width: 88px; height: 88px; }
+  .inv-item.tier-a .inv-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.55rem; font-weight: 400; margin: 0; line-height: 1.1; }
+  .inv-item.tier-a .inv-role { font-size: 0.68rem; margin: 0.3rem 0 0.7rem; color: var(--accent); }
+  .inv-item.tier-a .inv-tooltip { position: static; opacity: 1; pointer-events: none; transform: none; width: auto; margin: 0; padding: 0; background: none; box-shadow: none; font-size: 0.86rem; line-height: 1.55; color: var(--ink-soft); }
+  .inv-item.tier-a .inv-tooltip::before { display: none; }
+  .inv-item.tier-a:hover .inv-tooltip, .inv-item.tier-a:focus-visible .inv-tooltip { transform: none; }
+  .inv-item.tier-b { grid-column: span 2; display: grid; grid-template-columns: 52px 1fr; column-gap: 0.9rem; align-items: center; padding: 0.85rem 1rem; text-align: left; }
+  .inv-item.tier-b .inv-photo { grid-row: 1 / span 2; width: 52px; height: 52px; }
+  .inv-item.tier-b .inv-name { font-size: 0.9rem; margin: 0; text-align: left; white-space: normal; align-self: end; }
+  .inv-item.tier-b .inv-role { font-size: 0.6rem; margin: 0.15rem 0 0; text-align: left; white-space: normal; align-self: start; }
+  .involvement-row.tier-b-row .inv-item { width: auto; }
+  .inv-item.tier-b .inv-tooltip { width: 260px; left: 0; transform: translate(0, 4px); }
+  .inv-item.tier-b:hover .inv-tooltip, .inv-item.tier-b:focus-visible .inv-tooltip { transform: translate(0, 0); }
+  @media (max-width: 900px) {
+    .inv-item.tier-a { grid-column: span 6; }
+    .inv-item.tier-b { grid-column: span 3; }
+  }
+  @media (max-width: 560px) {
+    .involvement-rows { gap: .7rem; }
+    .inv-item.tier-b { grid-column: span 6; }
+    .inv-item.tier-a { grid-template-columns: 64px 1fr; padding: 1.1rem; }
+    .inv-item.tier-a .inv-photo { width: 64px; height: 64px; }
+  }
+  @media (hover: none) {
+    .inv-item.tier-b .inv-tooltip { display: none; }
+    .inv-item.tier-a .inv-tooltip { max-width: none; margin: 0; text-align: left; font-size: 0.86rem; color: var(--ink-soft); }
+  }
+
   @media (max-width: 900px) {
     .exp-row {
       grid-template-columns: 1fr auto;
@@ -1409,9 +1450,11 @@
 
   /* ---------- CONTACT ---------- */
   .contact {
-    padding: 5.5rem 0 3.5rem;
-    border-top: 1px solid var(--line);
+    padding: 6rem 0 3.5rem;
+    background: var(--night);
+    color: var(--bg);
   }
+  .contact .section-num { color: var(--pop); }
   .contact-headline {
     font-family: 'Instrument Serif', serif;
     font-size: clamp(3rem, 9vw, 8rem);
@@ -1420,9 +1463,9 @@
     margin-bottom: 3rem;
     max-width: 1100px;
   }
-  .contact-headline em { font-style: italic; color: var(--accent); }
+  .contact-headline em { font-style: italic; color: var(--pop); }
   .contact-headline a {
-    border-bottom: 2px solid var(--ink);
+    border-bottom: 2px solid var(--pop);
     transition: color 0.3s ease, border-color 0.3s ease;
     display: inline-block;
   }
@@ -1433,12 +1476,12 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 2rem;
     padding: 2.5rem 0;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgba(241,236,228,.18);
   }
   .contact-block .label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    color: var(--muted);
+    color: #8d887f;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     margin-bottom: 0.7rem;
@@ -1446,12 +1489,12 @@
   }
   .contact-block a, .contact-block span {
     font-size: 1rem;
-    color: var(--ink);
+    color: var(--bg);
     transition: color 0.3s ease;
     line-height: 1.4;
     word-break: break-word;
   }
-  .contact-block a:hover { color: var(--accent); }
+  .contact-block a:hover { color: var(--pop); }
 
   @media (max-width: 800px) {
     .contact-row { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
@@ -1552,6 +1595,36 @@
     pointer-events: none;
   }
 
+
+  /* ---------- EQ BARS (shared motion motif) ---------- */
+  :root { --pop: #ffc83d; --night: #0e0e0c; }
+  .eq-mini { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+  .eq-mini i, .eq i { display: block; width: 3px; height: 100%; background: linear-gradient(180deg, var(--pop), var(--accent)); border-radius: 1px; transform-origin: bottom; animation: eqbar 1s ease-in-out infinite alternate; }
+  .eq-mini i:nth-child(1) { animation-duration: .7s; } .eq-mini i:nth-child(2) { animation-duration: 1.1s; animation-delay: -.3s; }
+  .eq-mini i:nth-child(3) { animation-duration: .85s; animation-delay: -.5s; } .eq-mini i:nth-child(4) { animation-duration: 1.3s; animation-delay: -.2s; }
+  @keyframes eqbar { from { transform: scaleY(.18); } to { transform: scaleY(1); } }
+
+  /* ---------- NOW BUILDING (dark band) ---------- */
+  #now { background: var(--night); color: var(--bg); padding: 5rem 0 9rem; overflow: hidden; }
+  #now .section-title em { color: var(--pop); }
+  #now .section-sub { color: #a8a39a; }
+  .now-eq { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; display: flex; align-items: flex-end; gap: 6px; padding: 0 2.5rem; opacity: .16; pointer-events: none; }
+  .now-eq i { flex: 1; height: 100%; background: linear-gradient(180deg, var(--pop), var(--accent)); transform-origin: bottom; animation: eqbar 1s ease-in-out infinite alternate; border-radius: 2px 2px 0 0; }
+  .now-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; position: relative; z-index: 1; }
+  .now-card { display: flex; flex-direction: column; gap: 1rem; padding: 1.75rem; border: 1px solid rgba(241,236,228,.16); border-radius: 18px; background: rgba(241,236,228,.04); color: inherit; text-decoration: none; transition: border-color .3s, background .3s, box-shadow .3s; }
+  .now-card:hover { border-color: var(--pop); background: rgba(241,236,228,.08); box-shadow: 0 0 0 1px var(--pop), 0 24px 50px -24px rgba(255,200,61,.35); }
+  .now-status { display: inline-flex; align-items: center; gap: .6rem; font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--pop); }
+  .now-status .eq-mini { height: 12px; }
+  .now-card h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 2.2rem; line-height: 1; letter-spacing: -.02em; margin: 0; }
+  .now-card p { margin: 0; color: #cfcac0; font-size: .95rem; line-height: 1.6; flex: 1; }
+  .now-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .now-tags span { font-family: 'JetBrains Mono', monospace; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .6rem; border: 1px solid rgba(241,236,228,.22); border-radius: 99px; color: #cfcac0; }
+  .now-last { font-family: 'JetBrains Mono', monospace; font-size: .68rem; line-height: 1.5; color: #8d887f; border-top: 1px solid rgba(241,236,228,.12); padding-top: .9rem; min-height: 3.1rem; }
+  .now-last b { color: var(--bg); font-weight: 500; }
+  .now-foot { margin-top: 1.75rem; font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: #8d887f; position: relative; z-index: 1; }
+  @media (max-width: 900px) { #now { padding: 4rem 0 4.5rem; } .now-grid { grid-template-columns: 1fr; } .now-eq { padding: 0 1.25rem; } }
+  @media (prefers-reduced-motion: reduce) { .eq-mini i, .eq i, .now-eq i { animation: none; transform: scaleY(.6); } }
+
   /* prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1581,7 +1654,7 @@
     <li><a href="#contact" data-section="contact">Contact</a></li>
   </ul>
   <div class="nav-status">
-    <span class="status-dot"></span>
+    <span class="eq-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     <span id="status-text">Currently @ Goldenrod</span>
   </div>
 </nav>
@@ -1627,6 +1700,19 @@
     <span>Generative AI <em>&nbsp;/&nbsp;</em><span class="dot"></span> Real-Estate Tech <em>&nbsp;/&nbsp;</em> Automation Workflows <em>&nbsp;/&nbsp;</em><span class="dot"></span> EdTech <em>&nbsp;/&nbsp;</em> Founder <em>&nbsp;/&nbsp;</em><span class="dot"></span> Prompt Engineer <em>&nbsp;/&nbsp;</em>&nbsp;</span>
   </div>
 </div>
+
+<!-- NOW BUILDING -->
+<section id="now">
+  <div class="now-eq" id="nowEq" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="section-title"><span class="title-inner">What I'm <em>building</em> now.</span></h2>
+      <p class="section-sub">A live look at the projects I'm actively working on, with the latest commit pulled straight from GitHub.</p>
+    </div>
+    <div class="now-grid" id="nowGrid"></div>
+    <div class="now-foot" id="nowFoot"></div>
+  </div>
+</section>
 
 <!-- ABOUT -->
 <section id="about">
@@ -1901,18 +1987,8 @@
           <div class="proj-nav-dates">Updated Aug 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item reveal" data-target="ai" data-started="2026-01" data-hover>
-          <div class="proj-nav-num">/02</div>
-          <div class="proj-nav-name">AI Suite</div>
-          <div class="proj-nav-meta">
-            <span>Automation</span>
-            <span>● Internal</span>
-          </div>
-          <div class="proj-nav-dates">Started Jan 2026</div>
-          <span class="proj-nav-arrow">→</span>
-        </div>
         <div class="proj-nav-item reveal" data-target="bc" data-started="2026-06" data-updated="2026-09" data-hover>
-          <div class="proj-nav-num">/03</div>
+          <div class="proj-nav-num">/02</div>
           <div class="proj-nav-name">8bit CRE</div>
           <div class="proj-nav-meta">
             <span>CRE + Game Design</span>
@@ -1921,18 +1997,18 @@
           <div class="proj-nav-dates">Updated Sep 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item reveal" data-target="pt" data-started="2026-07" data-updated="2026-10" data-hover>
-          <div class="proj-nav-num">/04</div>
-          <div class="proj-nav-name">StockStarter</div>
+        <div class="proj-nav-item reveal" data-target="ai" data-started="2026-01" data-hover>
+          <div class="proj-nav-num">/03</div>
+          <div class="proj-nav-name">AI Suite</div>
           <div class="proj-nav-meta">
-            <span>FinTech</span>
-            <span class="live">● Live</span>
+            <span>Automation</span>
+            <span>● Internal</span>
           </div>
-          <div class="proj-nav-dates">Updated Oct 2026</div>
+          <div class="proj-nav-dates">Started Jan 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
         <div class="proj-nav-item reveal" data-target="cd" data-started="2026-05" data-updated="2026-10" data-hover>
-          <div class="proj-nav-num">/05</div>
+          <div class="proj-nav-num">/04</div>
           <div class="proj-nav-name">Career Dashboard</div>
           <div class="proj-nav-meta">
             <span>Career Tech</span>
@@ -1941,14 +2017,24 @@
           <div class="proj-nav-dates">Updated Oct 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item reveal" data-target="hs" data-started="2026-08" data-updated="2026-09" data-hover>
-          <div class="proj-nav-num">/06</div>
-          <div class="proj-nav-name">Hacky Sack CV</div>
+        <div class="proj-nav-item reveal" data-target="cim" data-started="2026-09" data-updated="2026-11" data-hover>
+          <div class="proj-nav-num">/05</div>
+          <div class="proj-nav-name">VR Projects</div>
           <div class="proj-nav-meta">
-            <span>Computer Vision</span>
-            <span>● In Progress</span>
+            <span>Virtual Reality</span>
+            <span class="live">● Live</span>
           </div>
-          <div class="proj-nav-dates">Updated Sep 2026</div>
+          <div class="proj-nav-dates">Updated Nov 2026</div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
+        <div class="proj-nav-item reveal" data-target="pt" data-started="2026-07" data-updated="2026-10" data-hover>
+          <div class="proj-nav-num">/06</div>
+          <div class="proj-nav-name">StockStarter</div>
+          <div class="proj-nav-meta">
+            <span>FinTech</span>
+            <span class="live">● Live</span>
+          </div>
+          <div class="proj-nav-dates">Updated Oct 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
         <div class="proj-nav-item reveal" data-target="sc" data-started="2025-07" data-updated="2025-10" data-hover>
@@ -1971,24 +2057,24 @@
           <div class="proj-nav-dates">Updated Aug 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
-        <div class="proj-nav-item reveal" data-target="wck" data-started="2026-07" data-updated="2026-08" data-hover>
+        <div class="proj-nav-item reveal" data-target="hs" data-started="2026-08" data-updated="2026-09" data-hover>
           <div class="proj-nav-num">/09</div>
+          <div class="proj-nav-name">Hacky Sack CV</div>
+          <div class="proj-nav-meta">
+            <span>Computer Vision</span>
+            <span>● In Progress</span>
+          </div>
+          <div class="proj-nav-dates">Updated Sep 2026</div>
+          <span class="proj-nav-arrow">→</span>
+        </div>
+        <div class="proj-nav-item reveal" data-target="wck" data-started="2026-07" data-updated="2026-08" data-hover>
+          <div class="proj-nav-num">/10</div>
           <div class="proj-nav-name">World Cup Kits</div>
           <div class="proj-nav-meta">
             <span>Sports Data</span>
             <span class="live">● Live</span>
           </div>
           <div class="proj-nav-dates">Updated Aug 2026</div>
-          <span class="proj-nav-arrow">→</span>
-        </div>
-        <div class="proj-nav-item reveal" data-target="cim" data-started="2026-09" data-updated="2026-11" data-hover>
-          <div class="proj-nav-num">/10</div>
-          <div class="proj-nav-name">VR Projects</div>
-          <div class="proj-nav-meta">
-            <span>Virtual Reality</span>
-            <span class="live">● Live</span>
-          </div>
-          <div class="proj-nav-dates">Updated Nov 2026</div>
           <span class="proj-nav-arrow">→</span>
         </div>
       </nav>
@@ -2255,7 +2341,7 @@
               <h3 class="proj-panel-title">Signal</h3>
               <p class="proj-dates" data-dates-for="sg">Started Aug 2026 · Updated Aug 2026</p>
             </div>
-            <a href="https://signal-woad-one.vercel.app" target="_blank" rel="noopener" class="proj-visit" data-hover>Visit ↗︎</a>
+            <a href="https://github.com/moff05/signal" target="_blank" rel="noopener" class="proj-visit" data-hover>Code ↗︎</a>
           </div>
           <div class="proj-shots">
             <button type="button" class="proj-shot-trigger" data-hover>
@@ -3091,5 +3177,45 @@
   });
 </script>
 
+
+<script>
+// ---------- NOW BUILDING: data from now.json + live latest commit from GitHub ----------
+(function () {
+  var grid = document.getElementById('nowGrid'); if (!grid) return;
+  var eq = document.getElementById('nowEq');
+  for (var i = 0; i < 64; i++) { var b = document.createElement('i'); b.style.animationDuration = (0.6 + Math.random() * 1.2).toFixed(2) + 's'; b.style.animationDelay = (-Math.random() * 2).toFixed(2) + 's'; eq.appendChild(b); }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function ago(iso) {
+    var s = (Date.now() - new Date(iso).getTime()) / 1000;
+    if (s < 3600) return Math.max(1, Math.round(s / 60)) + 'm ago';
+    if (s < 86400) return Math.round(s / 3600) + 'h ago';
+    if (s < 86400 * 30) return Math.round(s / 86400) + 'd ago';
+    return Math.round(s / 86400 / 30) + 'mo ago';
+  }
+  fetch('now.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
+    grid.innerHTML = d.items.map(function (it, n) {
+      return '<a class="now-card reveal" href="' + esc(it.url) + '" target="_blank" rel="noopener" data-hover>' +
+        '<span class="now-status"><span class="eq-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' + esc(it.status) + '</span>' +
+        '<h3>' + esc(it.name) + '</h3><p>' + esc(it.blurb) + '</p>' +
+        '<div class="now-tags">' + it.tags.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>' +
+        '<div class="now-last" data-repo="' + esc(it.repo || '') + '">&nbsp;</div></a>';
+    }).join('');
+    grid.querySelectorAll('.reveal').forEach(function (el, n) { el.style.transitionDelay = (n * 90) + 'ms'; setTimeout(function () { el.classList.add('in', 'visible'); }, 60); });
+    document.getElementById('nowFoot').textContent = 'Blurbs last updated ' + new Date(d.updated + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '. Commit times are live.';
+    grid.querySelectorAll('.now-last').forEach(function (el) {
+      var repo = el.dataset.repo; if (!repo) return;
+      var key = 'commit:' + repo, cached = null;
+      try { cached = JSON.parse(sessionStorage.getItem(key)); } catch (e) {}
+      function show(c) { el.innerHTML = 'Last commit <b>' + ago(c.date) + '</b><br>' + esc(c.msg.length > 70 ? c.msg.slice(0, 67) + '...' : c.msg); }
+      if (cached && Date.now() - cached.t < 600000) { show(cached); return; }
+      fetch('https://api.github.com/repos/moff05/' + repo + '/commits?per_page=1').then(function (r) { return r.json(); }).then(function (j) {
+        var c = { date: j[0].commit.committer.date, msg: j[0].commit.message.split('\n')[0], t: Date.now() };
+        try { sessionStorage.setItem(key, JSON.stringify(c)); } catch (e) {}
+        show(c);
+      }).catch(function () { el.innerHTML = '&nbsp;'; });
+    });
+  }).catch(function () { var s = document.getElementById('now'); if (s) s.style.display = 'none'; });
+})();
+</script>
 </body>
 </html>

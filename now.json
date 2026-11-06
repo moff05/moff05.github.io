@@ -1,0 +1,29 @@
+{
+  "updated": "2026-11-06",
+  "items": [
+    {
+      "name": "VR Projects",
+      "status": "Shipped",
+      "blurb": "Three headset and virtual-world builds for CIM 423: Day 181, Encore Hall (a shared MUD world where visitors vote the artists), and Night Shift Vinyl (a hands-only DJ lounge on Quest 3). Now polishing the build logs.",
+      "tags": ["Unity", "Quest 3", "MUD XR"],
+      "repo": "cim423-3d-world",
+      "url": "https://cim423-3d-world.vercel.app"
+    },
+    {
+      "name": "This site",
+      "status": "Building",
+      "blurb": "Rebuilding nmoffett.com with more motion and contrast, plus this live feed of what I am working on.",
+      "tags": ["HTML", "CSS", "JS"],
+      "repo": "moff05.github.io",
+      "url": "https://github.com/moff05/moff05.github.io"
+    },
+    {
+      "name": "Career Dashboard",
+      "status": "Live",
+      "blurb": "AI job tracker that scores every posting against my background and coaches me through applications. Next.js, Claude and Turso.",
+      "tags": ["Next.js", "Claude", "Turso"],
+      "repo": "career-dashboard",
+      "url": "https://github.com/moff05/career-dashboard"
+    }
+  ]
+}
