@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-06",
+  "updated": "2026-11-11",
   "items": [
     {
-      "name": "VR Projects",
-      "status": "Shipped",
-      "blurb": "Three headset and virtual-world builds for CIM 423: Day 181, Encore Hall (a shared MUD world where visitors vote the artists), and Night Shift Vinyl (a hands-only DJ lounge on Quest 3). Now polishing the build logs.",
+      "name": "Day 181 v2",
+      "status": "Building",
+      "blurb": "Final project for CIM 423: reworking my Quest space-station mystery into a longer run with two new rooms, four new hand interactions, optional crew logs and three endings. Built and played through in the Unity Editor; headset testing is next.",
       "tags": ["Unity", "Quest 3", "MUD XR"],
       "repo": "cim423-3d-world",
       "url": "https://cim423-3d-world.vercel.app"
